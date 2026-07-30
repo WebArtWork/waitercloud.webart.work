@@ -5,18 +5,13 @@ import { adminsGuard, authenticatedGuard, guestGuard } from '@wawjs/ngx-bos';
 export const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'feed',
-		pathMatch: 'full',
-	},
-	{
-		path: '',
 		loadComponent: () =>
 			import('./layouts/public/public.component').then(
 				(m) => m.PublicComponent,
 			),
 		children: [
 			{
-				path: 'feed',
+				path: '',
 				canActivate: [MetaGuard],
 				data: { meta: { title: 'Food feed' } },
 				loadComponent: () =>
@@ -208,7 +203,7 @@ export const routes: Routes = [
 	},
 	{
 		path: '**',
-		redirectTo: 'feed',
+		redirectTo: '',
 		pathMatch: 'full',
 	},
 ];

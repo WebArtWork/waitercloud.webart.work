@@ -26,7 +26,7 @@
 			<material-icon icon="map"></material-icon>
 			<span>Map</span>
 		</a>
-		<a routerLink="/feed" routerLinkActive="public-layout__link--active">
+		<a routerLink="/" routerLinkActive="public-layout__link--active" [routerLinkActiveOptions]="{ exact: true }">
 			<material-icon icon="dynamic_feed"></material-icon>
 			<span>Feed</span>
 		</a>

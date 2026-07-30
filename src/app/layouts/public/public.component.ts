@@ -40,6 +40,6 @@ export class PublicComponent {
 			settings: 'Settings',
 		};
 
-		return pageTitles[page] ?? 'Waiter Cloud';
+		return pageTitles[page] ?? 'Feed';
 	}
 }
