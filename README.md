@@ -739,4 +739,43 @@ These options should not block the first public release.
 
 ## API
 
-_To be documented later._
+### Existing CRUD routes
+
+The backend currently exposes generic CRUD routes for these collections. The
+public layout can use the read routes today; Feed, Map, and a unified Entity
+API do not exist yet and are intentionally not listed here.
+
+For every collection below:
+
+| Method + URL | Query / body |
+| --- | --- |
+| `GET /api/<collection>/get` | Query: `page`, `perPage`, `query` |
+| `POST /api/<collection>/fetch` | `{ _id }` |
+| `POST /api/<collection>/create` | `{ ...collectionFields }` |
+| `POST /api/<collection>/update` | `{ _id, ...editableCollectionFields }` |
+| `POST /api/<collection>/delete` | `{ _id }` |
+
+Available public-layout collections:
+
+- `companydeliverrecipe` — recipes
+- `companydeliverrestaurant` — restaurants
+- `companydeliverschool` — cooking schools
+- `companydeliveremployee` — employee profiles
+- `companydeliverjob` — jobs
+- `companydelivercomment` — comments
+
+Employment collections already exposed by CRUD:
+
+- `companydeliverapplication`
+- `companydelivercontract`
+
+The existing specific employment endpoints are:
+
+| Method + URL | Body / query |
+| --- | --- |
+| `GET /api/company/deliver/job/list` | No body |
+| `POST /api/company/deliver/employee/application/apply` | `{ company, job?, coverLetter }` |
+| `GET /api/company/deliver/employee/application/mine` | No body |
+| `POST /api/company/deliver/employee/application/withdraw` | `{ _id }` |
+| `GET /api/company/deliver/contract/mine` | No body |
+| `POST /api/company/deliver/contract/sign` | `{ _id }` |

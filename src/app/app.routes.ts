@@ -17,6 +17,8 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'feed',
+				canActivate: [MetaGuard],
+				data: { meta: { title: 'Food feed' } },
 				loadComponent: () =>
 					import('./pages/public/feed/feed.component').then(
 						(m) => m.FeedComponent,
@@ -24,6 +26,8 @@ export const routes: Routes = [
 			},
 			{
 				path: 'explore',
+				canActivate: [MetaGuard],
+				data: { meta: { title: 'Explore food' } },
 				loadComponent: () =>
 					import('./pages/public/explore/explore.component').then(
 						(m) => m.ExploreComponent,
@@ -31,6 +35,8 @@ export const routes: Routes = [
 			},
 			{
 				path: 'map',
+				canActivate: [MetaGuard],
+				data: { meta: { title: 'Food map' } },
 				loadComponent: () =>
 					import('./pages/public/map/map.component').then(
 						(m) => m.MapComponent,
@@ -38,7 +44,8 @@ export const routes: Routes = [
 			},
 			{
 				path: 'workspace',
-				canActivate: [authenticatedGuard],
+				canActivate: [authenticatedGuard, MetaGuard],
+				data: { meta: { title: 'Workspace' } },
 				loadComponent: () =>
 					import('./pages/public/workspace/workspace.component').then(
 						(m) => m.WorkspaceComponent,
@@ -46,6 +53,8 @@ export const routes: Routes = [
 			},
 			{
 				path: 'investment',
+				canActivate: [MetaGuard],
+				data: { meta: { title: 'For investors' } },
 				loadComponent: () =>
 					import('./pages/public/investment/investment.component').then(
 						(m) => m.InvestmentComponent,
@@ -53,6 +62,8 @@ export const routes: Routes = [
 			},
 			{
 				path: 'entity',
+				canActivate: [MetaGuard],
+				data: { meta: { title: 'Food directory' } },
 				loadComponent: () =>
 					import('./pages/public/entity/entity.component').then(
 						(m) => m.EntityComponent,
@@ -60,6 +71,8 @@ export const routes: Routes = [
 			},
 			{
 				path: 'editor',
+				canActivate: [MetaGuard],
+				data: { meta: { title: 'Editor' } },
 				loadComponent: () =>
 					import('./pages/public/editor/editor.component').then(
 						(m) => m.EditorComponent,
