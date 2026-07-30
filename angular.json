@@ -67,7 +67,7 @@
 						"stylePreprocessorOptions": {
 							"includePaths": ["src/scss/utils", "."]
 						},
-						"allowedCommonJsDependencies": ["brace", "ace-builds"],
+						"allowedCommonJsDependencies": ["brace", "ace-builds", "debug", "xmlhttprequest-ssl"],
 						"browser": "src/main.ts",
 						"server": "src/main.server.ts",
 						"outputMode": "server",
