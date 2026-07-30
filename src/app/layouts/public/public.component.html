@@ -1,0 +1,38 @@
+<div class="public-layout">
+	<header class="public-layout__topbar">
+		<a aria-label="Profile" routerLink="/profile">
+			<material-icon icon="person"></material-icon>
+		</a>
+		<div class="public-layout__title">{{ pageTitle() }}</div>
+		<a aria-label="Settings" routerLink="/settings">
+			<material-icon icon="settings"></material-icon>
+		</a>
+	</header>
+
+	<main class="public-layout__main">
+		<router-outlet />
+	</main>
+
+	<nav aria-label="Primary navigation" class="public-layout__navigation">
+		<a routerLink="/investment" routerLinkActive="public-layout__link--active">
+			<material-icon icon="trending_up"></material-icon>
+			<span>Investment</span>
+		</a>
+		<a routerLink="/explore" routerLinkActive="public-layout__link--active">
+			<material-icon icon="explore"></material-icon>
+			<span>Explore</span>
+		</a>
+		<a routerLink="/map" routerLinkActive="public-layout__link--active">
+			<material-icon icon="map"></material-icon>
+			<span>Map</span>
+		</a>
+		<a routerLink="/feed" routerLinkActive="public-layout__link--active">
+			<material-icon icon="dynamic_feed"></material-icon>
+			<span>Feed</span>
+		</a>
+		<a routerLink="/workspace" routerLinkActive="public-layout__link--active">
+			<material-icon icon="workspaces"></material-icon>
+			<span>Workspace</span>
+		</a>
+	</nav>
+</div>
