@@ -56,7 +56,7 @@ export const routes: Routes = [
 					),
 			},
 			{
-				path: 'entity',
+				path: 'entity/:id',
 				canActivate: [MetaGuard],
 				data: { meta: { title: 'Food directory' } },
 				loadComponent: () =>
@@ -71,7 +71,7 @@ export const routes: Routes = [
 				loadComponent: () =>
 					import('./pages/public/editor/editor.component').then(
 						(m) => m.EditorComponent,
-				),
+					),
 			},
 			{
 				path: 'profile',

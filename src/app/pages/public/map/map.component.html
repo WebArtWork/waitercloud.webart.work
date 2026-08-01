@@ -1,1 +1,84 @@
-<section></section>
+<!-- Контейнер карти -->
+<div
+	class="relative h-[calc(100vh-8rem)] w-full overflow-hidden rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] border border-[var(--c-border)]"
+>
+	<!-- Фон (імітація карти) -->
+	<div
+		class="absolute inset-0 bg-gray-900 bg-opacity-50"
+		style="
+			background-image: radial-gradient(
+				circle,
+				#444 1px,
+				transparent 1px
+			);
+			background-size: 20px 20px;
+		"
+	></div>
+
+	<!-- Блок фільтрів -->
+	<div
+		class="absolute left-2 right-2 top-4 z-10 flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden"
+	>
+		@for (filter of filters(); track filter.id) {
+		<button
+			(click)="toggleFilter(filter.id)"
+			class="flex flex-shrink-0 items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold shadow-md transition-colors"
+			[class]="filter.active
+					? 'bg-white text-black'
+					: 'bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-black/80'"
+		>
+			<material-icon
+				[icon]="filter.icon"
+				class="text-[1rem]"
+				[style.color]="filter.active ? 'black' : 'white'"
+			>
+			</material-icon>
+			{{ filter.label }}
+		</button>
+		}
+	</div>
+
+	<!-- Маркери на карті -->
+	@for (marker of markers(); track marker.id) { @if (filters().find(f => f.id
+	=== marker.type)?.active) {
+	<div
+		class="absolute z-0 flex flex-col items-center gap-1 transform -translate-x-1/2 -translate-y-full cursor-pointer group"
+		[style.top]="marker.top"
+		[style.left]="marker.left"
+	>
+		<!-- Підказка -->
+		<div
+			class="rounded bg-black/80 px-2 py-1 text-[0.6rem] font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 backdrop-blur-sm whitespace-nowrap"
+		>
+			{{ marker.label }}
+		</div>
+
+		<!-- Іконка маркера -->
+		<div
+			class="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-lg relative"
+		>
+			<material-icon
+				[icon]="
+							marker.type === 'restaurants' ? 'restaurant' :
+							marker.type === 'schools' ? 'school' :
+							marker.type === 'recipes' ? 'menu_book' : 'place'
+						"
+				class="text-sm"
+				style="color: black"
+			>
+			</material-icon>
+			<!-- "Хвостик" піна -->
+			<div
+				class="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-white -z-10"
+			></div>
+		</div>
+	</div>
+	} }
+
+	<!-- Кнопка локації -->
+	<button
+		class="absolute bottom-6 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white shadow-lg backdrop-blur-md border border-white/10 hover:bg-black/90"
+	>
+		<material-icon icon="my_location"></material-icon>
+	</button>
+</div>

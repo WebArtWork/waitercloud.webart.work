@@ -1,1 +1,80 @@
-<section></section>
+<div class="flex flex-col gap-5 pb-6">
+	<div class="flex items-center justify-between">
+		<h1 class="text-xl font-bold text-[var(--c-text-primary)]">Огляд</h1>
+		<button
+			class="flex items-center gap-1 rounded-full bg-[var(--c-bg-tertiary)] px-3 py-1.5 text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text-primary)]"
+		>
+			<material-icon
+				icon="location_on"
+				class="text-[1.1rem]"
+			></material-icon>
+			<span class="text-xs font-semibold">Україна</span>
+			<material-icon
+				icon="expand_more"
+				class="text-[1.1rem]"
+			></material-icon>
+		</button>
+	</div>
+
+	<div class="relative w-full">
+		<material-icon
+			icon="search"
+			class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--c-text-muted)]"
+		></material-icon>
+		<input
+			type="text"
+			placeholder="Пошук рецептів, ресторанів, людей..."
+			class="w-full rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-tertiary)] py-3 pl-14 pr-4 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)]"
+		/>
+	</div>
+
+	<div class="flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+		@for (filter of filters(); track filter) {
+		<button
+			type="button"
+			(click)="setFilter(filter)"
+			class="whitespace-nowrap rounded-[var(--radius-btn)] px-4 py-2 text-sm font-semibold transition-colors"
+			[class]="activeFilter() === filter
+					? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)]'
+					: 'bg-[var(--c-bg-tertiary)] text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
+		>
+			{{ filter }}
+		</button>
+		}
+	</div>
+
+	<div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+		@for (item of exploreItems(); track item.id) {
+		<div
+			[routerLink]="['/entity', item.id]"
+			class="group flex cursor-pointer flex-col gap-2 rounded-[var(--radius-btn)]"
+		>
+			<div
+				class="relative aspect-square w-full overflow-hidden rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)]"
+			>
+				<img
+					[src]="item.image"
+					[alt]="item.title"
+					class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+				/>
+				<div
+					class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[0.6rem] font-bold uppercase tracking-wider text-white backdrop-blur-sm"
+				>
+					{{ item.type }}
+				</div>
+			</div>
+
+			<div class="px-1">
+				<h3
+					class="truncate text-sm font-bold text-[var(--c-text-primary)]"
+				>
+					{{ item.title }}
+				</h3>
+				<p class="truncate text-xs text-[var(--c-text-muted)]">
+					{{ item.subtitle }}
+				</p>
+			</div>
+		</div>
+		}
+	</div>
+</div>

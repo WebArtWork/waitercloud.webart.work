@@ -1,1 +1,60 @@
-<section></section>
+<div class="flex flex-col gap-6 pb-10 max-w-4xl mx-auto w-full">
+	<!-- Шапка сторінки -->
+	<div
+		class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-8 border border-[var(--c-border)] text-center sm:text-left"
+	>
+		<h1 class="text-3xl font-bold text-[var(--c-text-primary)]">
+			Інвестиції та Партнерство
+		</h1>
+		<p class="text-sm text-[var(--c-text-muted)] leading-relaxed max-w-2xl">
+			Waiter Cloud відкрита до нових бізнес-можливостей, стратегічного
+			партнерства та інвестиційних пропозицій для подальшого розвитку
+			платформи на ринку.
+		</p>
+	</div>
+
+	<!-- Сітка можливостей -->
+	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		@for (item of opportunities(); track item.title) {
+		<div
+			class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-6 border border-[var(--c-border)] transition-transform duration-300 hover:scale-[1.01]"
+		>
+			<div
+				class="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--c-bg-primary)] text-[var(--c-text-primary)] border border-[var(--c-border)]"
+			>
+				<material-icon
+					[icon]="item.icon"
+					class="text-lg"
+				></material-icon>
+			</div>
+			<h3 class="text-base font-bold text-[var(--c-text-primary)]">
+				{{ item.title }}
+			</h3>
+			<p class="text-xs text-[var(--c-text-muted)] leading-relaxed">
+				{{ item.description }}
+			</p>
+		</div>
+		}
+	</div>
+
+	<!-- Заклик до дії (Call to Action) -->
+	об'єднати унікальний досвід ->
+	<div
+		class="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-6 border border-[var(--c-border)]"
+	>
+		<div class="flex flex-col text-center sm:text-left">
+			<h4 class="text-sm font-bold text-[var(--c-text-primary)]">
+				Маєте пропозицію для співпраці?
+			</h4>
+			<p class="text-xs text-[var(--c-text-muted)] mt-0.5">
+				Зв'яжіться з нашою командою для обговорення деталей.
+			</p>
+		</div>
+		<button
+			type="button"
+			class="rounded-[var(--radius-btn)] bg-[var(--c-text-primary)] px-6 py-2.5 text-xs font-bold text-[var(--c-bg-primary)] transition-opacity hover:opacity-90"
+		>
+			Зв'язатися
+		</button>
+	</div>
+</div>

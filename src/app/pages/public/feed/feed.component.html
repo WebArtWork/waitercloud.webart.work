@@ -1,1 +1,107 @@
-<section></section>
+<div class="flex flex-col gap-6 pb-6">
+	@for (recipe of recipes(); track recipe.id) {
+	<div
+		class="relative flex w-full flex-col overflow-hidden rounded-[var(--radius-btn)] bg-black shadow-md"
+		style="height: 70vh; min-height: 450px"
+	>
+		<img
+			[src]="recipe.image"
+			[alt]="recipe.title"
+			class="absolute inset-0 h-full w-full object-cover opacity-85"
+		/>
+
+		<div
+			class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"
+		></div>
+
+		<div class="absolute bottom-0 left-0 right-16 flex flex-col gap-3 p-4">
+			<!-- Заголовок-посилання на повну сторінку -->
+			<a
+				[routerLink]="['/recipe', recipe.id]"
+				class="group block cursor-pointer outline-none"
+			>
+				<h2
+					class="text-xl font-bold leading-tight text-white line-clamp-2 transition-colors group-hover:text-gray-300"
+				>
+					{{ recipe.title }}
+				</h2>
+				<span
+					class="mt-1 inline-flex items-center text-xs text-white/70 hover:text-white"
+				>
+					Детальніше
+					<material-icon
+						icon="chevron_right"
+						class="text-[1rem]"
+					></material-icon>
+				</span>
+			</a>
+
+			<!-- Автор та підписка -->
+			<div class="flex items-center gap-2">
+				<a
+					[routerLink]="['/author', recipe.author]"
+					class="flex items-center gap-2 outline-none"
+				>
+					<div
+						class="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-bg-tertiary)] bg-opacity-30 backdrop-blur-sm"
+					>
+						<material-icon
+							icon="person"
+							class="text-xs text-white"
+						></material-icon>
+					</div>
+					<span
+						class="text-sm font-medium text-white/90 hover:underline"
+						>{{ recipe.author }}</span
+					>
+				</a>
+
+				<button
+					type="button"
+					class="ml-1 rounded-full border border-white/50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
+				>
+					Follow
+				</button>
+			</div>
+		</div>
+
+		<!-- Права панель -->
+		<div class="absolute bottom-4 right-3 flex flex-col items-center gap-5">
+			<button
+				type="button"
+				class="group flex flex-col items-center gap-1 text-white outline-none"
+			>
+				<div
+					class="flex h-11 w-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 transition-colors group-hover:bg-black/60"
+				>
+					<material-icon icon="favorite"></material-icon>
+				</div>
+				<span class="text-xs font-semibold">{{ recipe.likes }}</span>
+			</button>
+
+			<button
+				type="button"
+				class="group flex flex-col items-center gap-1 text-white outline-none"
+			>
+				<div
+					class="flex h-11 w-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 transition-colors group-hover:bg-black/60"
+				>
+					<material-icon icon="chat_bubble"></material-icon>
+				</div>
+				<span class="text-xs font-semibold">{{ recipe.comments }}</span>
+			</button>
+
+			<button
+				type="button"
+				class="group flex flex-col items-center gap-1 text-white outline-none"
+			>
+				<div
+					class="flex h-11 w-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 transition-colors group-hover:bg-black/60"
+				>
+					<material-icon icon="share"></material-icon>
+				</div>
+			</button>
+		</div>
+	</div>
+	}
+</div>
