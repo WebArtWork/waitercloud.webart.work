@@ -1,11 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-
+import { RecipeViewComponent } from 'src/app/components/recipe/recipe-view/recipe-view.component';
+import { RestaurantViewComponent } from 'src/app/components/restaurant/restaurant-view/restaurant-view.component';
 @Component({
 	selector: 'page-feed',
 	templateUrl: './feed.component.html',
-	imports: [MaterialComponent, RouterLink],
+	imports: [
+		MaterialComponent,
+		RouterLink,
+		RecipeViewComponent,
+		RestaurantViewComponent,
+	],
 })
 export class FeedComponent {
 	readonly recipes = signal([

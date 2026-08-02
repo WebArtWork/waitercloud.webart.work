@@ -1,4 +1,5 @@
 <section class="profile">
+	<!-- Блок редагування профілю (стилізується через твій SCSS) -->
 	<div class="profile__card">
 		<ngx-file
 			mode="single-image"
@@ -14,19 +15,76 @@
 			[cropHeight]="512"
 		></ngx-file>
 
-		<form (submit)="wFormSubmit(); $event.preventDefault()" class="profile__form">
-			<winput [placeholder]="translateService.translate('Enter your name...')()" [formField]="profileForm.name"></winput>
-			<winput [placeholder]="translateService.translate('Enter your phone...')()" [formField]="profileForm.phone" type="tel"></winput>
-			<winput [placeholder]="translateService.translate('Enter your bio...')()" [formField]="profileForm.bio" type="textarea"></winput>
+		<form
+			(submit)="wFormSubmit(); $event.preventDefault()"
+			class="profile__form"
+		>
+			<winput
+				[placeholder]="translateService.translate('Enter your name...')()"
+				[formField]="profileForm.name"
+			></winput>
+			<winput
+				[placeholder]="translateService.translate('Enter your phone...')()"
+				[formField]="profileForm.phone"
+				type="tel"
+			></winput>
+			<winput
+				[placeholder]="translateService.translate('Enter your bio...')()"
+				[formField]="profileForm.bio"
+				type="textarea"
+			></winput>
 
 			<div class="profile__actions">
-				<wbutton [disabled]="isSubmitDisabled()" type="primary"><span translate>Update</span></wbutton>
+				<wbutton [disabled]="isSubmitDisabled()" type="primary"
+					><span translate>Update</span></wbutton
+				>
 			</div>
 		</form>
 	</div>
 
-	<button type="button" class="profile__logout" (click)="userService.logout()">
+	<!-- Кнопка виходу (стилізується через твій SCSS) -->
+	<button
+		type="button"
+		class="profile__logout"
+		(click)="userService.logout()"
+	>
 		<material-icon icon="logout"></material-icon>
 		<span translate>Logout</span>
 	</button>
+
+	<!-- Новий блок: Короткі картки сутностей користувача -->
+	<div class="flex flex-col gap-4 mt-10">
+		<h2 class="text-xl font-bold text-[var(--c-text-primary)]" translate>
+			Мої публікації
+		</h2>
+
+		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+			<!-- Рецепти -->
+			@for (recipe of $any(userService).userRecipes?.() || []; track
+			recipe.id) {
+			<recipe-short
+				[recipe]="{
+                        id: recipe.id,
+                        title: recipe.title,
+                        author: $any(userService.user())?.name || 'Ви',
+                        imageUrl: recipe.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
+                    }"
+			></recipe-short>
+			}
+
+			<!-- Ресторани -->
+			@for (place of $any(userService).userRestaurants?.() || []; track
+			place.id) {
+			<restaurant-short
+				[restaurant]="{
+                        id: place.id,
+                        title: place.name || place.title,
+                        description: place.description || '',
+                        imageUrl: place.image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+                        rating: place.rating || 5.0
+                    }"
+			></restaurant-short>
+			}
+		</div>
+	</div>
 </section>

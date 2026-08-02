@@ -1,1 +1,78 @@
-<!-- Intentionally empty. -->
+<form
+	(ngSubmit)="onSubmit()"
+	class="flex flex-col gap-4 p-6 bg-[var(--c-bg-secondary)] rounded-[var(--radius-btn)] border border-[var(--c-border)]"
+>
+	<h2 class="text-2xl font-bold text-[var(--c-text-primary)] mb-4">
+		Додати / Редагувати заклад
+	</h2>
+
+	<div class="flex flex-col gap-1">
+		<label class="text-sm font-semibold text-[var(--c-text-secondary)]"
+			>Назва закладу</label
+		>
+		<input
+			type="text"
+			name="title"
+			[(ngModel)]="formData.title"
+			class="px-4 py-2 rounded-md bg-[var(--c-bg-tertiary)] border border-[var(--c-border)] text-[var(--c-text-primary)] focus:outline-none focus:border-blue-500"
+			placeholder="Введіть назву..."
+			required
+		/>
+	</div>
+
+	<div class="flex flex-col gap-1">
+		<label class="text-sm font-semibold text-[var(--c-text-secondary)]"
+			>Адреса</label
+		>
+		<input
+			type="text"
+			name="address"
+			[(ngModel)]="formData.address"
+			class="px-4 py-2 rounded-md bg-[var(--c-bg-tertiary)] border border-[var(--c-border)] text-[var(--c-text-primary)] focus:outline-none focus:border-blue-500"
+			placeholder="Введіть адресу..."
+			required
+		/>
+	</div>
+
+	<div class="flex flex-col gap-1">
+		<label class="text-sm font-semibold text-[var(--c-text-secondary)]"
+			>URL зображення</label
+		>
+		<input
+			type="text"
+			name="imageUrl"
+			[(ngModel)]="formData.imageUrl"
+			class="px-4 py-2 rounded-md bg-[var(--c-bg-tertiary)] border border-[var(--c-border)] text-[var(--c-text-primary)] focus:outline-none focus:border-blue-500"
+			placeholder="https://..."
+		/>
+	</div>
+
+	<div class="flex flex-col gap-1">
+		<label class="text-sm font-semibold text-[var(--c-text-secondary)]"
+			>Опис</label
+		>
+		<textarea
+			name="description"
+			[(ngModel)]="formData.description"
+			class="px-4 py-2 rounded-md bg-[var(--c-bg-tertiary)] border border-[var(--c-border)] text-[var(--c-text-primary)] focus:outline-none focus:border-blue-500 min-h-[100px]"
+			placeholder="Опишіть заклад..."
+			required
+		></textarea>
+	</div>
+
+	<div class="flex justify-end gap-3 mt-4">
+		<button
+			type="button"
+			(click)="onCancel()"
+			class="px-4 py-2 rounded-md bg-transparent border border-[var(--c-border)] text-[var(--c-text-primary)] hover:bg-[var(--c-bg-tertiary)] transition-colors"
+		>
+			Скасувати
+		</button>
+		<button
+			type="submit"
+			class="px-4 py-2 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors"
+		>
+			Зберегти
+		</button>
+	</div>
+</form>

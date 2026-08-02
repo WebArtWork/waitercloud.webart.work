@@ -1,12 +1,31 @@
 <div class="flex flex-col gap-6 pb-6">
-	@for (recipe of recipes(); track recipe.id) {
+	<!-- Змінили змінну циклу з recipe на item, щоб логічно обробляти різні типи -->
+	@for (item of recipes(); track item.id) {
+
+	<!-- Якщо це ресторан, показуємо нашу нову картку -->
+	@if ($any(item).type === 'restaurants' || $any(item).type === 'Rest') {
+	<restaurant-view
+		[restaurant]="{
+                    id: item.id,
+                    title: item.title || $any(item).label || 'Невідомий заклад',
+                    description: $any(item).description || 'Детальний опис закладу.',
+                    imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+                    rating: $any(item).rating || 4.8,
+                    address: $any(item).address || 'Адреса не вказана',
+                    workingHours: $any(item).workingHours || '10:00 - 22:00'
+                }"
+	></restaurant-view>
+	}
+
+	<!-- Якщо це рецепт (або тип не вказано), показуємо твою оригінальну верстку -->
+	@else {
 	<div
 		class="relative flex w-full flex-col overflow-hidden rounded-[var(--radius-btn)] bg-black shadow-md"
 		style="height: 70vh; min-height: 450px"
 	>
 		<img
-			[src]="recipe.image"
-			[alt]="recipe.title"
+			[src]="item.image"
+			[alt]="item.title"
 			class="absolute inset-0 h-full w-full object-cover opacity-85"
 		/>
 
@@ -17,13 +36,13 @@
 		<div class="absolute bottom-0 left-0 right-16 flex flex-col gap-3 p-4">
 			<!-- Заголовок-посилання на повну сторінку -->
 			<a
-				[routerLink]="['/recipe', recipe.id]"
+				[routerLink]="['/recipe', item.id]"
 				class="group block cursor-pointer outline-none"
 			>
 				<h2
 					class="text-xl font-bold leading-tight text-white line-clamp-2 transition-colors group-hover:text-gray-300"
 				>
-					{{ recipe.title }}
+					{{ item.title }}
 				</h2>
 				<span
 					class="mt-1 inline-flex items-center text-xs text-white/70 hover:text-white"
@@ -39,7 +58,7 @@
 			<!-- Автор та підписка -->
 			<div class="flex items-center gap-2">
 				<a
-					[routerLink]="['/author', recipe.author]"
+					[routerLink]="['/author', item.author]"
 					class="flex items-center gap-2 outline-none"
 				>
 					<div
@@ -52,7 +71,7 @@
 					</div>
 					<span
 						class="text-sm font-medium text-white/90 hover:underline"
-						>{{ recipe.author }}</span
+						>{{ item.author }}</span
 					>
 				</a>
 
@@ -76,7 +95,7 @@
 				>
 					<material-icon icon="favorite"></material-icon>
 				</div>
-				<span class="text-xs font-semibold">{{ recipe.likes }}</span>
+				<span class="text-xs font-semibold">{{ item.likes }}</span>
 			</button>
 
 			<button
@@ -88,7 +107,7 @@
 				>
 					<material-icon icon="chat_bubble"></material-icon>
 				</div>
-				<span class="text-xs font-semibold">{{ recipe.comments }}</span>
+				<span class="text-xs font-semibold">{{ item.comments }}</span>
 			</button>
 
 			<button
@@ -103,5 +122,5 @@
 			</button>
 		</div>
 	</div>
-	}
+	} }
 </div>

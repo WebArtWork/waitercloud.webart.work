@@ -1,10 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-
+import { RecipeShortComponent } from 'src/app/components/recipe/recipe-short/recipe-short.component';
+import { RestaurantShortComponent } from 'src/app/components/restaurant/restaurant-short/restaurant-short.component';
 @Component({
 	selector: 'page-workspace',
 	templateUrl: './workspace.component.html',
-	imports: [MaterialComponent],
+	imports: [
+		MaterialComponent,
+		RecipeShortComponent,
+		RestaurantShortComponent,
+	],
 })
 export class WorkspaceComponent {
 	// Активна вкладка для перемикання розділів воркспейсу

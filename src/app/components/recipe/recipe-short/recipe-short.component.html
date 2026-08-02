@@ -1,1 +1,14 @@
-<!-- Intentionally empty. -->
+<div class="recipe-short" (click)="onCardClick()" tabindex="0">
+	<img
+		class="recipe-short__image"
+		[src]="recipe().imageUrl"
+		[alt]="recipe().title"
+	/>
+	<div class="recipe-short__content">
+		<h3 class="recipe-short__title">{{ recipe().title }}</h3>
+		<p class="recipe-short__author">Від: {{ recipe().author }}</p>
+		@if (recipe().status) {
+		<span class="recipe-short__status">{{ recipe().status }}</span>
+		}
+	</div>
+</div>

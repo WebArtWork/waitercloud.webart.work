@@ -1,1 +1,66 @@
-<!-- Intentionally empty. -->
+<article class="recipe-view">
+	<img
+		class="recipe-view__image"
+		[src]="recipe().imageUrl"
+		[alt]="recipe().title"
+	/>
+	<div class="recipe-view__overlay"></div>
+
+	<div class="recipe-view__info">
+		<a
+			[routerLink]="['/entity', recipe().id]"
+			class="recipe-view__title-link group"
+		>
+			<h2 class="recipe-view__title">{{ recipe().title }}</h2>
+			<span class="recipe-view__more">
+				Детальніше
+				<material-icon
+					icon="chevron_right"
+					class="text-[1rem]"
+				></material-icon>
+			</span>
+		</a>
+
+		<div class="recipe-view__author-row">
+			<a
+				[routerLink]="['/author', recipe().author]"
+				class="recipe-view__author-link"
+			>
+				<div class="recipe-view__avatar">
+					<material-icon
+						icon="person"
+						class="text-xs text-white"
+					></material-icon>
+				</div>
+				<span class="recipe-view__author-name"
+					>{{ recipe().author }}</span
+				>
+			</a>
+			<button type="button" class="recipe-view__follow-btn">
+				Follow
+			</button>
+		</div>
+	</div>
+
+	<div class="recipe-view__actions">
+		<button type="button" class="recipe-view__action-btn group">
+			<div class="recipe-view__action-icon">
+				<material-icon icon="favorite"></material-icon>
+			</div>
+			<span class="recipe-view__action-count">{{ recipe().likes }}</span>
+		</button>
+		<button type="button" class="recipe-view__action-btn group">
+			<div class="recipe-view__action-icon">
+				<material-icon icon="chat_bubble"></material-icon>
+			</div>
+			<span class="recipe-view__action-count"
+				>{{ recipe().comments }}</span
+			>
+		</button>
+		<button type="button" class="recipe-view__action-btn group">
+			<div class="recipe-view__action-icon">
+				<material-icon icon="share"></material-icon>
+			</div>
+		</button>
+	</div>
+</article>

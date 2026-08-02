@@ -75,26 +75,25 @@
 				></material-icon>
 				Власні та приватні рецепти
 			</h3>
-			<div class="flex flex-col gap-2">
+			<div
+				class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2"
+			>
 				@for (recipe of ownedRecipes(); track recipe.id) {
-				<div
-					class="flex items-center justify-between p-3 rounded bg-[var(--c-bg-primary)] border border-[var(--c-border)]"
-				>
-					<span
-						class="text-xs font-semibold text-[var(--c-text-primary)]"
-						>{{ recipe.title }}</span
-					>
-					<span
-						class="text-[0.65rem] px-2 py-0.5 rounded bg-[var(--c-bg-tertiary)] text-[var(--c-text-muted)] border border-[var(--c-border)]"
-						>{{ recipe.status }}</span
-					>
-				</div>
+				<recipe-short
+					[recipe]="{
+                            id: recipe.id,
+                            title: recipe.title,
+                            author: 'Ви',
+                            imageUrl: $any(recipe).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+                            status: recipe.status
+                        }"
+				></recipe-short>
 				}
 			</div>
 		</div>
 
 		<!-- Поділені з користувачем та улюблені -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 			<div
 				class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
 			>
@@ -103,16 +102,18 @@
 				>
 					Спільні рецепти
 				</h4>
-				@for (recipe of sharedRecipes(); track recipe.id) {
-				<div
-					class="p-2.5 rounded bg-[var(--c-bg-primary)] border border-[var(--c-border)] text-xs text-[var(--c-text-primary)]"
-				>
-					{{ recipe.title }} <br />
-					<span class="text-[0.7rem] text-[var(--c-text-muted)]"
-						>Від: {{ recipe.sharedBy }}</span
-					>
+				<div class="flex flex-col gap-3 mt-2">
+					@for (recipe of sharedRecipes(); track recipe.id) {
+					<recipe-short
+						[recipe]="{
+                                id: recipe.id,
+                                title: recipe.title,
+                                author: $any(recipe).sharedBy || 'Спільний доступ',
+                                imageUrl: $any(recipe).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
+                            }"
+					></recipe-short>
+					}
 				</div>
-				}
 			</div>
 
 			<div
@@ -123,13 +124,31 @@
 				>
 					Улюблені сутності
 				</h4>
-				@for (fav of favoriteEntities(); track fav.id) {
-				<div
-					class="p-2.5 rounded bg-[var(--c-bg-primary)] border border-[var(--c-border)] text-xs text-[var(--c-text-primary)]"
-				>
-					{{ fav.title }}
+				<div class="flex flex-col gap-3 mt-2">
+					@for (fav of favoriteEntities(); track fav.id) {
+					<!-- Перевірка типу для універсального виведення улюблених -->
+					@if ($any(fav).type === 'restaurant' || $any(fav).type ===
+					'restaurants' || $any(fav).type === 'Rest') {
+					<restaurant-short
+						[restaurant]="{
+                                    id: fav.id,
+                                    title: fav.title,
+                                    description: $any(fav).description || 'Збережений заклад',
+                                    imageUrl: $any(fav).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+                                    rating: $any(fav).rating || 4.5
+                                }"
+					></restaurant-short>
+					} @else {
+					<recipe-short
+						[recipe]="{
+                                    id: fav.id,
+                                    title: fav.title,
+                                    author: $any(fav).author || 'Автор невідомий',
+                                    imageUrl: $any(fav).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
+                                }"
+					></recipe-short>
+					} }
 				</div>
-				}
 			</div>
 		</div>
 	</div>
@@ -143,19 +162,19 @@
 			<material-icon icon="restaurant" class="text-base"></material-icon>
 			Заклади під вашим керуванням
 		</h3>
-		@for (place of managedRestaurants(); track place.id) {
-		<div
-			class="flex items-center justify-between p-3 rounded bg-[var(--c-bg-primary)] border border-[var(--c-border)]"
-		>
-			<span class="text-xs font-semibold text-[var(--c-text-primary)]"
-				>{{ place.name }}</span
-			>
-			<span
-				class="text-[0.65rem] px-2 py-0.5 rounded bg-[var(--c-bg-tertiary)] text-[var(--c-text-muted)]"
-				>{{ place.role }}</span
-			>
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
+			@for (place of managedRestaurants(); track place.id) {
+			<restaurant-short
+				[restaurant]="{
+                        id: place.id,
+                        title: place.name || $any(place).title,
+                        description: 'Роль: ' + ($any(place).role || 'Власник'),
+                        imageUrl: $any(place).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+                        rating: $any(place).rating || 5.0
+                    }"
+			></restaurant-short>
+			}
 		</div>
-		}
 	</div>
 	} @if (activeTab() === 'jobs') {
 	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-
+import { RecipeFormComponent } from 'src/app/components/recipe/recipe-form/recipe-form.component';
+import { RestaurantFormComponent } from 'src/app/components/restaurant/restaurant-form/restaurant-form.component';
 @Component({
 	selector: 'page-editor',
 	templateUrl: './editor.component.html',
-	imports: [MaterialComponent],
+	imports: [MaterialComponent, RecipeFormComponent, RestaurantFormComponent],
 })
 export class EditorComponent {
 	// Доступні типи форм згідно з ТЗ
