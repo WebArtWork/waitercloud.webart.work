@@ -1,1 +1,184 @@
-<section></section>
+<div class="flex flex-col gap-6 pb-10">
+	<!-- Обкладинка -->
+	<div
+		class="relative h-64 w-full overflow-hidden rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)]"
+	>
+		<img
+			[src]="entity().image"
+			[alt]="entity().title"
+			class="h-full w-full object-cover"
+		/>
+
+		<!-- Статус (Зліва) -->
+		<div class="absolute left-3 top-3">
+			<span
+				class="flex items-center justify-center rounded bg-black/70 px-2 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm"
+			>
+				{{ entity().status }}
+			</span>
+		</div>
+
+		<!-- Видимість (Справа) -->
+		<div class="absolute right-3 top-3">
+			<span
+				class="flex items-center gap-1 rounded bg-black/70 px-2 py-1 text-xs font-bold tracking-wider text-white backdrop-blur-sm"
+			>
+				<material-icon
+					icon="public"
+					class="text-[1rem] normal-case"
+				></material-icon>
+				<span class="uppercase">{{ entity().visibility }}</span>
+			</span>
+		</div>
+	</div>
+
+	<!-- Основна інформація -->
+	<div class="flex flex-col gap-3 px-1">
+		<h1
+			class="text-2xl font-bold leading-tight text-[var(--c-text-primary)]"
+		>
+			{{ entity().title }}
+		</h1>
+
+		<!-- Ratings, reviews & fork info -->
+		<div
+			class="flex flex-wrap items-center gap-4 text-sm text-[var(--c-text-muted)]"
+		>
+			<div class="flex items-center gap-1">
+				<material-icon
+					icon="star"
+					class="text-yellow-500 text-sm"
+				></material-icon>
+				<span class="font-bold text-[var(--c-text-primary)]"
+					>{{ entity().rating }}</span
+				>
+				<span>({{ entity().reviewsCount }} відгуків)</span>
+			</div>
+
+			<div class="flex items-center gap-1 text-xs">
+				<material-icon
+					icon="call_split"
+					class="text-xs"
+				></material-icon>
+				{{ entity().forkInfo }}
+			</div>
+		</div>
+
+		<!-- Author and ownership info -->
+		<div
+			class="my-3 flex items-center justify-between rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-3"
+		>
+			<div class="flex items-center gap-3">
+				<img
+					[src]="entity().author.avatar"
+					alt="Author"
+					class="h-10 w-10 rounded-full object-cover"
+				/>
+				<div class="flex flex-col">
+					<span class="text-sm font-bold text-[var(--c-text-primary)]"
+						>{{ entity().author.name }}</span
+					>
+					<span class="text-xs text-[var(--c-text-muted)]"
+						>Власник: {{ entity().ownership }}</span
+					>
+				</div>
+			</div>
+			<button
+				type="button"
+				class="rounded-full border border-[var(--c-border)] px-4 py-1.5 text-xs font-bold text-[var(--c-text-primary)] transition-colors hover:bg-[var(--c-text-primary)] hover:text-[var(--c-bg-primary)]"
+			>
+				Follow
+			</button>
+		</div>
+
+		<!-- Детальний опис сутності -->
+		<div class="text-sm leading-relaxed text-[var(--c-text-primary)]/90">
+			{{ entity().description }}
+		</div>
+	</div>
+
+	<hr class="border-[var(--c-border)]" />
+
+	<!-- Related entities -->
+	<div class="flex flex-col gap-3">
+		<h3 class="px-1 text-lg font-bold text-[var(--c-text-primary)]">
+			Схожі {{ entity().type | lowercase }}
+		</h3>
+		<div
+			class="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden"
+		>
+			@for (item of related(); track item.id) {
+			<div
+				class="flex w-32 flex-shrink-0 cursor-pointer flex-col gap-2 rounded-[var(--radius-btn)] group"
+			>
+				<div
+					class="h-24 w-full overflow-hidden rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)]"
+				>
+					<img
+						[src]="item.image"
+						[alt]="item.title"
+						class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+					/>
+				</div>
+				<span
+					class="truncate px-1 text-xs font-semibold text-[var(--c-text-primary)]"
+					>{{ item.title }}</span
+				>
+			</div>
+			}
+		</div>
+	</div>
+
+	<hr class="border-[var(--c-border)]" />
+
+	<!-- Comments & Reviews -->
+	<div class="flex flex-col gap-5 px-1">
+		<h3 class="text-lg font-bold text-[var(--c-text-primary)]">
+			Коментарі
+		</h3>
+
+		<!-- Поле для нового коментаря -->
+		<div class="flex gap-3 items-center">
+			<div
+				class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[var(--c-bg-tertiary)]"
+			>
+				<material-icon
+					icon="person"
+					class="text-[var(--c-text-muted)]"
+				></material-icon>
+			</div>
+			<input
+				type="text"
+				placeholder="Додати коментар..."
+				class="w-full rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-tertiary)] px-4 py-2 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)]"
+			/>
+		</div>
+
+		<!-- Список коментарів -->
+		<div class="flex flex-col gap-4 mt-2">
+			@for (comment of comments(); track comment.id) {
+			<div class="flex gap-3">
+				<div
+					class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[var(--c-bg-tertiary)] text-[var(--c-text-primary)] font-bold text-sm"
+				>
+					{{ comment.user.charAt(0) }}
+				</div>
+				<div class="flex flex-col w-full">
+					<div class="flex items-baseline justify-between mb-1">
+						<span
+							class="text-sm font-bold text-[var(--c-text-primary)]"
+							>{{ comment.user }}</span
+						>
+						<span class="text-xs text-[var(--c-text-muted)]"
+							>{{ comment.time }}</span
+						>
+					</div>
+					<p class="text-sm text-[var(--c-text-primary)]/80">
+						{{ comment.text }}
+					</p>
+				</div>
+			</div>
+			}
+		</div>
+	</div>
+</div>

@@ -1,1 +1,101 @@
-<section></section>
+<div class="flex flex-col gap-6 pb-10">
+	<!-- Заголовок -->
+	<div class="flex items-center justify-between">
+		<h1 class="text-xl font-bold text-[var(--c-text-primary)]">
+			Редактор сутностей
+		</h1>
+		<span
+			class="rounded bg-[var(--c-bg-tertiary)] px-3 py-1 text-xs font-semibold text-[var(--c-text-muted)]"
+		>
+			Потрібна автентифікація
+		</span>
+	</div>
+
+	<!-- Вибір типу форми (Supported forms) -->
+	<div class="flex flex-col gap-2">
+		<label
+			class="text-xs font-bold uppercase tracking-wider text-[var(--c-text-muted)]"
+			>Оберіть тип форми</label
+		>
+		<div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+			@for (form of formTypes(); track form.id) {
+			<button
+				type="button"
+				(click)="selectForm(form.id)"
+				class="flex items-center gap-2 rounded-[var(--radius-btn)] p-3 text-sm font-semibold transition-colors"
+				[class]="activeForm() === form.id
+						? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] shadow-md'
+						: 'bg-[var(--c-bg-tertiary)] text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
+			>
+				<material-icon
+					[icon]="form.icon"
+					class="text-base"
+				></material-icon>
+				<span class="truncate">{{ form.label }}</span>
+			</button>
+			}
+		</div>
+	</div>
+
+	<hr class="border-[var(--c-border)]" />
+
+	<!-- Динамічна форма створення / оновлення -->
+	<div
+		class="flex flex-col gap-4 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
+	>
+		<h3 class="text-base font-bold text-[var(--c-text-primary)]">
+			Параметри сутності:
+			<span class="capitalize">{{ activeForm() }}</span>
+		</h3>
+
+		<!-- Поле: Назва -->
+		<div class="flex flex-col gap-1.5">
+			<label class="text-xs font-semibold text-[var(--c-text-muted)]"
+				>Назва</label
+			>
+			<input
+				type="text"
+				placeholder="Введіть назву..."
+				class="rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-primary)] px-4 py-2.5 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)]"
+			/>
+		</div>
+
+		<!-- Поле: Опис -->
+		<div class="flex flex-col gap-1.5">
+			<label class="text-xs font-semibold text-[var(--c-text-muted)]"
+				>Опис</label
+			>
+			<textarea
+				rows="4"
+				placeholder="Детальний опис..."
+				class="rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-primary)] px-4 py-2.5 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)] resize-none"
+			></textarea>
+		</div>
+
+		<!-- Поле: Видимість (як обговорювали раніше) -->
+		<div class="flex flex-col gap-1.5">
+			<label class="text-xs font-semibold text-[var(--c-text-muted)]"
+				>Видимість</label
+			>
+			<select
+				class="rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-primary)] px-4 py-2.5 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)]"
+			>
+				<option value="public">Публічний</option>
+				<option value="internal">Внутрішній</option>
+				<option value="private">
+					Приватний (потребує авторизації)
+				</option>
+			</select>
+		</div>
+
+		<!-- Кнопка збереження -->
+		<div class="flex justify-end mt-2">
+			<button
+				type="button"
+				class="rounded-[var(--radius-btn)] bg-[var(--c-text-primary)] px-6 py-2.5 text-sm font-bold text-[var(--c-bg-primary)] transition-opacity hover:opacity-90"
+			>
+				Зберегти сутність
+			</button>
+		</div>
+	</div>
+</div>
