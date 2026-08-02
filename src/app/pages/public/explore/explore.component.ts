@@ -1,11 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-
+import { RecipeShortComponent } from 'src/app/components/recipe/recipe-short/recipe-short.component';
+import { RestaurantShortComponent } from 'src/app/components/restaurant/restaurant-short/restaurant-short.component';
 @Component({
 	selector: 'page-explore',
 	templateUrl: './explore.component.html',
-	imports: [MaterialComponent, RouterLink],
+	imports: [
+		MaterialComponent,
+		RouterLink,
+		RecipeShortComponent,
+		RestaurantShortComponent,
+	],
 })
 export class ExploreComponent {
 	// Категорії для фільтрації (статика)

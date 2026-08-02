@@ -1,1 +1,52 @@
-<!-- Intentionally empty. -->
+<div
+	class="flex flex-col w-full bg-[var(--c-bg-primary)] rounded-[var(--radius-btn)] overflow-hidden border border-[var(--c-border)]"
+>
+	<div class="w-full h-64 md:h-80 relative">
+		<img
+			[src]="restaurant().imageUrl"
+			[alt]="restaurant().title"
+			class="w-full h-full object-cover"
+		/>
+	</div>
+	<div class="p-6 flex flex-col gap-4">
+		<div class="flex justify-between items-start">
+			<h1 class="text-3xl font-bold text-[var(--c-text-primary)]">
+				{{ restaurant().title }}
+			</h1>
+			<div
+				class="flex items-center gap-1 bg-yellow-400/20 text-yellow-600 px-3 py-1 rounded-full font-bold"
+			>
+				<material-icon icon="star" class="text-[18px]"></material-icon>
+				{{ restaurant().rating }}
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-2 text-sm text-[var(--c-text-secondary)]">
+			<div class="flex items-center gap-2">
+				<material-icon
+					icon="location_on"
+					class="text-[18px]"
+				></material-icon>
+				<span>{{ restaurant().address }}</span>
+			</div>
+			<div class="flex items-center gap-2">
+				<material-icon
+					icon="schedule"
+					class="text-[18px]"
+				></material-icon>
+				<span>{{ restaurant().workingHours }}</span>
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<h2 class="text-xl font-semibold mb-2 text-[var(--c-text-primary)]">
+				Про заклад
+			</h2>
+			<p
+				class="text-[var(--c-text-secondary)] leading-relaxed whitespace-pre-wrap"
+			>
+				{{ restaurant().description }}
+			</p>
+		</div>
+	</div>
+</div>

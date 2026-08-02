@@ -1,15 +1,22 @@
 import { Component, signal } from '@angular/core';
 import { LowerCasePipe } from '@angular/common';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-
+import { RecipeViewComponent } from 'src/app/components/recipe/recipe-view/recipe-view.component';
+import { RestaurantViewComponent } from 'src/app/components/restaurant/restaurant-view/restaurant-view.component';
 @Component({
 	selector: 'page-entity',
 	templateUrl: './entity.component.html',
-	imports: [MaterialComponent, LowerCasePipe],
+	imports: [
+		MaterialComponent,
+		LowerCasePipe,
+		RecipeViewComponent,
+		RestaurantViewComponent,
+	],
 })
 export class EntityComponent {
 	// Статичні дані для демонстрації всіх вимог ТЗ
 	readonly entity = signal({
+		id: 1,
 		type: 'Рецепт',
 		title: 'Справжня італійська паста Карбонара',
 		image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=1000&auto=format&fit=crop',

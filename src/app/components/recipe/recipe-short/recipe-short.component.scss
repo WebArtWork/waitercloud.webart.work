@@ -1,0 +1,30 @@
+@reference "tailwindcss";
+
+.recipe-short {
+	@apply flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-3 border border-[var(--c-border)] cursor-pointer transition-shadow duration-300;
+
+	&:hover,
+	&:focus-visible {
+		@apply shadow-md outline-none;
+	}
+
+	&__image {
+		@apply w-full h-32 object-cover rounded-[var(--radius-btn)] border border-[var(--c-border)];
+	}
+
+	&__content {
+		@apply flex flex-col gap-1;
+	}
+
+	&__title {
+		@apply text-sm font-bold text-[var(--c-text-primary)] truncate;
+	}
+
+	&__author {
+		@apply text-xs text-[var(--c-text-muted)] truncate;
+	}
+
+	&__status {
+		@apply mt-1 self-start rounded bg-[var(--c-bg-primary)] px-2 py-0.5 text-[0.65rem] font-semibold text-[var(--c-text-muted)] border border-[var(--c-border)];
+	}
+}

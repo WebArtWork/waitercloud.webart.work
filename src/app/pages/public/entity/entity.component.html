@@ -1,4 +1,33 @@
 <div class="flex flex-col gap-6 pb-10">
+	<!-- === ОСНОВНИЙ БЛОК СУТНОСТІ (ДИНАМІЧНИЙ) === -->
+	@switch (entity().type) { @case ('Рецепт') {
+	<!-- Викликаємо наш новий компонент для Рецептів -->
+	<recipe-view
+		[recipe]="{
+        id: entity().id,
+        title: entity().title,
+        description: entity().description,
+        author: entity().author.name,
+        imageUrl: entity().image,
+        likes: entity().reviewsCount,
+        comments: comments().length
+    }"
+	></recipe-view>
+	} @case ('restaurant') {
+	<!-- Викликаємо наш новий компонент для Ресторанів -->
+	<restaurant-view
+		[restaurant]="{
+            id: entity().id,
+            title: entity().title || $any(entity()).label || 'Невідомий заклад',
+            description: entity().description || 'Детальний опис закладу.',
+            imageUrl: entity().image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+            rating: $any(entity()).rating || 4.8,
+            address: $any(entity()).address || 'Адреса не вказана',
+            workingHours: $any(entity()).workingHours || '10:00 - 22:00'
+        }"
+	></restaurant-view>
+	} @default {
+	<!-- Старий монолітний код для інших типів (Школи тощо) -->
 	<!-- Обкладинка -->
 	<div
 		class="relative h-64 w-full overflow-hidden rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)]"
@@ -8,8 +37,6 @@
 			[alt]="entity().title"
 			class="h-full w-full object-cover"
 		/>
-
-		<!-- Статус (Зліва) -->
 		<div class="absolute left-3 top-3">
 			<span
 				class="flex items-center justify-center rounded bg-black/70 px-2 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm"
@@ -17,8 +44,6 @@
 				{{ entity().status }}
 			</span>
 		</div>
-
-		<!-- Видимість (Справа) -->
 		<div class="absolute right-3 top-3">
 			<span
 				class="flex items-center gap-1 rounded bg-black/70 px-2 py-1 text-xs font-bold tracking-wider text-white backdrop-blur-sm"
@@ -39,8 +64,6 @@
 		>
 			{{ entity().title }}
 		</h1>
-
-		<!-- Ratings, reviews & fork info -->
 		<div
 			class="flex flex-wrap items-center gap-4 text-sm text-[var(--c-text-muted)]"
 		>
@@ -54,7 +77,6 @@
 				>
 				<span>({{ entity().reviewsCount }} відгуків)</span>
 			</div>
-
 			<div class="flex items-center gap-1 text-xs">
 				<material-icon
 					icon="call_split"
@@ -63,8 +85,6 @@
 				{{ entity().forkInfo }}
 			</div>
 		</div>
-
-		<!-- Author and ownership info -->
 		<div
 			class="my-3 flex items-center justify-between rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-3"
 		>
@@ -90,16 +110,15 @@
 				Follow
 			</button>
 		</div>
-
-		<!-- Детальний опис сутності -->
 		<div class="text-sm leading-relaxed text-[var(--c-text-primary)]/90">
 			{{ entity().description }}
 		</div>
 	</div>
+	} }
 
 	<hr class="border-[var(--c-border)]" />
 
-	<!-- Related entities -->
+	<!-- === СХОЖІ СУТНОСТІ === -->
 	<div class="flex flex-col gap-3">
 		<h3 class="px-1 text-lg font-bold text-[var(--c-text-primary)]">
 			Схожі {{ entity().type | lowercase }}
@@ -131,13 +150,11 @@
 
 	<hr class="border-[var(--c-border)]" />
 
-	<!-- Comments & Reviews -->
+	<!-- === КОМЕНТАРІ === -->
 	<div class="flex flex-col gap-5 px-1">
 		<h3 class="text-lg font-bold text-[var(--c-text-primary)]">
 			Коментарі
 		</h3>
-
-		<!-- Поле для нового коментаря -->
 		<div class="flex gap-3 items-center">
 			<div
 				class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[var(--c-bg-tertiary)]"
@@ -153,8 +170,6 @@
 				class="w-full rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-tertiary)] px-4 py-2 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)]"
 			/>
 		</div>
-
-		<!-- Список коментарів -->
 		<div class="flex flex-col gap-4 mt-2">
 			@for (comment of comments(); track comment.id) {
 			<div class="flex gap-3">

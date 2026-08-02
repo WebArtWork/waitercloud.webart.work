@@ -1,19 +1,19 @@
-import {
-	Component,
-	computed,
-	inject,
-	signal,
-} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { form, submit } from '@angular/forms/signals';
-import { ButtonComponent, InputComponent, MaterialComponent } from '@wawjs/ngx-ui';
+import {
+	ButtonComponent,
+	InputComponent,
+	MaterialComponent,
+} from '@wawjs/ngx-ui';
 import { FileComponent } from '@wawjs/ngx-bos';
 import { UserService } from '@wawjs/ngx-bos';
 import { EmitterService } from '@wawjs/ngx-core';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
 import { ProfileModel } from './profile.interface';
 import { profileSchema } from './profile.schema';
-
+import { RecipeShortComponent } from 'src/app/components/recipe/recipe-short/recipe-short.component';
+import { RestaurantShortComponent } from 'src/app/components/restaurant/restaurant-short/restaurant-short.component';
 @Component({
 	imports: [
 		InputComponent,
@@ -21,6 +21,8 @@ import { profileSchema } from './profile.schema';
 		FileComponent,
 		MaterialComponent,
 		TranslateDirective,
+		RecipeShortComponent,
+		RestaurantShortComponent,
 	],
 	templateUrl: './profile.component.html',
 	styleUrl: './profile.component.scss',

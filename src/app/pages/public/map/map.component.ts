@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-
+import { RecipeIconComponent } from 'src/app/components/recipe/recipe-icon/recipe-icon.component';
+import { RestaurantIconComponent } from 'src/app/components/restaurant/restaurant-icon/restaurant-icon.component';
 @Component({
 	selector: 'page-map',
 	templateUrl: './map.component.html',
-	imports: [MaterialComponent],
+	imports: [MaterialComponent, RecipeIconComponent, RestaurantIconComponent],
 })
 export class MapComponent {
 	// Фільтри для керування відображенням (згідно ТЗ)
