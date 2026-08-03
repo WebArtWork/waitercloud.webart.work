@@ -1,10 +1,5 @@
 import { Component, signal, output } from '@angular/core';
 import { form, schema, required, submit } from '@angular/forms/signals';
-import {
-	ButtonComponent,
-	InputComponent,
-	MaterialComponent,
-} from '@wawjs/ngx-ui';
 
 export interface RecipeModel {
 	title: string;
@@ -20,7 +15,6 @@ const recipeSchema = schema<RecipeModel>((path) => {
 	selector: 'recipe-form',
 	templateUrl: './recipe-form.component.html',
 	styleUrl: './recipe-form.component.scss',
-	imports: [MaterialComponent, ButtonComponent, InputComponent],
 })
 export class RecipeFormComponent {
 	/** Подія успішного збереження форми */

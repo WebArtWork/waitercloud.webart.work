@@ -1,11 +1,9 @@
 import { Component, input, output } from '@angular/core';
-import { MaterialComponent } from '@wawjs/ngx-ui';
 
 @Component({
 	selector: 'recipe-short',
 	templateUrl: './recipe-short.component.html',
 	styleUrl: './recipe-short.component.scss',
-	imports: [MaterialComponent],
 })
 export class RecipeShortComponent {
 	/** Дані рецепта для відображення */

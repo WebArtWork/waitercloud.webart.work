@@ -1,5 +1,4 @@
 import { Component, input } from '@angular/core';
-import { MaterialComponent } from '@wawjs/ngx-ui';
 
 export interface RestaurantMarkerModel {
 	id: number | string;
@@ -10,7 +9,6 @@ export interface RestaurantMarkerModel {
 @Component({
 	selector: 'restaurant-icon',
 	standalone: true,
-	imports: [MaterialComponent],
 	templateUrl: './restaurant-icon.component.html',
 	styleUrl: './restaurant-icon.component.scss',
 })
