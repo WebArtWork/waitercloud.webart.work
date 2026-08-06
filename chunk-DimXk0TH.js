@@ -1,0 +1,1 @@
+import {E as Ed,O as Of,b as Aa}from'./main-AQOVIPS2.js';var c=(()=>{class e{static{this.\u0275fac=function(t){return new(t||e)};}static{this.\u0275cmp=Ed({type:e,selectors:[["ng-component"]],decls:1,vars:0,template:function(t,p){t&1&&Aa(0,"router-outlet");},dependencies:[Of],encapsulation:2});}}return e})();export{c as GuestComponent};
