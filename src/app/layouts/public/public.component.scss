@@ -18,9 +18,9 @@
 }
 
 .public-layout__topbar {
+	position: relative; /* Додано для відцентрування заголовка */
 	flex: 0 0 var(--topbar-h);
-	justify-content: space-between;
-	padding: 0 .75rem;
+	padding: 0 0.75rem;
 	box-shadow: var(--shadow-sm);
 }
 
@@ -31,9 +31,21 @@
 }
 
 .public-layout__title {
+	position: absolute; /* Відцентровуємо абсолютно відносно topbar */
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 	font-weight: 600;
+	white-space: nowrap; /* Забороняємо тексту переноситись на новий рядок */
+	pointer-events: none; /* Щоб кліки проходили крізь заголовок, якщо він широкий */
 }
 
+/* Новий клас для іконки профілю */
+.public-layout__profile {
+	margin-left: auto; /* Притискає елемент максимально вправо */
+	display: flex;
+	align-items: center;
+}
 
 .public-layout__main {
 	min-height: 0;
@@ -52,10 +64,10 @@
 .public-layout__navigation a {
 	display: grid;
 	justify-items: center;
-	gap: .125rem;
+	gap: 0.125rem;
 	min-width: 3.75rem;
-	padding: .5rem;
-	font-size: .6875rem;
+	padding: 0.5rem;
+	font-size: 0.6875rem;
 	color: var(--c-text-muted);
 }
 
