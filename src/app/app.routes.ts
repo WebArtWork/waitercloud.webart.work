@@ -47,12 +47,12 @@ export const routes: Routes = [
 					),
 			},
 			{
-				path: 'investment',
+				path: 'home',
 				canActivate: [MetaGuard],
-				data: { meta: { title: 'For investors' } },
+				data: { meta: { title: 'Home' } },
 				loadComponent: () =>
-					import('./pages/public/investment/investment.component').then(
-						(m) => m.InvestmentComponent,
+					import('./pages/public/home/home.component').then(
+						(m) => m.HomeComponent,
 					),
 			},
 			{

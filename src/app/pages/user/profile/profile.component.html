@@ -1,6 +1,13 @@
 <section class="profile">
 	<!-- Блок редагування профілю (стилізується через твій SCSS) -->
 	<div class="profile__card">
+		<a
+			routerLink="/settings"
+			class="profile__settings"
+			aria-label="Settings"
+		>
+			<material-icon icon="settings"></material-icon>
+		</a>
 		<ngx-file
 			mode="single-image"
 			view="thumb-only"

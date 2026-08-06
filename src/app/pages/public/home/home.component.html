@@ -1,0 +1,54 @@
+<div class="home-page">
+	<!-- Вітальний блок (Home) -->
+	<section class="home-page__hero">
+		<h1 class="home-page__hero-title">
+			Everything for food.
+			<span class="home-page__span">One platform.</span>
+		</h1>
+		<p class="home-page__hero-subtitle">
+			Discover recipes, restaurants, cooking schools, jobs, and talented
+			people — all in one place. Whether you're looking for inspiration,
+			your next opportunity, or a place to eat, Waiter Cloud connects
+			every part of the food industry in a single, easy-to-use platform.
+		</p>
+	</section>
+
+	<!-- Блок Інвестицій -->
+	<section class="home-page__investment">
+		<!-- Шапка сторінки -->
+		<div class="home-page__header">
+			<h2 class="home-page__title">Інвестиції та Партнерство</h2>
+			<p class="home-page__subtitle">
+				Waiter Cloud відкрита до нових бізнес-можливостей, стратегічного
+				партнерства та інвестиційних пропозицій для подальшого розвитку
+				платформи на ринку.
+			</p>
+		</div>
+
+		<!-- Сітка можливостей -->
+		<div class="home-page__grid">
+			@for (item of opportunities(); track item.title) {
+			<div class="opportunity-card">
+				<div class="opportunity-card__icon">
+					<material-icon [icon]="item.icon"></material-icon>
+				</div>
+				<h3 class="opportunity-card__title">{{ item.title }}</h3>
+				<p class="opportunity-card__desc">{{ item.description }}</p>
+			</div>
+			}
+		</div>
+
+		<!-- Заклик до дії (Call to Action) -->
+		<div class="home-page__cta">
+			<div class="home-page__cta-content">
+				<h4 class="home-page__cta-title">
+					Маєте пропозицію для співпраці?
+				</h4>
+				<p class="home-page__cta-desc">
+					Зв'яжіться з нашою командою для обговорення деталей.
+				</p>
+			</div>
+			<button type="button" class="home-page__cta-btn">Зв'язатися</button>
+		</div>
+	</section>
+</div>

@@ -12,6 +12,7 @@ import { EmitterService } from '@wawjs/ngx-core';
 import { TranslateDirective, TranslateService } from '@wawjs/ngx-translate';
 import { ProfileModel } from './profile.interface';
 import { profileSchema } from './profile.schema';
+import { RouterLink } from '@angular/router';
 import { RecipeShortComponent } from 'src/app/components/recipe/recipe-short/recipe-short.component';
 import { RestaurantShortComponent } from 'src/app/components/restaurant/restaurant-short/restaurant-short.component';
 @Component({
@@ -21,6 +22,7 @@ import { RestaurantShortComponent } from 'src/app/components/restaurant/restaura
 		FileComponent,
 		MaterialComponent,
 		TranslateDirective,
+		RouterLink,
 		RecipeShortComponent,
 		RestaurantShortComponent,
 	],
