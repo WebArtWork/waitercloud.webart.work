@@ -1,21 +1,4 @@
-<div class="flex flex-col gap-5 pb-6">
-	<div class="flex items-center justify-between">
-		<h1 class="text-xl font-bold text-[var(--c-text-primary)]">Огляд</h1>
-		<button
-			class="flex items-center gap-1 rounded-full bg-[var(--c-bg-tertiary)] px-3 py-1.5 text-[var(--c-text-muted)] transition-colors hover:text-[var(--c-text-primary)]"
-		>
-			<material-icon
-				icon="location_on"
-				class="text-[1.1rem]"
-			></material-icon>
-			<span class="text-xs font-semibold">Україна</span>
-			<material-icon
-				icon="expand_more"
-				class="text-[1.1rem]"
-			></material-icon>
-		</button>
-	</div>
-
+<!-- <div class="flex flex-col gap-5 pb-6">
 	<div class="relative w-full">
 		<material-icon
 			icon="search"
@@ -46,7 +29,7 @@
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
 		@for (item of exploreItems(); track item.id) {
 
-		<!-- Якщо це Рецепт -->
+
 		@if ($any(item).type === 'recipe' || $any(item).type === 'recipes') {
 		<recipe-short
 			[routerLink]="['/recipe', item.id]"
@@ -61,7 +44,7 @@
 		></recipe-short>
 		}
 
-		<!-- Якщо це Ресторан -->
+
 		@else if ($any(item).type === 'restaurant' || $any(item).type ===
 		'restaurants' || $any(item).type === 'Rest') {
 		<restaurant-short
@@ -77,7 +60,7 @@
 		></restaurant-short>
 		}
 
-		<!-- Фолбек для інших типів (щоб нічого не пропало з видачі) -->
+
 		@else {
 		<recipe-short
 			[routerLink]="['/entity', item.id]"
@@ -89,6 +72,98 @@
                         status: $any(item).type
                     }"
 			class="w-full cursor-pointer opacity-70"
+		></recipe-short>
+		} }
+	</div>
+</div> -->
+<div class="explore">
+	<div class="explore__search-wrapper">
+		<material-icon
+			icon="search"
+			class="explore__search-icon"
+		></material-icon>
+		<input
+			type="text"
+			placeholder="Пошук рецептів, ресторанів, людей..."
+			class="explore__search-input"
+		/>
+	</div>
+
+	<div class="explore__filters">
+		@for (filter of filters(); track filter) {
+		<button
+			type="button"
+			(click)="setFilter(filter)"
+			class="explore__filter-btn"
+			[class.explore__filter-btn--active]="activeFilter() === filter"
+		>
+			{{ filter }}
+		</button>
+		}
+	</div>
+	@if (subcategories[activeFilter()]) {
+	<div class="explore__subfilters">
+		@for (sub of subcategories[activeFilter()]; track sub) {
+		<button
+			type="button"
+			(click)="setSubcategory(sub)"
+			class="explore__subfilter-btn"
+			[class.explore__subfilter-btn--active]="activeSubcategory() === sub"
+		>
+			{{ sub }}
+		</button>
+		}
+	</div>
+	}
+	<!-- Сітка карток -->
+	<div class="explore__grid">
+		@for (item of exploreItems(); track item.id) {
+
+		<!-- Якщо це Рецепт -->
+		@if ($any(item).type === 'recipe' || $any(item).type === 'recipes' ||
+		$any(item).type === 'Рецепт') {
+		<recipe-short
+			[routerLink]="['/recipe', item.id]"
+			[recipe]="{
+                    id: item.id,
+                    title: item.title,
+                    author: $any(item).subtitle || 'Невідомий автор',
+                    imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+                    status: $any(item).type
+                }"
+			class="explore__card"
+		></recipe-short>
+		}
+
+		<!-- Якщо це Ресторан -->
+		@else if ($any(item).type === 'restaurant' || $any(item).type ===
+		'restaurants' || $any(item).type === 'Rest' || $any(item).type ===
+		'Ресторан') {
+		<restaurant-short
+			[routerLink]="['/restaurant', item.id]"
+			[restaurant]="{
+                    id: item.id,
+                    title: item.title,
+                    description: $any(item).subtitle || 'Опис закладу',
+                    imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+                    rating: $any(item).rating || 5.0
+                }"
+			class="explore__card"
+		></restaurant-short>
+		}
+
+		<!-- Фолбек для інших типів -->
+		@else {
+		<recipe-short
+			[routerLink]="['/entity', item.id]"
+			[recipe]="{
+                    id: item.id,
+                    title: item.title,
+                    author: $any(item).subtitle || 'Деталі',
+                    imageUrl: $any(item).image || 'https://placehold.co/400x300/eeeeee/999999?text=Entity',
+                    status: $any(item).type
+                }"
+			class="explore__card explore__card--fallback"
 		></recipe-short>
 		} }
 	</div>

@@ -6,6 +6,7 @@ import { RestaurantShortComponent } from 'src/app/components/restaurant/restaura
 @Component({
 	selector: 'page-explore',
 	templateUrl: './explore.component.html',
+	styleUrls: ['./explore.component.scss'],
 	imports: [
 		MaterialComponent,
 		RouterLink,
@@ -24,6 +25,7 @@ export class ExploreComponent {
 	]);
 	readonly activeFilter = signal('Усі');
 
+	readonly activeSubcategory = signal('');
 	// Мікс різних карток (short components)
 	readonly exploreItems = signal([
 		{
@@ -70,7 +72,25 @@ export class ExploreComponent {
 		},
 	]);
 
+	readonly subcategories: Record<string, string[]> = {
+		Рецепти: [
+			'Сніданки',
+			'Обіди',
+			'Вечері',
+			'Десерти',
+			'Напої',
+			'Веганські',
+			"М'ясні",
+		],
+		Ресторани: ['Кафе', 'Піцерії', 'Паби', 'Суші', 'Фастфуд', "Кав'ярні"],
+	};
 	setFilter(filterName: string) {
 		this.activeFilter.set(filterName);
+		this.activeSubcategory.set(''); // Скидаємо підкатегорію при зміні основної
+	}
+
+	// 4. Додаємо новий метод
+	setSubcategory(sub: string) {
+		this.activeSubcategory.set(sub);
 	}
 }

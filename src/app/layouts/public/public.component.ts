@@ -40,6 +40,7 @@ export class PublicComponent {
 		const page = url.split('?')[0].split('/')[1];
 
 		const pageTitles: Record<string, string> = {
+			home: 'Home',
 			feed: 'Feed',
 			explore: 'Explore',
 			map: 'Map',

@@ -1,126 +1,119 @@
-<!-- Контейнер карти -->
-<div
-	class="relative h-[calc(100vh-8rem)] w-full overflow-hidden rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] border border-[var(--c-border)]"
->
-	<!-- Фон (імітація карти) -->
-	<div
-		class="absolute inset-0 bg-gray-900 bg-opacity-50"
-		style="
-			background-image: radial-gradient(
-				circle,
-				#444 1px,
-				transparent 1px
-			);
-			background-size: 20px 20px;
-		"
-	></div>
+<!-- <div class="map-page">
 
-	<!-- Блок фільтрів -->
-	<div
-		class="absolute left-2 right-2 top-4 z-10 flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden"
-	>
+	<div class="map-page__filters">
 		@for (filter of filters(); track filter.id) {
 		<button
 			(click)="toggleFilter(filter.id)"
-			class="flex flex-shrink-0 items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold shadow-md transition-colors"
-			[class]="filter.active
-                    ? 'bg-white text-black'
-                    : 'bg-black/60 text-white backdrop-blur-md border border-white/20 hover:bg-black/80'"
+			class="map-page__filter-btn"
+			[class.map-page__filter-btn--active]="filter.active"
 		>
 			<material-icon
 				[icon]="filter.icon"
-				class="text-[1rem]"
-				[style.color]="filter.active ? 'black' : 'white'"
-			>
-			</material-icon>
+				class="map-page__filter-icon"
+			></material-icon>
 			{{ filter.label }}
 		</button>
 		}
 	</div>
 
-	<!-- Маркери на карті -->
-	@for (marker of markers(); track marker.id) { @if (filters().find(f => f.id
-	=== marker.type)?.active) {
 
-	<!-- Рецепти -->
-	@if (marker.type === 'recipe' || marker.type === 'recipes') {
-	<div
-		class="absolute z-10 flex flex-col items-center gap-1 transform -translate-x-1/2 -translate-y-full group outline-none"
-		[style.top]="marker.top"
-		[style.left]="marker.left"
-	>
+	<div class="map">
+
+		<div class="map__bg"></div>
+
+
+		@for (marker of markers(); track marker.id) { @if (filters().find(f =>
+		f.id === marker.type)?.active) {
+
+
+		@if (marker.type === 'recipe' || marker.type === 'recipes') {
 		<div
-			class="rounded bg-black/80 px-2 py-1 text-[0.6rem] font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 backdrop-blur-sm whitespace-nowrap"
+			class="map__marker"
+			[style.top]="marker.top"
+			[style.left]="marker.left"
 		>
-			{{ marker.label }}
+			<div class="map__marker-tooltip">{{ marker.label }}</div>
+			<recipe-icon
+				[marker]="{
+                                id: marker.id,
+                                title: marker.label,
+                                imageUrl: $any(marker).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
+                            }"
+			></recipe-icon>
 		</div>
+		}
 
-		<recipe-icon
-			[marker]="{
-                            id: marker.id,
-                            title: marker.label,
-                            imageUrl: $any(marker).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
-                        }"
-		></recipe-icon>
+
+		@else if (marker.type === 'restaurant' || marker.type === 'restaurants'
+		|| marker.type === 'Rest') {
+		<div
+			class="map__marker"
+			[style.top]="marker.top"
+			[style.left]="marker.left"
+		>
+			<div class="map__marker-tooltip">{{ marker.label }}</div>
+			<restaurant-icon
+				[marker]="{
+                                id: marker.id,
+                                title: marker.label,
+                                imageUrl: $any(marker).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4'
+                            }"
+			></restaurant-icon>
+		</div>
+		}
+
+
+		@else {
+		<div
+			class="map__marker map__marker--z0"
+			[style.top]="marker.top"
+			[style.left]="marker.left"
+		>
+			<div class="map__marker-tooltip">{{ marker.label }}</div>
+			<div class="map__marker-fallback">
+				<material-icon
+					icon="school"
+					class="map__marker-icon-school"
+					style="color: black"
+				></material-icon>
+				<div class="map__marker-tail"></div>
+			</div>
+		</div>
+		} } }
+
+
+		<button class="map__location-btn">
+			<material-icon icon="my_location"></material-icon>
+		</button>
 	</div>
-	}
+</div> -->
 
-	<!-- Ресторани -->
-	@else if (marker.type === 'restaurant' || marker.type === 'restaurants' ||
-	marker.type === 'Rest') {
-	<div
-		class="absolute z-10 flex flex-col items-center gap-1 transform -translate-x-1/2 -translate-y-full group outline-none"
-		[style.top]="marker.top"
-		[style.left]="marker.left"
-	>
-		<div
-			class="rounded bg-black/80 px-2 py-1 text-[0.6rem] font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 backdrop-blur-sm whitespace-nowrap"
-		>
-			{{ marker.label }}
-		</div>
-
-		<restaurant-icon
-			[marker]="{
-                            id: marker.id,
-                            title: marker.label,
-                            imageUrl: $any(marker).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4'
-                        }"
-		></restaurant-icon>
-	</div>
-	}
-
-	<!-- Інші маркери (Школи тощо) -->
-	@else {
-	<div
-		class="absolute z-0 flex flex-col items-center gap-1 transform -translate-x-1/2 -translate-y-full group outline-none"
-		[style.top]="marker.top"
-		[style.left]="marker.left"
-	>
-		<div
-			class="rounded bg-black/80 px-2 py-1 text-[0.6rem] font-bold text-white opacity-0 transition-opacity group-hover:opacity-100 backdrop-blur-sm whitespace-nowrap"
-		>
-			{{ marker.label }}
-		</div>
-
-		<div
-			class="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-lg relative transition-transform group-hover:scale-110"
+<div class="map-page">
+	<!-- Блок фільтрів (залишається зверху) -->
+	<div class="map-page__filters">
+		@for (filter of filters(); track filter.id) {
+		<button
+			(click)="toggleFilter(filter.id)"
+			class="map-page__filter-btn"
+			[class.map-page__filter-btn--active]="filter.active"
 		>
 			<material-icon
-				icon="school"
-				class="text-sm"
-				style="color: black"
+				[icon]="filter.icon"
+				class="map-page__filter-icon"
 			></material-icon>
-			<div
-				class="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-white -z-10"
-			></div>
-		</div>
+			{{ filter.label }}
+		</button>
+		}
 	</div>
-	} } }
 
-	<!-- Кнопка локації -->
-	<button
-		class="absolute bottom-6 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white shadow-lg backdrop-blur-md border border-white/10 hover:bg-black/90"
-	>
-		<material-icon icon="my_location"></material-icon>
-	</button>
+	<!-- Контейнер карти -->
+	<div class="map">
+		<!-- Сюди Leaflet відмалює OpenStreetMap -->
+		<div id="osm-map" class="map__container"></div>
+
+		<!-- Кнопка локації -->
+		<button class="map__location-btn" (click)="goToMyLocation()">
+			<material-icon icon="my_location"></material-icon>
+		</button>
+	</div>
 </div>

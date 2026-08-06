@@ -1,4 +1,5 @@
 @use 'scss';
+@import 'leaflet/dist/leaflet.css';
 
 /* Keep TinyMCE menus / dialogs above app modals */
 .tox-tinymce,
