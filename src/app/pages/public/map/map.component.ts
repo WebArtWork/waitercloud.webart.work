@@ -1,15 +1,24 @@
-import { Component, signal } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	OnDestroy,
+	signal,
+	viewChild,
+} from '@angular/core';
 import * as L from 'leaflet';
 import { MaterialComponent } from '@wawjs/ngx-ui';
-import { RecipeIconComponent } from 'src/app/components/recipe/recipe-icon/recipe-icon.component';
-import { RestaurantIconComponent } from 'src/app/components/restaurant/restaurant-icon/restaurant-icon.component';
 @Component({
 	selector: 'page-map',
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
-	imports: [MaterialComponent, RecipeIconComponent, RestaurantIconComponent],
+	imports: [MaterialComponent],
 })
-export class MapComponent {
+export class MapComponent implements AfterViewInit, OnDestroy {
+	private readonly mapContainer =
+		viewChild.required<ElementRef<HTMLElement>>('mapContainer');
+	private map?: L.Map;
+
 	// Фільтри для керування відображенням (згідно ТЗ)
 	readonly filters = signal([
 		{
@@ -54,6 +63,26 @@ export class MapComponent {
 			left: '80%',
 		},
 	]);
+
+	ngAfterViewInit(): void {
+		this.map = L.map(this.mapContainer().nativeElement).setView(
+			[50.4501, 30.5234],
+			12,
+		);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; OpenStreetMap contributors',
+			maxZoom: 19,
+		}).addTo(this.map);
+	}
+
+	ngOnDestroy(): void {
+		this.map?.remove();
+	}
+
+	goToMyLocation(): void {
+		this.map?.locate({ setView: true, maxZoom: 16 });
+	}
 
 	// Метод для перемикання фільтрів (тільки візуал)
 	toggleFilter(filterId: string) {
