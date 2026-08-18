@@ -8,10 +8,11 @@
 
 	<div class="recipe-view__info">
 		<a
-			[routerLink]="['/entity', recipe().id]"
+			routerLink="/recipe"
+			[queryParams]="{ id: recipe().id }"
 			class="recipe-view__title-link group"
 		>
-			<h2 class="recipe-view__title">{{ recipe().title }}</h2>
+			<h1 class="recipe-view__title">{{ recipe().title }}</h1>
 			<span class="recipe-view__more">
 				Детальніше
 				<material-icon
@@ -23,7 +24,8 @@
 
 		<div class="recipe-view__author-row">
 			<a
-				[routerLink]="['/author', recipe().author]"
+				routerLink="/author"
+				[queryParams]="{ id: recipe().author }"
 				class="recipe-view__author-link"
 			>
 				<div class="recipe-view__avatar">

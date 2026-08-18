@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://waitercloud.webart.work/sitemap.xml

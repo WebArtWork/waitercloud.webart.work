@@ -45,7 +45,11 @@
 						"inlineStyleLanguage": "scss",
 						"assets": [
 							"src/favicon.ico",
-							"src/assets",
+							{
+								"glob": "**/*",
+								"input": "src/assets",
+								"output": "/"
+							},
 							{
 								"glob": "**/*",
 								"input": "src/i18n",
@@ -54,12 +58,22 @@
 							{
 								"glob": "README.md",
 								"input": ".",
-								"output": "/assets"
+								"output": "/"
+							},
+							{
+								"glob": "robots.txt",
+								"input": "src",
+								"output": "/"
+							},
+							{
+								"glob": "sitemap.xml",
+								"input": "src",
+								"output": "/"
 							},
 							{
 								"glob": "**/*",
 								"input": "node_modules/tinymce",
-								"output": "assets/tinymce"
+								"output": "/tinymce"
 							}
 						],
 						"styles": ["src/styles.scss"],
@@ -74,7 +88,9 @@
 							"leaflet",
 							"xmlhttprequest-ssl"
 						],
-						"browser": "src/main.ts"
+						"browser": "src/main.ts",
+						"server": "src/main.server.ts",
+						"outputMode": "static"
 					},
 					"configurations": {
 						"production": {

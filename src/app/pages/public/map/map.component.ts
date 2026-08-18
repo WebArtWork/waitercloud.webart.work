@@ -2,11 +2,14 @@ import {
 	AfterViewInit,
 	Component,
 	ElementRef,
+	inject,
 	OnDestroy,
+	PLATFORM_ID,
 	signal,
 	viewChild,
 } from '@angular/core';
-import * as L from 'leaflet';
+import { isPlatformBrowser } from '@angular/common';
+import type * as Leaflet from 'leaflet';
 import { MaterialComponent } from '@wawjs/ngx-ui';
 @Component({
 	selector: 'page-map',
@@ -15,9 +18,10 @@ import { MaterialComponent } from '@wawjs/ngx-ui';
 	imports: [MaterialComponent],
 })
 export class MapComponent implements AfterViewInit, OnDestroy {
+	private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 	private readonly mapContainer =
 		viewChild.required<ElementRef<HTMLElement>>('mapContainer');
-	private map?: L.Map;
+	private map?: Leaflet.Map;
 
 	// Фільтри для керування відображенням (згідно ТЗ)
 	readonly filters = signal([
@@ -64,7 +68,10 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 		},
 	]);
 
-	ngAfterViewInit(): void {
+	async ngAfterViewInit(): Promise<void> {
+		if (!this.isBrowser) return;
+
+		const L = await import('leaflet');
 		this.map = L.map(this.mapContainer().nativeElement).setView(
 			[50.4501, 30.5234],
 			12,

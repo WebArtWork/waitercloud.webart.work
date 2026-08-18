@@ -1,7 +1,7 @@
 import { TinymceConfig } from '@wawjs/ngx-tinymce';
 
 export const tinymceConfig: TinymceConfig = {
-	baseURL: './assets/tinymce/',
+	baseURL: '/tinymce/',
 	config: {
 		// basic UI
 		height: 480,

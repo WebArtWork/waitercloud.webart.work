@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router'; // Додали для routerLin
 })
 export class RecipeViewComponent {
 	readonly recipe = input.required<{
-		id: number;
+		id: number | string;
 		title: string;
 		description?: string;
 		author: string;

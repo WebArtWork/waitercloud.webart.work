@@ -9,15 +9,15 @@ export const environment = {
 		password: '',
 	},
 	image: {
-		default: 'https://waitercloud.webart.work/assets/logo.png',
-		logo: 'https://waitercloud.webart.work/assets/logo.png',
+		default: 'https://waitercloud.webart.work/logo.png',
+		logo: 'https://waitercloud.webart.work/logo.png',
 	},
 	meta: {
 		title: 'Waiter Cloud',
 		description:
 			'Discover recipes, restaurants, cooking schools, food professionals, and jobs in one shared food-industry platform.',
-		favicon: 'https://waitercloud.webart.work/assets/favicon.png',
-		image: 'https://waitercloud.webart.work/assets/logo.png',
+		favicon: 'https://waitercloud.webart.work/favicon.png',
+		image: 'https://waitercloud.webart.work/logo.png',
 	},
 	defaultLanguageCode: 'en',
 	languages: [

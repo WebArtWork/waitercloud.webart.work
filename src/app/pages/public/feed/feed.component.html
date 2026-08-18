@@ -2,6 +2,7 @@
 <div
 	class="fixed inset-x-0 bottom-[4rem] top-[var(--topbar-h,56px)] z-10 bg-black"
 >
+	<h1 class="sr-only">Discover food, recipes, and restaurants</h1>
 	<!-- Контейнер для свайпів (TikTok скрол) -->
 	<!-- snap-y snap-mandatory: робить примагнічування -->
 	<!-- [scrollbar-width:none] [&::-webkit-scrollbar]:hidden: ховає скролбар -->
@@ -69,7 +70,8 @@
 
 					<!-- Заголовок-посилання на повну сторінку -->
 					<a
-						[routerLink]="['/recipe', item.id]"
+						routerLink="/recipe"
+						[queryParams]="{ id: item.id }"
 						class="group block cursor-pointer outline-none"
 					>
 						<h2
@@ -91,7 +93,8 @@
 					<!-- Автор та підписка -->
 					<div class="flex items-center gap-2">
 						<a
-							[routerLink]="['/author', item.author]"
+							routerLink="/author"
+							[queryParams]="{ id: item.author }"
 							class="flex items-center gap-2 outline-none"
 						>
 							<div

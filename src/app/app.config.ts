@@ -53,7 +53,7 @@ export const appConfig: ApplicationConfig = {
 				(environment as unknown as {
 					userForm?: NgxBosConfig['userForm'];
 				}).userForm ?? [],
-			defaultUserThumb: 'assets/default.png',
+			defaultUserThumb: '/default.png',
 		}),
 		provideFormComponents(),
 		provideNgxCore(wawjsConfig),

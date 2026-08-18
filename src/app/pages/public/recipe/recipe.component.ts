@@ -1,19 +1,29 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { LowerCasePipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { map } from 'rxjs';
 import { MaterialComponent } from '@wawjs/ngx-ui';
 import { RecipeViewComponent } from 'src/app/components/recipe/recipe-view/recipe-view.component';
 import { RestaurantViewComponent } from 'src/app/components/restaurant/restaurant-view/restaurant-view.component';
 @Component({
-	selector: 'page-entity',
-	templateUrl: './entity.component.html',
+	selector: 'page-recipe',
+	templateUrl: './recipe.component.html',
 	imports: [
 		MaterialComponent,
 		LowerCasePipe,
+		RouterLink,
 		RecipeViewComponent,
 		RestaurantViewComponent,
 	],
 })
-export class EntityComponent {
+export class RecipeComponent {
+	readonly entityId = toSignal(
+		inject(ActivatedRoute).queryParamMap.pipe(
+			map((params) => params.get('id')),
+		),
+		{ initialValue: null },
+	);
 	// Статичні дані для демонстрації всіх вимог ТЗ
 	readonly entity = signal({
 		id: 1,

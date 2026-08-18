@@ -48,9 +48,9 @@ export class SettingsComponent {
 		switch (this.languageService.language()) {
 			case 'ua':
 			case 'uk':
-				return 'assets/flags/ukraine.svg';
+				return '/flags/ukraine.svg';
 			case 'en':
-				return 'assets/flags/united-kingdom.svg';
+				return '/flags/united-kingdom.svg';
 			default:
 				return '';
 		}

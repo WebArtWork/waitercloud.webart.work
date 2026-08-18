@@ -6,39 +6,75 @@ export const serverRoutes: ServerRoute[] = [
 		renderMode: RenderMode.Prerender,
 	},
 	{
-		path: 'admin/form/:formId',
-		renderMode: RenderMode.Client,
+		path: 'home',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'explore',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'map',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'recipe',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'restaurant',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'author',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'school',
+		renderMode: RenderMode.Prerender,
 	},
 	{
 		path: 'sign',
-		renderMode: RenderMode.Client,
+		renderMode: RenderMode.Prerender,
 	},
 	{
 		path: 'workspace',
-		renderMode: RenderMode.Client,
+		renderMode: RenderMode.Prerender,
 	},
 	{
 		path: 'editor',
-		renderMode: RenderMode.Client,
+		renderMode: RenderMode.Prerender,
 	},
 	{
 		path: 'profile',
-		renderMode: RenderMode.Client,
+		renderMode: RenderMode.Prerender,
 	},
 	{
 		path: 'settings',
-		renderMode: RenderMode.Client,
+		renderMode: RenderMode.Prerender,
 	},
 	{
-		path: 'dashboard/**',
-		renderMode: RenderMode.Client,
+		path: 'dashboard',
+		renderMode: RenderMode.Prerender,
 	},
 	{
-		path: 'admin/**',
-		renderMode: RenderMode.Client,
+		path: 'admin/users',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'admin/clients',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'admin/forms',
+		renderMode: RenderMode.Prerender,
+	},
+	{
+		path: 'admin/form',
+		renderMode: RenderMode.Prerender,
 	},
 	{
 		path: '**',
-		renderMode: RenderMode.Prerender,
+		renderMode: RenderMode.Client,
 	},
 ];

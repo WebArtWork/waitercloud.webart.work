@@ -31,8 +31,12 @@
 
 
 		@if ($any(item).type === 'recipe' || $any(item).type === 'recipes') {
+		<a
+			routerLink="/recipe"
+			[queryParams]="{ id: item.id }"
+			class="explore__card"
+		>
 		<recipe-short
-			[routerLink]="['/recipe', item.id]"
 			[recipe]="{
                         id: item.id,
                         title: item.title,
@@ -48,7 +52,8 @@
 		@else if ($any(item).type === 'restaurant' || $any(item).type ===
 		'restaurants' || $any(item).type === 'Rest') {
 		<restaurant-short
-			[routerLink]="['/restaurant', item.id]"
+			routerLink="/restaurant"
+			[queryParams]="{ id: item.id }"
 			[restaurant]="{
                         id: item.id,
                         title: item.title,
@@ -63,7 +68,8 @@
 
 		@else {
 		<recipe-short
-			[routerLink]="['/entity', item.id]"
+			[routerLink]="$any(item).type === 'Школа' ? '/school' : '/author'"
+			[queryParams]="{ id: item.id }"
 			[recipe]="{
                         id: item.id,
                         title: item.title,
@@ -77,6 +83,7 @@
 	</div>
 </div> -->
 <div class="explore">
+	<h1 class="sr-only">Explore recipes, restaurants, cooks, and schools</h1>
 	<div class="explore__search-wrapper">
 		<material-icon
 			icon="search"
@@ -122,8 +129,12 @@
 		<!-- Якщо це Рецепт -->
 		@if ($any(item).type === 'recipe' || $any(item).type === 'recipes' ||
 		$any(item).type === 'Рецепт') {
+		<a
+			routerLink="/recipe"
+			[queryParams]="{ id: item.id }"
+			class="explore__card"
+		>
 		<recipe-short
-			[routerLink]="['/recipe', item.id]"
 			[recipe]="{
                     id: item.id,
                     title: item.title,
@@ -131,16 +142,20 @@
                     imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
                     status: $any(item).type
                 }"
-			class="explore__card"
 		></recipe-short>
+		</a>
 		}
 
 		<!-- Якщо це Ресторан -->
 		@else if ($any(item).type === 'restaurant' || $any(item).type ===
 		'restaurants' || $any(item).type === 'Rest' || $any(item).type ===
 		'Ресторан') {
+		<a
+			routerLink="/restaurant"
+			[queryParams]="{ id: item.id }"
+			class="explore__card"
+		>
 		<restaurant-short
-			[routerLink]="['/restaurant', item.id]"
 			[restaurant]="{
                     id: item.id,
                     title: item.title,
@@ -148,14 +163,18 @@
                     imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
                     rating: $any(item).rating || 5.0
                 }"
-			class="explore__card"
 		></restaurant-short>
+		</a>
 		}
 
 		<!-- Фолбек для інших типів -->
 		@else {
+		<a
+			[routerLink]="$any(item).type === 'Школа' ? '/school' : '/author'"
+			[queryParams]="{ id: item.id }"
+			class="explore__card explore__card--fallback"
+		>
 		<recipe-short
-			[routerLink]="['/entity', item.id]"
 			[recipe]="{
                     id: item.id,
                     title: item.title,
@@ -163,8 +182,8 @@
                     imageUrl: $any(item).image || 'https://placehold.co/400x300/eeeeee/999999?text=Entity',
                     status: $any(item).type
                 }"
-			class="explore__card explore__card--fallback"
 		></recipe-short>
+		</a>
 		} }
 	</div>
 </div>
