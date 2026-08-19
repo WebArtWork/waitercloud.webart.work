@@ -8,9 +8,9 @@ import { RecipeViewComponent } from 'src/app/components/recipe/recipe-view/recip
 import { RestaurantViewComponent } from 'src/app/components/restaurant/restaurant-view/restaurant-view.component';
 
 @Component({
-	selector: 'page-recipe',
-	templateUrl: './recipe.component.html',
-	styleUrls: ['./recipe.component.scss'],
+	selector: 'page-entity',
+	templateUrl: './entity.component.html',
+	styleUrls: ['./entity.component.scss'],
 	imports: [
 		MaterialComponent,
 		LowerCasePipe,
@@ -19,14 +19,14 @@ import { RestaurantViewComponent } from 'src/app/components/restaurant/restauran
 		RestaurantViewComponent,
 	],
 })
-export class RecipeComponent {
+export class EntityComponent {
 	readonly entityId = toSignal(
 		inject(ActivatedRoute).queryParamMap.pipe(
 			map((params) => params.get('id')),
 		),
 		{ initialValue: null },
 	);
-
+	// Статичні дані для демонстрації всіх вимог ТЗ
 	readonly entity = signal({
 		id: 1,
 		type: 'Рецепт',
@@ -44,21 +44,24 @@ export class RecipeComponent {
 		forkInfo: 'Оригінальний рецепт',
 		description:
 			'Класичний римський рецепт з гуанчіале, пекоріно романо, чорним перцем та яйцями. Жодних вершків! Ця страва ідеально підходить для швидкої та ситної вечері.',
+
+		// === НОВІ ДАНІ ДЛЯ РЕЦЕПТУ ===
 		ingredients: [
 			'Спагетті - 400г',
-			'Гуанчіале (або панчета) - 150г',
-			'Жовтки - 4 шт.',
+			'Гуанчіале (або бекон) - 150г',
+			'Яйця - 4 шт (тільки жовтки)',
 			'Сир Пекоріно Романо - 100г',
-			'Свіжомелений чорний перець - за смаком',
+			'Чорний перець - за смаком',
 		],
 		steps: [
-			'Відваріть пасту у великій кількості підсоленої води до стану аль денте (на 1 хвилину менше, ніж вказано на упаковці).',
-			'Наріжте гуанчіале брусочками і обсмажте на сухій сковороді до золотистої та хрусткої скоринки. Зніміть з вогню.',
-			'У мисці ретельно збийте жовтки з дрібно натертим сиром Пекоріно та великою кількістю чорного перцю.',
-			'Перекладіть готову пасту в сковороду до гуанчіале. Додайте яєчно-сирну суміш та трохи води, в якій варилася паста. Інтенсивно перемішуйте до утворення густого кремового соусу.',
+			'Відваріть пасту в добре підсоленій воді до стану аль денте.',
+			'Наріжте гуанчіале кубиками і обсмажте до хрусткої скоринки.',
+			'Змішайте жовтки з тертим сиром і свіжомеленим перцем.',
+			'Перекладіть гарячу пасту в сковороду (без вогню!). Додайте трохи води з-під пасти, влийте яєчну суміш і перемішайте.',
 		],
 	});
 
+	// Відгуки та коментарі
 	readonly comments = signal([
 		{
 			id: 1,
@@ -74,6 +77,7 @@ export class RecipeComponent {
 		},
 	]);
 
+	// Пов'язані сутності
 	readonly related = signal([
 		{
 			id: 1,
@@ -88,7 +92,7 @@ export class RecipeComponent {
 		{
 			id: 3,
 			title: 'Равіолі',
-			image: 'https://images.unsplash.com/photo-1588013273468-315fd08af3c5?q=80&w=300&auto=format&fit=crop',
+			image: 'https://images.unsplash.com/photo-1588013273468-315fd88ea34c?q=80&w=300&auto=format&fit=crop',
 		},
 	]);
 }

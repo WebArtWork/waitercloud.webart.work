@@ -21,7 +21,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Food Feed',
-						description: 'Discover food inspiration, recipes, restaurants, and culinary creators on Waiter Cloud.',
+						description:
+							'Discover food inspiration, recipes, restaurants, and culinary creators on Waiter Cloud.',
 						path: '/',
 					},
 				},
@@ -36,7 +37,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Explore Food',
-						description: 'Explore recipes, restaurants, cooks, and cooking schools across the food industry.',
+						description:
+							'Explore recipes, restaurants, cooks, and cooking schools across the food industry.',
 						path: '/explore',
 					},
 				},
@@ -51,7 +53,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Food Map',
-						description: 'Find restaurants, culinary schools, recipes, and food professionals on an interactive map.',
+						description:
+							'Find restaurants, culinary schools, recipes, and food professionals on an interactive map.',
 						path: '/map',
 					},
 				},
@@ -75,7 +78,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Food Discovery and Careers',
-						description: 'Connect with recipes, restaurants, cooking schools, food professionals, jobs, and partnership opportunities.',
+						description:
+							'Connect with recipes, restaurants, cooking schools, food professionals, jobs, and partnership opportunities.',
 						path: '/home',
 					},
 				},
@@ -90,7 +94,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Recipe',
-						description: 'Discover recipe details, ingredients, creators, and related food inspiration on Waiter Cloud.',
+						description:
+							'Discover recipe details, ingredients, creators, and related food inspiration on Waiter Cloud.',
 						path: '/recipe',
 					},
 				},
@@ -105,7 +110,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Restaurant',
-						description: 'View restaurant details, location, opening hours, and related recommendations on Waiter Cloud.',
+						description:
+							'View restaurant details, location, opening hours, and related recommendations on Waiter Cloud.',
 						path: '/restaurant',
 					},
 				},
@@ -120,7 +126,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Food Professional',
-						description: 'View food-professional profiles, published recipes, and related culinary work on Waiter Cloud.',
+						description:
+							'View food-professional profiles, published recipes, and related culinary work on Waiter Cloud.',
 						path: '/author',
 					},
 				},
@@ -135,7 +142,8 @@ export const routes: Routes = [
 				data: {
 					meta: {
 						title: 'Cooking School',
-						description: 'View cooking-school programs, specialties, and contact details on Waiter Cloud.',
+						description:
+							'View cooking-school programs, specialties, and contact details on Waiter Cloud.',
 						path: '/school',
 					},
 				},

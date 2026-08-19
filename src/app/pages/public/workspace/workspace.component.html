@@ -1,233 +1,213 @@
-<div class="flex flex-col gap-6 pb-10 max-w-4xl mx-auto w-full">
+<div class="workspace">
 	<!-- Шапка воркспейсу -->
-	<div
-		class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-6 border border-[var(--c-border)]"
-	>
-		<div>
-			<h1 class="text-2xl font-bold text-[var(--c-text-primary)]">
-				Робоча зона (Workspace)
-			</h1>
-			<p class="text-xs text-[var(--c-text-muted)] mt-1">
+	<div class="workspace__header">
+		<div class="workspace__header-info">
+			<h1 class="workspace__title">Робоча зона (Workspace)</h1>
+			<p class="workspace__desc">
 				Приватна зона керування вашими сутностями, рецептами та
 				контрактами.
 			</p>
 		</div>
-		<button
-			type="button"
-			class="rounded-[var(--radius-btn)] bg-[var(--c-text-primary)] px-4 py-2 text-xs font-bold text-[var(--c-bg-primary)] transition-opacity hover:opacity-90 flex items-center gap-2"
-		>
-			<material-icon icon="add" class="text-sm"></material-icon>
+		<button type="button" class="workspace__create-btn">
+			<material-icon
+				icon="add"
+				class="workspace__create-icon"
+			></material-icon>
 			Створити сутність
 		</button>
 	</div>
 
 	<!-- Навігаційні вкладки -->
-	<div
-		class="flex rounded-full bg-[var(--c-bg-tertiary)] p-1 border border-[var(--c-border)]"
-	>
+	<div class="workspace__tabs">
 		<button
 			type="button"
 			(click)="setActiveTab('recipes')"
-			class="flex-1 rounded-full py-2 text-xs font-bold transition-colors"
-			[class]="activeTab() === 'recipes' ? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] shadow' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
+			class="workspace__tab"
+			[class.workspace__tab--active]="activeTab() === 'recipes'"
 		>
 			Рецепти
 		</button>
 		<button
 			type="button"
 			(click)="setActiveTab('restaurants')"
-			class="flex-1 rounded-full py-2 text-xs font-bold transition-colors"
-			[class]="activeTab() === 'restaurants' ? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] shadow' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
+			class="workspace__tab"
+			[class.workspace__tab--active]="activeTab() === 'restaurants'"
 		>
 			Заклади
 		</button>
 		<button
 			type="button"
 			(click)="setActiveTab('jobs')"
-			class="flex-1 rounded-full py-2 text-xs font-bold transition-colors"
-			[class]="activeTab() === 'jobs' ? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] shadow' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
+			class="workspace__tab"
+			[class.workspace__tab--active]="activeTab() === 'jobs'"
 		>
 			Вакансії та заявки
 		</button>
 		<button
 			type="button"
 			(click)="setActiveTab('contracts')"
-			class="flex-1 rounded-full py-2 text-xs font-bold transition-colors"
-			[class]="activeTab() === 'contracts' ? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] shadow' : 'text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
+			class="workspace__tab"
+			[class.workspace__tab--active]="activeTab() === 'contracts'"
 		>
 			Контракти
 		</button>
 	</div>
 
 	<!-- Вміст вкладок -->
-	@if (activeTab() === 'recipes') {
-	<div class="flex flex-col gap-5">
-		<!-- Власні та приватні рецепти -->
-		<div
-			class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-		>
-			<h3
-				class="text-sm font-bold text-[var(--c-text-primary)] flex items-center gap-2"
-			>
-				<material-icon
-					icon="menu_book"
-					class="text-base"
-				></material-icon>
-				Власні та приватні рецепти
-			</h3>
-			<div
-				class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2"
-			>
-				@for (recipe of ownedRecipes(); track recipe.id) {
-				<recipe-short
-					[recipe]="{
-                            id: recipe.id,
-                            title: recipe.title,
-                            author: 'Ви',
-                            imageUrl: $any(recipe).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
-                            status: recipe.status
-                        }"
-				></recipe-short>
-				}
-			</div>
-		</div>
+	<div class="workspace__content">
+		@if (activeTab() === 'recipes') {
+		<div class="workspace__layout-col">
+			<!-- Власні та приватні рецепти (З КНОПКОЮ РЕДАГУВАННЯ) -->
+			<section class="workspace__section">
+				<h3 class="workspace__section-title">
+					<material-icon icon="menu_book"></material-icon>
+					Власні та приватні рецепти
+				</h3>
+				<div class="workspace__grid">
+					@for (recipe of ownedRecipes(); track recipe.id) {
+					<div class="workspace__item">
+						<!-- Кнопка редагування -->
+						<button
+							class="workspace__edit-btn"
+							title="Редагувати рецепт"
+						>
+							<material-icon icon="edit"></material-icon>
+						</button>
 
-		<!-- Поділені з користувачем та улюблені -->
-		<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-			<div
-				class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-			>
-				<h4
-					class="text-xs font-bold uppercase tracking-wider text-[var(--c-text-muted)]"
-				>
-					Спільні рецепти
-				</h4>
-				<div class="flex flex-col gap-3 mt-2">
-					@for (recipe of sharedRecipes(); track recipe.id) {
-					<recipe-short
-						[recipe]="{
+						<recipe-short
+							[recipe]="{
+                                id: recipe.id,
+                                title: recipe.title,
+                                author: 'Ви',
+                                imageUrl: $any(recipe).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+                                status: recipe.status
+                            }"
+						></recipe-short>
+					</div>
+					}
+				</div>
+			</section>
+
+			<!-- Поділені з користувачем та улюблені -->
+			<div class="workspace__layout-row">
+				<section class="workspace__section">
+					<h4 class="workspace__section-subtitle">Спільні рецепти</h4>
+					<div class="workspace__grid workspace__grid--1col">
+						@for (recipe of sharedRecipes(); track recipe.id) {
+						<recipe-short
+							[recipe]="{
                                 id: recipe.id,
                                 title: recipe.title,
                                 author: $any(recipe).sharedBy || 'Спільний доступ',
                                 imageUrl: $any(recipe).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
                             }"
-					></recipe-short>
-					}
-				</div>
-			</div>
+						></recipe-short>
+						}
+					</div>
+				</section>
 
-			<div
-				class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-			>
-				<h4
-					class="text-xs font-bold uppercase tracking-wider text-[var(--c-text-muted)]"
-				>
-					Улюблені сутності
-				</h4>
-				<div class="flex flex-col gap-3 mt-2">
-					@for (fav of favoriteEntities(); track fav.id) {
-					<!-- Перевірка типу для універсального виведення улюблених -->
-					@if ($any(fav).type === 'restaurant' || $any(fav).type ===
-					'restaurants' || $any(fav).type === 'Rest') {
-					<restaurant-short
-						[restaurant]="{
+				<section class="workspace__section">
+					<h4 class="workspace__section-subtitle">
+						Улюблені сутності
+					</h4>
+					<div class="workspace__grid workspace__grid--1col">
+						@for (fav of favoriteEntities(); track fav.id) { @if
+						($any(fav).type === 'restaurant' || $any(fav).type ===
+						'restaurants' || $any(fav).type === 'Rest') {
+						<restaurant-short
+							[restaurant]="{
                                     id: fav.id,
                                     title: fav.title,
                                     description: $any(fav).description || 'Збережений заклад',
                                     imageUrl: $any(fav).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
                                     rating: $any(fav).rating || 4.5
                                 }"
-					></restaurant-short>
-					} @else {
-					<recipe-short
-						[recipe]="{
+						></restaurant-short>
+						} @else {
+						<recipe-short
+							[recipe]="{
                                     id: fav.id,
                                     title: fav.title,
                                     author: $any(fav).author || 'Автор невідомий',
                                     imageUrl: $any(fav).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'
                                 }"
-					></recipe-short>
-					} }
-				</div>
+						></recipe-short>
+						} }
+					</div>
+				</section>
 			</div>
 		</div>
-	</div>
-	} @if (activeTab() === 'restaurants') {
-	<div
-		class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-	>
-		<h3
-			class="text-sm font-bold text-[var(--c-text-primary)] flex items-center gap-2"
-		>
-			<material-icon icon="restaurant" class="text-base"></material-icon>
-			Заклади під вашим керуванням
-		</h3>
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
-			@for (place of managedRestaurants(); track place.id) {
-			<restaurant-short
-				[restaurant]="{
-                        id: place.id,
-                        title: place.name || $any(place).title,
-                        description: 'Роль: ' + ($any(place).role || 'Власник'),
-                        imageUrl: $any(place).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
-                        rating: $any(place).rating || 5.0
-                    }"
-			></restaurant-short>
-			}
+		} @else if (activeTab() === 'restaurants') {
+		<section class="workspace__section">
+			<h3 class="workspace__section-title">
+				<material-icon icon="restaurant"></material-icon>
+				Заклади під вашим керуванням
+			</h3>
+			<div class="workspace__grid">
+				@for (place of managedRestaurants(); track place.id) {
+				<div class="workspace__item">
+					<!-- Кнопка редагування -->
+					<button
+						class="workspace__edit-btn"
+						title="Редагувати заклад"
+					>
+						<material-icon icon="edit"></material-icon>
+					</button>
+
+					<restaurant-short
+						[restaurant]="{
+                            id: place.id,
+                            title: place.name || $any(place).title,
+                            description: 'Роль: ' + ($any(place).role || 'Власник'),
+                            imageUrl: $any(place).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+                            rating: $any(place).rating || 5.0
+                        }"
+					></restaurant-short>
+				</div>
+				}
+			</div>
+		</section>
+		} @else if (activeTab() === 'jobs') {
+		<div class="workspace__layout-row">
+			<section class="workspace__section">
+				<h4 class="workspace__section-subtitle">
+					Вакансії та Профіль працівника
+				</h4>
+				<p class="workspace__text">
+					Статус: <b>{{ professionalActivity().employeeProfile }}</b>
+				</p>
+				<p class="workspace__text workspace__text--muted">
+					Активних вакансій: {{ professionalActivity().jobsCount }}
+				</p>
+			</section>
+			<section class="workspace__section">
+				<h4 class="workspace__section-subtitle">
+					Заявки та пропозиції
+				</h4>
+				<p class="workspace__text workspace__text--muted">
+					Заявок подано: {{ professionalActivity().applicationsCount
+					}}
+				</p>
+				<p class="workspace__text workspace__text--muted">
+					Пропозицій отримано: {{
+					professionalActivity().proposalsCount }}
+				</p>
+			</section>
 		</div>
+		} @else if (activeTab() === 'contracts') {
+		<section class="workspace__section">
+			<h3 class="workspace__section-title">
+				<material-icon icon="gavel"></material-icon>
+				Контракти та угоди
+			</h3>
+			<div class="workspace__contract-card">
+				<span>Договір співпраці з постачальником продуктів</span>
+				<span class="workspace__contract-badge"
+					>Активний ({{ professionalActivity().contractsCount
+					}})</span
+				>
+			</div>
+		</section>
+		}
 	</div>
-	} @if (activeTab() === 'jobs') {
-	<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-		<div
-			class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-		>
-			<h4
-				class="text-xs font-bold uppercase tracking-wider text-[var(--c-text-muted)]"
-			>
-				Вакансії та Профіль працівника
-			</h4>
-			<p class="text-xs text-[var(--c-text-primary)]">
-				Статус: <b>{{ professionalActivity().employeeProfile }}</b>
-			</p>
-			<p class="text-xs text-[var(--c-text-muted)]">
-				Активних вакансій: {{ professionalActivity().jobsCount }}
-			</p>
-		</div>
-		<div
-			class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-		>
-			<h4
-				class="text-xs font-bold uppercase tracking-wider text-[var(--c-text-muted)]"
-			>
-				Заявки та пропозиції
-			</h4>
-			<p class="text-xs text-[var(--c-text-muted)]">
-				Заявок подано: {{ professionalActivity().applicationsCount }}
-			</p>
-			<p class="text-xs text-[var(--c-text-muted)]">
-				Пропозицій отримано: {{ professionalActivity().proposalsCount }}
-			</p>
-		</div>
-	</div>
-	} @if (activeTab() === 'contracts') {
-	<div
-		class="flex flex-col gap-3 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
-	>
-		<h3
-			class="text-sm font-bold text-[var(--c-text-primary)] flex items-center gap-2"
-		>
-			<material-icon icon="gavel" class="text-base"></material-icon>
-			Контракти та угоди
-		</h3>
-		<div
-			class="p-3 rounded bg-[var(--c-bg-primary)] border border-[var(--c-border)] text-xs text-[var(--c-text-primary)] flex justify-between items-center"
-		>
-			<span>Договір співпраці з постачальником продуктів</span>
-			<span
-				class="text-[0.65rem] px-2 py-0.5 rounded bg-green-500/20 text-green-400"
-				>Активний ({{ professionalActivity().contractsCount }})</span
-			>
-		</div>
-	</div>
-	}
 </div>

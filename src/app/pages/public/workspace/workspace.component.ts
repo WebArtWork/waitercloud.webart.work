@@ -5,6 +5,7 @@ import { RestaurantShortComponent } from 'src/app/components/restaurant/restaura
 @Component({
 	selector: 'page-workspace',
 	templateUrl: './workspace.component.html',
+	styleUrls: ['./workspace.component.scss'],
 	imports: [
 		MaterialComponent,
 		RecipeShortComponent,
