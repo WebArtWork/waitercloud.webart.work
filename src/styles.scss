@@ -10,3 +10,18 @@
 .tox .tox-pop {
 	z-index: 999999 !important;
 }
+html,
+body,
+.public-layout,
+.public-layout__main {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* 2. Для Chrome, Safari, Opera (Webkit) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.public-layout::-webkit-scrollbar,
+.public-layout__main::-webkit-scrollbar {
+	display: none;
+}

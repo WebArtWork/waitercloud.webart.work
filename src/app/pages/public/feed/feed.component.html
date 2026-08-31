@@ -1,170 +1,155 @@
-<!-- Головний фіксований контейнер на весь екран -->
-<div
-	class="fixed inset-x-0 bottom-[4rem] top-[var(--topbar-h,56px)] z-10 bg-black"
->
+<div class="feed">
 	<h1 class="sr-only">Discover food, recipes, and restaurants</h1>
-	<!-- Контейнер для свайпів (TikTok скрол) -->
-	<!-- snap-y snap-mandatory: робить примагнічування -->
-	<!-- [scrollbar-width:none] [&::-webkit-scrollbar]:hidden: ховає скролбар -->
-	<div
-		class="h-full w-full snap-y snap-mandatory overflow-y-scroll overscroll-y-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-	>
-		@for (item of recipes(); track item.id) {
 
-		<!-- Один екран = один рецепт/ресторан. snap-start snap-always магнітить кожен блок -->
-		<section class="h-full w-full snap-start snap-always">
-			@if ($any(item).type === 'restaurants' || $any(item).type ===
-			'Rest') {
-			<div class="h-full w-full bg-[var(--c-bg-primary)] p-4">
+	<div class="feed__scroll-container">
+		@for (item of feedItems(); track item.id) {
+		<section class="feed__section">
+			@switch (item.type) {
+
+			<!-- === РЕСТОРАН (Використовуємо твій готовий компонент) === -->
+			@case ('restaurant') {
+			<div class="feed__restaurant-wrap">
 				<restaurant-view
-					class="block h-full w-full overflow-hidden rounded-[var(--radius-btn)]"
+					class="feed__restaurant-view"
 					[restaurant]="{
-                                id: item.id,
-                                title: item.title || $any(item).label || 'Невідомий заклад',
-                                description: $any(item).description || 'Детальний опис закладу.',
-                                imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
-                                rating: $any(item).rating || 4.8,
-                                address: $any(item).address || 'Адреса не вказана',
-                                workingHours: $any(item).workingHours || '10:00 - 22:00'
-                            }"
+                                    id: item.id,
+                                    title: item.title,
+                                    description: item.description || '',
+                                    imageUrl: item.image,
+                                    rating: item.rating || 5.0,
+                                    address: item.address || '',
+                                    workingHours: item.workingHours || ''
+                                }"
 				></restaurant-view>
 			</div>
-			} @else {
-			<!-- Твій оригінальний дизайн на Tailwind -->
-			<div
-				class="relative flex h-full w-full flex-col overflow-hidden bg-black"
-			>
+			}
+
+			<!-- === ІНШІ СУТНОСТІ (TikTok-стайл) === -->
+			@default {
+			<div class="feed-card">
+				<!-- Медіа (Відео або Картинка) -->
+				@if (item.video) {
+				<video
+					#feedVideo
+					[src]="item.video"
+					[poster]="item.image"
+					autoplay
+					loop
+					[muted]="true"
+					playsinline
+					class="feed-card__media"
+					style="cursor: pointer"
+					(click)="toggleVideo(feedVideo)"
+				></video>
+
+				<!-- Кнопка керування звуком -->
+				<button
+					class="feed-card__mute-btn"
+					(click)="toggleMute(feedVideo, $event)"
+				>
+					<material-icon
+						[icon]="feedVideo.muted ? 'volume_off' : 'volume_up'"
+					></material-icon>
+				</button>
+				} @else {
 				<img
 					[src]="item.image"
 					[alt]="item.title"
-					class="absolute inset-0 h-full w-full object-cover opacity-85"
+					class="feed-card__media"
 				/>
+				}
 
-				<div
-					class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"
-				></div>
+				<!-- Градієнтне затемнення -->
+				<div class="feed-card__overlay"></div>
 
-				<!-- Ліва панель -->
-				<div
-					class="absolute bottom-4 left-4 right-16 flex flex-col gap-3"
-				>
-					<!-- НОВИЙ БЛОК: Чіпси інгредієнтів -->
-					@if (item.ingredients && item.ingredients.length > 0) {
-					<div class="flex flex-wrap gap-1.5">
+				<!-- Ліва панель (Інфо) -->
+				<div class="feed-card__info">
+					<!-- Інгредієнти (Тільки для рецептів) -->
+					@if (item.type === 'recipe' && item.ingredients) {
+					<div class="feed-card__tags">
 						@for (ingredient of item.ingredients.slice(0, 3); track
 						$index) {
-						<span
-							class="rounded-full border border-white/20 bg-black/40 px-2 py-1 text-[0.65rem] font-medium tracking-wide text-white/90 backdrop-blur-md"
-						>
-							{{ ingredient }}
-						</span>
+						<span class="feed-card__tag">{{ ingredient }}</span>
 						} @if (item.ingredients.length > 3) {
-						<span
-							class="rounded-full border border-white/10 bg-black/20 px-2 py-1 text-[0.65rem] font-medium text-white/60 backdrop-blur-md"
+						<span class="feed-card__tag feed-card__tag--muted"
+							>+{{ item.ingredients.length - 3 }}</span
 						>
-							+{{ item.ingredients.length - 3 }}
-						</span>
 						}
 					</div>
 					}
 
-					<!-- Заголовок-посилання на повну сторінку -->
+					<!-- Спеціалізація (Тільки для школи або кухаря) -->
+					@if ((item.type === 'author' || item.type === 'school') &&
+					item.specialty) {
+					<div class="feed-card__specialty">
+						<material-icon
+							[icon]="item.type === 'school' ? 'school' : 'restaurant'"
+							class="feed-card__specialty-icon"
+						></material-icon>
+						{{ item.specialty }}
+					</div>
+					}
+
+					<!-- Заголовок -->
 					<a
-						routerLink="/recipe"
+						[routerLink]="'/' + item.type"
 						[queryParams]="{ id: item.id }"
-						class="group block cursor-pointer outline-none"
+						class="feed-card__link"
 					>
-						<h2
-							class="text-xl font-bold leading-tight text-white line-clamp-2 transition-colors group-hover:text-gray-300"
-						>
-							{{ item.title }}
-						</h2>
-						<span
-							class="mt-1 inline-flex items-center text-xs text-white/70 hover:text-white"
-						>
+						<h2 class="feed-card__title">{{ item.title }}</h2>
+						<span class="feed-card__more">
 							Детальніше
-							<material-icon
-								icon="chevron_right"
-								class="text-[1rem]"
-							></material-icon>
+							<material-icon icon="chevron_right"></material-icon>
 						</span>
 					</a>
 
-					<!-- Автор та підписка -->
-					<div class="flex items-center gap-2">
+					<!-- Автор / Власник -->
+					<div class="feed-card__author-row">
 						<a
-							routerLink="/author"
-							[queryParams]="{ id: item.author }"
-							class="flex items-center gap-2 outline-none"
+							[routerLink]="'/' + (item.type === 'school' ? 'school' : 'author')"
+							class="feed-card__author-link"
 						>
-							<div
-								class="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-bg-tertiary)] bg-opacity-30 backdrop-blur-sm"
-							>
+							<div class="feed-card__avatar">
 								<material-icon
-									icon="person"
-									class="text-xs text-white"
+									[icon]="item.type === 'school' ? 'account_balance' : 'person'"
 								></material-icon>
 							</div>
-							<span
-								class="text-sm font-medium text-white/90 hover:underline"
+							<span class="feed-card__author-name"
 								>{{ item.author }}</span
 							>
 						</a>
-
-						<button
-							type="button"
-							class="ml-1 rounded-full border border-white/50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black"
-						>
+						<button type="button" class="feed-card__btn-follow">
 							Follow
 						</button>
 					</div>
 				</div>
 
-				<!-- Права панель -->
-				<div
-					class="absolute bottom-4 right-3 flex flex-col items-center gap-5"
-				>
-					<button
-						type="button"
-						class="group flex flex-col items-center gap-1 text-white outline-none"
-					>
-						<div
-							class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-colors group-hover:bg-black/60"
-						>
+				<!-- Права панель (Кнопки дій) -->
+				<div class="feed-card__sidebar">
+					<button type="button" class="feed-card__btn-action">
+						<div class="feed-card__icon-wrapper">
 							<material-icon icon="favorite"></material-icon>
 						</div>
-						<span class="text-xs font-semibold"
+						<span class="feed-card__action-text"
 							>{{ item.likes }}</span
 						>
 					</button>
-
-					<button
-						type="button"
-						class="group flex flex-col items-center gap-1 text-white outline-none"
-					>
-						<div
-							class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-colors group-hover:bg-black/60"
-						>
+					<button type="button" class="feed-card__btn-action">
+						<div class="feed-card__icon-wrapper">
 							<material-icon icon="chat_bubble"></material-icon>
 						</div>
-						<span class="text-xs font-semibold"
+						<span class="feed-card__action-text"
 							>{{ item.comments }}</span
 						>
 					</button>
-
-					<button
-						type="button"
-						class="group flex flex-col items-center gap-1 text-white outline-none"
-					>
-						<div
-							class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-colors group-hover:bg-black/60"
-						>
+					<button type="button" class="feed-card__btn-action">
+						<div class="feed-card__icon-wrapper">
 							<material-icon icon="share"></material-icon>
 						</div>
 					</button>
 				</div>
 			</div>
-			}
+			} }
 		</section>
 		}
 	</div>

@@ -1,7 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
+import { RouterLink } from '@angular/router'; // 1. Додаємо імпорт
 import { MaterialComponent } from '@wawjs/ngx-ui';
 import { RecipeShortComponent } from 'src/app/components/recipe/recipe-short/recipe-short.component';
 import { RestaurantShortComponent } from 'src/app/components/restaurant/restaurant-short/restaurant-short.component';
+
 @Component({
 	selector: 'page-workspace',
 	templateUrl: './workspace.component.html',
@@ -10,10 +12,11 @@ import { RestaurantShortComponent } from 'src/app/components/restaurant/restaura
 		MaterialComponent,
 		RecipeShortComponent,
 		RestaurantShortComponent,
+		RouterLink, // 2. Додаємо в imports
 	],
 })
 export class WorkspaceComponent {
-	// Активна вкладка для перемикання розділів воркспейсу
+	// Активна вкладка
 	readonly activeTab = signal<
 		'recipes' | 'restaurants' | 'jobs' | 'contracts'
 	>('recipes');
@@ -22,7 +25,40 @@ export class WorkspaceComponent {
 		this.activeTab.set(tab);
 	}
 
-	// Дані для приватного воркспейсу згідно з ТЗ
+	// 3. РОЗУМНІ ВЛАСТИВОСТІ ДЛЯ КНОПКИ
+	// Динамічний текст кнопки
+	readonly createBtnLabel = computed(() => {
+		switch (this.activeTab()) {
+			case 'recipes':
+				return 'Створити рецепт';
+			case 'restaurants':
+				return 'Створити заклад';
+			case 'jobs':
+				return 'Створити вакансію';
+			case 'contracts':
+				return 'Створити контракт';
+			default:
+				return 'Створити сутність';
+		}
+	});
+
+	// Динамічне посилання для кнопки (роути)
+	readonly createBtnLink = computed(() => {
+		switch (this.activeTab()) {
+			case 'recipes':
+				return '/editor'; // Або '/editor?type=recipe'
+			case 'restaurants':
+				return '/editor';
+			case 'jobs':
+				return '/editor';
+			case 'contracts':
+				return '/editor';
+			default:
+				return '/editor';
+		}
+	});
+
+	// --- Твої існуючі дані ---
 	readonly ownedRecipes = signal([
 		{ id: 1, title: 'Фірмовий стейк Рібай', status: 'Опубліковано' },
 		{

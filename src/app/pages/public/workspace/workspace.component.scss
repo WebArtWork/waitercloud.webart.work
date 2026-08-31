@@ -50,8 +50,8 @@
 		border-radius: var(--radius-btn);
 		background-color: var(--c-text-primary);
 		color: var(--c-bg-primary);
-		padding: 0.5rem 1rem;
-		font-size: 0.75rem;
+		padding: 0.65rem 1.25rem;
+		font-size: 0.875rem;
 		font-weight: 700;
 		border: none;
 		cursor: pointer;
@@ -61,11 +61,6 @@
 			opacity: 0.9;
 		}
 	}
-
-	&__create-icon {
-		font-size: 0.875rem;
-	}
-
 	/* --- Вклади (Tabs) --- */
 	&__tabs {
 		display: flex;
@@ -202,32 +197,38 @@
 
 	&__edit-btn {
 		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
+		top: 0.75rem;
+		right: 0.75rem;
 		z-index: 10;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2rem;
-		height: 2rem;
+		width: 2.25rem;
+		height: 2.25rem;
 		border-radius: 50%;
-		background-color: var(--c-text-primary);
-		color: var(--c-bg-primary);
 		border: none;
 		cursor: pointer;
-		opacity: 0.8;
+
+		/* Висока контрастність на будь-якому фото */
+		background-color: rgba(0, 0, 0, 0.65);
+		color: #ffffff;
+		backdrop-filter: blur(4px);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+		opacity: 0.85;
 		transform: scale(0.9);
 		transition: all 0.2s ease-in-out;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 
 		material-icon {
 			font-size: 1.125rem;
 		}
 
 		&:hover {
-			background-color: var(--c-bg-primary);
-			color: var(--c-text-primary);
-			border: 1px solid var(--c-border);
+			background-color: rgba(0, 0, 0, 0.9);
+			color: #ffffff;
+			transform: scale(
+				1.05
+			) !important; /* Трохи збільшуємо при наведенні саме на кнопку */
 		}
 	}
 

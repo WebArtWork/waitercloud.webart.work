@@ -3,7 +3,14 @@
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	padding-bottom: 1.5rem;
+
+	/* 1. Жорстко обмежуємо висоту сторінки (100% мінус верхній і нижній бари) */
+	height: calc(100vh - 120px);
+
+	/* 2. Вбиваємо будь-який загальний скрол на рівні сторінки */
+	overflow: hidden;
+
+	padding-bottom: 0.5rem;
 
 	/* --- ФІЛЬТРИ --- */
 	&__filters {
@@ -12,8 +19,9 @@
 		gap: 0.5rem;
 		overflow-x: auto;
 		padding-bottom: 0.25rem;
-		scrollbar-width: none;
+		flex-shrink: 0; /* Щоб фільтри не стискалися */
 
+		scrollbar-width: none;
 		&::-webkit-scrollbar {
 			display: none;
 		}
@@ -62,7 +70,11 @@
 /* --- КОНТЕЙНЕР КАРТИ --- */
 .map {
 	position: relative;
-	height: calc(100vh - 11rem);
+
+	/* 3. Карта автоматично займає весь простір, що залишився під фільтрами */
+	flex: 1;
+	min-height: 0; /* Хак для flexbox, щоб контейнер не вилазив за межі батька */
+
 	width: 100%;
 	overflow: hidden;
 	border-radius: var(--radius-btn);

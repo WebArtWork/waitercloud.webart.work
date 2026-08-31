@@ -1,11 +1,58 @@
-<article class="flex flex-col gap-4 pb-10">
-	<img
-		src="https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=600&auto=format&fit=crop"
-		alt="Chef Mario preparing food"
-		class="h-64 w-full rounded-[var(--radius-btn)] object-cover"
-	/>
-	<h1 class="text-3xl font-bold text-[var(--c-text-primary)]">Chef Mario</h1>
-	<p class="text-[var(--c-text-primary)]">
-		Italian chef sharing traditional recipes, practical techniques, and food-industry experience.
-	</p>
+<article class="author-page">
+	<div class="author-page__banner">
+		<img
+			[src]="author().imageUrl"
+			[alt]="author().name"
+			class="author-page__image"
+		/>
+	</div>
+
+	<div class="author-page__body">
+		<div class="author-page__header">
+			<h1 class="author-page__name">{{ author().name }}</h1>
+			<span class="author-page__role">{{ author().role }}</span>
+		</div>
+
+		<div class="author-page__meta">
+			<div class="author-page__meta-item">
+				<material-icon icon="workspace_premium"></material-icon>
+				<span>{{ author().experience }}</span>
+			</div>
+			<div class="author-page__meta-item">
+				<material-icon icon="restaurant_menu"></material-icon>
+				<span>{{ author().specialty }}</span>
+			</div>
+		</div>
+
+		<div class="author-page__bio">
+			<h2 class="author-page__bio-title">Про кухаря</h2>
+			<p class="author-page__bio-text">{{ author().bio }}</p>
+		</div>
+
+		@if (author().restaurants.length) {
+		<section class="author-page__section">
+			<h2 class="author-page__section-title">
+				<material-icon icon="storefront"></material-icon>
+				Заклади, в яких працює
+			</h2>
+			<div class="author-page__grid">
+				@for (restaurant of author().restaurants; track restaurant.id) {
+				<restaurant-short [restaurant]="restaurant"></restaurant-short>
+				}
+			</div>
+		</section>
+		} @if (author().recipes.length) {
+		<section class="author-page__section">
+			<h2 class="author-page__section-title">
+				<material-icon icon="menu_book"></material-icon>
+				Фірмові рецепти від автора
+			</h2>
+			<div class="author-page__grid">
+				@for (recipe of author().recipes; track recipe.id) {
+				<recipe-short [recipe]="recipe"></recipe-short>
+				}
+			</div>
+		</section>
+		}
+	</div>
 </article>

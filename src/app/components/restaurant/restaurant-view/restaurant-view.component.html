@@ -1,52 +1,83 @@
-<div
-	class="flex flex-col w-full bg-[var(--c-bg-primary)] rounded-[var(--radius-btn)] overflow-hidden border border-[var(--c-border)]"
->
-	<div class="w-full h-64 md:h-80 relative">
+<div class="restaurant-view">
+	<div class="restaurant-view__banner">
 		<img
 			[src]="restaurant().imageUrl"
 			[alt]="restaurant().title"
-			class="w-full h-full object-cover"
+			class="restaurant-view__image"
 		/>
 	</div>
-	<div class="p-6 flex flex-col gap-4">
-		<div class="flex justify-between items-start">
-			<h1 class="text-3xl font-bold text-[var(--c-text-primary)]">
-				{{ restaurant().title }}
-			</h1>
-			<div
-				class="flex items-center gap-1 bg-yellow-400/20 text-yellow-600 px-3 py-1 rounded-full font-bold"
-			>
-				<material-icon icon="star" class="text-[18px]"></material-icon>
+
+	<div class="restaurant-view__body">
+		<div class="restaurant-view__header">
+			<h1 class="restaurant-view__title">{{ restaurant().title }}</h1>
+			<div class="restaurant-view__rating">
+				<material-icon icon="star"></material-icon>
 				{{ restaurant().rating }}
 			</div>
 		</div>
 
-		<div class="flex flex-col gap-2 text-sm text-[var(--c-text-secondary)]">
-			<div class="flex items-center gap-2">
-				<material-icon
-					icon="location_on"
-					class="text-[18px]"
-				></material-icon>
+		<div class="restaurant-view__meta">
+			<div class="restaurant-view__meta-item">
+				<material-icon icon="location_on"></material-icon>
 				<span>{{ restaurant().address }}</span>
 			</div>
-			<div class="flex items-center gap-2">
-				<material-icon
-					icon="schedule"
-					class="text-[18px]"
-				></material-icon>
+			<div class="restaurant-view__meta-item">
+				<material-icon icon="schedule"></material-icon>
 				<span>{{ restaurant().workingHours }}</span>
 			</div>
 		</div>
 
-		<div class="mt-4">
-			<h2 class="text-xl font-semibold mb-2 text-[var(--c-text-primary)]">
-				Про заклад
-			</h2>
-			<p
-				class="text-[var(--c-text-secondary)] leading-relaxed whitespace-pre-wrap"
-			>
+		<div class="restaurant-view__description">
+			<h2 class="restaurant-view__description-title">Про заклад</h2>
+			<p class="restaurant-view__description-text">
 				{{ restaurant().description }}
 			</p>
 		</div>
+
+		@if (restaurant().chefs && restaurant().chefs?.length) {
+		<div class="restaurant-view__section">
+			<h2 class="restaurant-view__section-title">
+				<material-icon icon="person"></material-icon>
+				Наші шефи та кухарі
+			</h2>
+			<div class="restaurant-view__chefs-grid">
+				@for (chef of restaurant().chefs; track chef.id) {
+				<a
+					[routerLink]="['/author']"
+					[queryParams]="{ id: chef.id }"
+					class="restaurant-view__chef-card"
+				>
+					<img
+						[src]="chef.avatarUrl"
+						[alt]="chef.name"
+						class="restaurant-view__chef-avatar"
+					/>
+					<div class="restaurant-view__chef-info">
+						<span class="restaurant-view__chef-name"
+							>{{ chef.name }}</span
+						>
+						<span class="restaurant-view__chef-role"
+							>{{ chef.role }}</span
+						>
+					</div>
+				</a>
+				}
+			</div>
+		</div>
+		} @if (restaurant().menu && restaurant().menu?.length) {
+		<div class="restaurant-view__section">
+			<h2 class="restaurant-view__section-title">
+				<material-icon icon="menu_book"></material-icon>
+				Меню та фірмові страви
+			</h2>
+			<div class="restaurant-view__menu-grid">
+				@for (dish of restaurant().menu; track dish.id) {
+				<div>
+					<recipe-short [recipe]="dish"></recipe-short>
+				</div>
+				}
+			</div>
+		</div>
+		}
 	</div>
 </div>

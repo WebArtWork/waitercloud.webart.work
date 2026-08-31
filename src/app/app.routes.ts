@@ -64,6 +64,22 @@ export const routes: Routes = [
 					),
 			},
 			{
+				path: 'cook',
+				canActivate: [MetaGuard, seoGuard],
+				data: {
+					meta: {
+						title: 'Що приготувати',
+						description:
+							'Підбір рецептів на основі продуктів з вашого холодильника.',
+						path: '/cook',
+					},
+				},
+				loadComponent: () =>
+					import('./pages/public/cook/cook.component').then(
+						(m) => m.CookComponent,
+					),
+			},
+			{
 				path: 'workspace',
 				canActivate: [prerenderAuthenticatedGuard, MetaGuard],
 				data: { meta: { title: 'Workspace' } },

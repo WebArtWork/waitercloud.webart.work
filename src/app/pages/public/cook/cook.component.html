@@ -1,0 +1,148 @@
+<div class="cook-page">
+	<!-- Шапка сторінки -->
+	<header class="cook-page__header">
+		<div class="cook-page__header-info">
+			<h1 class="cook-page__title">Що у вашому холодильнику?</h1>
+			<p class="cook-page__desc">
+				Введіть наявні продукти, і ми знайдемо найкращі рецепти з
+				максимальним збігом інгредієнтів.
+			</p>
+		</div>
+	</header>
+
+	<!-- Блок введення інгредієнтів -->
+	<section class="cook-page__input-section">
+		<div class="cook-page__search-box">
+			<material-icon
+				icon="search"
+				class="cook-page__search-icon"
+			></material-icon>
+			<input
+				type="text"
+				class="cook-page__input"
+				placeholder="Введіть продукт (наприклад: сир, курка, яйця)..."
+				[ngModel]="ingredientInput()"
+				(ngModelChange)="ingredientInput.set($event)"
+				(keydown.enter)="addIngredient(ingredientInput())"
+			/>
+			<button
+				type="button"
+				class="cook-page__add-btn"
+				(click)="addIngredient(ingredientInput())"
+			>
+				Додати
+			</button>
+		</div>
+
+		<!-- Вибрані користувачем інгредієнти -->
+		@if (selectedIngredients().length > 0) {
+		<div class="cook-page__chips-wrapper">
+			<div class="cook-page__chips-header">
+				<span class="cook-page__chips-title"
+					>Ваші інгредієнти ({{ selectedIngredients().length
+					}}):</span
+				>
+				<button
+					type="button"
+					class="cook-page__clear-btn"
+					(click)="clearAll()"
+				>
+					Очистити всі
+				</button>
+			</div>
+			<div class="cook-page__chips">
+				@for (item of selectedIngredients(); track item) {
+				<div class="cook-page__chip">
+					<span>{{ item }}</span>
+					<button
+						type="button"
+						class="cook-page__chip-remove"
+						(click)="removeIngredient(item)"
+						title="Видалити"
+					>
+						<material-icon icon="close"></material-icon>
+					</button>
+				</div>
+				}
+			</div>
+		</div>
+		}
+
+		<!-- Швидкий вибір (Популярні інгредієнти) -->
+		<div class="cook-page__quick-select">
+			<span class="cook-page__quick-title">Швидко додати:</span>
+			<div class="cook-page__quick-list">
+				@for (item of popularIngredients(); track item) { @if
+				(!selectedIngredients().includes(item)) {
+				<button
+					type="button"
+					class="cook-page__quick-btn"
+					(click)="addIngredient(item)"
+				>
+					+ {{ item }}
+				</button>
+				} }
+			</div>
+		</div>
+	</section>
+
+	<!-- Секція результатів підбору -->
+	<section class="cook-page__results">
+		<div class="cook-page__results-header">
+			<h2 class="cook-page__section-title">
+				<material-icon icon="restaurant_menu"></material-icon>
+				Підібрані страви (@if (matchedRecipes().length) { {{
+				matchedRecipes().length }} } @else { 0 })
+			</h2>
+		</div>
+
+		@if (matchedRecipes().length > 0) {
+		<div class="cook-page__grid">
+			@for (recipe of matchedRecipes(); track recipe.id) {
+			<div class="cook-page__recipe-card">
+				<!-- Бейдж відсотка збігу -->
+				<div
+					class="cook-page__match-badge"
+					[class.cook-page__match-badge--full]="recipe.matchPercentage === 100"
+				>
+					{{ recipe.matchPercentage }}% збіг
+				</div>
+
+				<recipe-short
+					[recipe]="{
+                        id: recipe.id,
+                        title: recipe.title,
+                        author: recipe.author,
+                        imageUrl: recipe.imageUrl
+                    }"
+				></recipe-short>
+
+				<div class="cook-page__recipe-footer">
+					@if (recipe.missingCount > 0) {
+					<span class="cook-page__missing-text">
+						Бракує: {{ recipe.missingCount }} інгр.
+					</span>
+					} @else {
+					<span class="cook-page__full-text">
+						✓ Всі продукти є!
+					</span>
+					}
+				</div>
+			</div>
+			}
+		</div>
+		} @else {
+		<div class="cook-page__empty-state">
+			<material-icon
+				icon="kitchen"
+				class="cook-page__empty-icon"
+			></material-icon>
+			<p class="cook-page__empty-title">Немає підібраних рецептів</p>
+			<p class="cook-page__empty-desc">
+				Додайте більше інгредієнтів у список вище, щоб знайти ідеальні
+				страви.
+			</p>
+		</div>
+		}
+	</section>
+</div>

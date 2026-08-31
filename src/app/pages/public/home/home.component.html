@@ -1,137 +1,151 @@
 <article class="landing">
-	<header class="landing__hero">
-		<p class="landing__eyebrow">Waiter Cloud</p>
-		<h1>Food is more than a restaurant name</h1>
-		<p class="landing__lead">
-			Waiter Cloud connects the people, recipes, places, schools, jobs and
-			stories behind the food industry.
-		</p>
-		<p>
+	<!-- Вау-екран з паралаксом на весь екран -->
+	<section
+		class="landing__hero"
+		[style.backgroundImage]="'url(' + heroBg() + ')'"
+	>
+		<div class="landing__hero-overlay"></div>
+		<div class="landing__hero-content">
+			<p class="landing__eyebrow">Waiter Cloud</p>
+			<h1>Food is more than a restaurant name</h1>
+			<p class="landing__lead">
+				Waiter Cloud connects the people, recipes, places, schools, jobs
+				and stories behind the food industry.
+			</p>
+		</div>
+	</section>
+
+	<!-- Контейнер для всього твого контенту (обмежений по ширині) -->
+	<div class="landing__content-wrap">
+		<!-- Текст, який спустили нижче, як казав ментор -->
+		<p class="landing__intro">
 			Discover what you want to eat, who created it, where they work now,
 			how recipes evolve, where to learn, and where new opportunities are
 			waiting.
 		</p>
-	</header>
 
-	<div class="landing__sections">
-		<section>
-			<p class="landing__number">01</p>
-			<h2>Follow the people behind the food</h2>
+		<div class="landing__sections">
+			<section>
+				<p class="landing__number">01</p>
+				<h2>Follow the people behind the food</h2>
+				<p>
+					You loved a dish at a restaurant, but a few months later it
+					tastes completely different. Maybe the chef who created it
+					is no longer there.
+				</p>
+				<p>
+					Waiter Cloud connects recipes with their authors and
+					workplaces, so you can see who created the food you love,
+					follow their career and discover where they are cooking now.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">02</p>
+				<h2>Search for the dish, not only the restaurant</h2>
+				<p>
+					Sometimes you don't care which restaurant you visit. You
+					just want a great Carbonara.
+				</p>
+				<p>
+					Search for a recipe or dish and discover nearby restaurants
+					that serve it, the people behind it, related recipes and
+					community feedback.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">03</p>
+				<h2>Recipes have a history</h2>
+				<p>
+					A great recipe rarely stays exactly the same. People improve
+					it, adapt it and create their own versions.
+				</p>
+				<p>
+					Public recipes can be forked into completely new recipes
+					while keeping a connection to the original, letting you
+					discover how an idea evolved and who created each version.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">04</p>
+				<h2>Build a real food-industry profile</h2>
+				<p>A CV tells you where somebody worked.</p>
+				<p>Waiter Cloud can show what they actually created.</p>
+				<p>
+					Chefs, waiters and other food-industry professionals can
+					build public profiles connected to recipes, workplaces,
+					experience and feedback — giving restaurants a better
+					picture of the person behind an application.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">05</p>
+				<h2>Find work — or get discovered</h2>
+				<p>
+					Employees can search and apply for jobs, but opportunities
+					don't have to start with an application. Restaurants can
+					discover professionals and send proposals directly.
+				</p>
+				<p>
+					Applications and proposals can then become contracts,
+					keeping the whole employment journey connected in one place.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">06</p>
+				<h2>Discover where to learn</h2>
+				<p>
+					Choosing a cooking school should involve more than reading a
+					description. Explore cooking schools, their location,
+					community feedback and the people connected with them.
+				</p>
+				<p>
+					Over time, Waiter Cloud can help you see what students
+					learned, what they created and where their careers took
+					them.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">07</p>
+				<h2>Save food for later</h2>
+				<p>
+					Finding something interesting is only the beginning. Save
+					recipes you want to try, keep track of what you're planning
+					to cook and mark what you've already made.
+				</p>
+				<p>
+					Your Workspace becomes your personal food collection rather
+					than another endless feed you forget tomorrow.
+				</p>
+			</section>
+			<section>
+				<p class="landing__number">08</p>
+				<h2>Understand places through people and food</h2>
+				<p>
+					Restaurant ratings alone don't tell the whole story. Waiter
+					Cloud connects restaurants with recipes, chefs, employees
+					and feedback, giving you more context about why people love
+					a place — and what may have changed when the experience
+					changes.
+				</p>
+			</section>
+		</div>
+
+		<footer class="landing__closing">
+			<h2>One platform for the food world</h2>
+			<ul aria-label="Waiter Cloud features">
+				<li>Discover recipes.</li>
+				<li>Find restaurants.</li>
+				<li>Explore cooking schools.</li>
+				<li>Follow food professionals.</li>
+				<li>Find work.</li>
+				<li>Build your reputation.</li>
+			</ul>
 			<p>
-				You loved a dish at a restaurant, but a few months later it
-				tastes completely different. Maybe the chef who created it is no
-				longer there.
+				<strong
+					>Waiter Cloud connects the food you experience with
+					everything and everyone behind it.</strong
+				>
 			</p>
-			<p>
-				Waiter Cloud connects recipes with their authors and workplaces,
-				so you can see who created the food you love, follow their
-				career and discover where they are cooking now.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">02</p>
-			<h2>Search for the dish, not only the restaurant</h2>
-			<p>
-				Sometimes you don't care which restaurant you visit. You just
-				want a great Carbonara.
-			</p>
-			<p>
-				Search for a recipe or dish and discover nearby restaurants that
-				serve it, the people behind it, related recipes and community
-				feedback.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">03</p>
-			<h2>Recipes have a history</h2>
-			<p>
-				A great recipe rarely stays exactly the same. People improve it,
-				adapt it and create their own versions.
-			</p>
-			<p>
-				Public recipes can be forked into completely new recipes while
-				keeping a connection to the original, letting you discover how
-				an idea evolved and who created each version.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">04</p>
-			<h2>Build a real food-industry profile</h2>
-			<p>A CV tells you where somebody worked.</p>
-			<p>Waiter Cloud can show what they actually created.</p>
-			<p>
-				Chefs, waiters and other food-industry professionals can build
-				public profiles connected to recipes, workplaces, experience and
-				feedback — giving restaurants a better picture of the person
-				behind an application.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">05</p>
-			<h2>Find work — or get discovered</h2>
-			<p>
-				Employees can search and apply for jobs, but opportunities don't
-				have to start with an application. Restaurants can discover
-				professionals and send proposals directly.
-			</p>
-			<p>
-				Applications and proposals can then become contracts, keeping
-				the whole employment journey connected in one place.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">06</p>
-			<h2>Discover where to learn</h2>
-			<p>
-				Choosing a cooking school should involve more than reading a
-				description. Explore cooking schools, their location, community
-				feedback and the people connected with them.
-			</p>
-			<p>
-				Over time, Waiter Cloud can help you see what students learned,
-				what they created and where their careers took them.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">07</p>
-			<h2>Save food for later</h2>
-			<p>
-				Finding something interesting is only the beginning. Save
-				recipes you want to try, keep track of what you're planning to
-				cook and mark what you've already made.
-			</p>
-			<p>
-				Your Workspace becomes your personal food collection rather than
-				another endless feed you forget tomorrow.
-			</p>
-		</section>
-		<section>
-			<p class="landing__number">08</p>
-			<h2>Understand places through people and food</h2>
-			<p>
-				Restaurant ratings alone don't tell the whole story. Waiter
-				Cloud connects restaurants with recipes, chefs, employees and
-				feedback, giving you more context about why people love a place
-				— and what may have changed when the experience changes.
-			</p>
-		</section>
+		</footer>
 	</div>
-
-	<footer class="landing__closing">
-		<h2>One platform for the food world</h2>
-		<ul aria-label="Waiter Cloud features">
-			<li>Discover recipes.</li>
-			<li>Find restaurants.</li>
-			<li>Explore cooking schools.</li>
-			<li>Follow food professionals.</li>
-			<li>Find work.</li>
-			<li>Build your reputation.</li>
-		</ul>
-		<p>
-			<strong
-				>Waiter Cloud connects the food you experience with everything
-				and everyone behind it.</strong
-			>
-		</p>
-	</footer>
 </article>

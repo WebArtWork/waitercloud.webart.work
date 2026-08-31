@@ -1,7 +1,23 @@
 <div class="public-layout">
 	<header class="public-layout__topbar">
+		<!-- 1. НОВА ІКОНКА HOME ЗЛІВА -->
+		<a
+			aria-label="Home"
+			routerLink="/home"
+			class="public-layout__home-btn"
+			style="
+				display: flex;
+				align-items: center;
+				color: var(--c-text-primary);
+			"
+		>
+			<material-icon icon="home"></material-icon>
+		</a>
+
+		<!-- 2. ЗАГОЛОВОК ПО ЦЕНТРУ -->
 		<div class="public-layout__title">{{ pageTitle() }}</div>
-		<!-- Іконка покажеться ТІЛЬКИ якщо ми НЕ на сторінці профілю -->
+
+		<!-- 3. ІКОНКА ПРОФІЛЮ СПРАВА -->
 		@if (pageTitle() !== 'Profile') {
 		<a
 			aria-label="Profile"
@@ -10,6 +26,9 @@
 		>
 			<material-icon icon="person"></material-icon>
 		</a>
+		} @else {
+		<!-- Пустий блок для балансу, щоб заголовок був ідеально по центру, коли профілю нема -->
+		<div style="width: 24px"></div>
 		}
 	</header>
 
@@ -18,10 +37,7 @@
 	</main>
 
 	<nav aria-label="Primary navigation" class="public-layout__navigation">
-		<a routerLink="/home" routerLinkActive="public-layout__link--active">
-			<material-icon icon="home"></material-icon>
-			<span>Home</span>
-		</a>
+		<!-- Home звідси видалили, лишилися тільки ці 4 -->
 		<a routerLink="/explore" routerLinkActive="public-layout__link--active">
 			<material-icon icon="explore"></material-icon>
 			<span>Explore</span>
@@ -44,6 +60,10 @@
 		>
 			<material-icon icon="workspaces"></material-icon>
 			<span>Workspace</span>
+		</a>
+		<a routerLink="/cook" routerLinkActive="public-layout__link--active">
+			<material-icon icon="soup_kitchen"></material-icon>
+			<span>Cook</span>
 		</a>
 	</nav>
 </div>

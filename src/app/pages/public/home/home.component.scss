@@ -1,51 +1,132 @@
 .landing {
-	display: grid;
-	gap: 3rem;
-	width: min(100%, 64rem);
-	margin-inline: auto;
-	padding: 1.5rem 1rem 4rem;
+	display: flex;
+	flex-direction: column;
+	width: 100%; /* Розтягуємо на весь екран */
 	color: var(--c-text-primary);
+	background-color: var(--c-bg-primary);
 
+	/* --- ЛОГОТИП (Зліва зверху) --- */
+	&__header {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		padding: 1.5rem 2rem;
+		z-index: 50;
+	}
+
+	&__logo {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #fff;
+		text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+	}
+
+	&__logo-icon {
+		font-size: 1.75rem;
+		color: var(--c-primary);
+	}
+
+	&__logo-text {
+		font-size: 1.25rem;
+		font-weight: 800;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	/* --- ВАУ-ЕКРАН З ПАРАЛАКСОМ --- */
+	&__hero {
+		position: relative;
+		height: 100vh; /* Висота на весь екран */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+		/* Магія паралаксу */
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	&__hero-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.4) 0%,
+			rgba(0, 0, 0, 0.7) 80%,
+			var(--c-bg-primary) 100%
+		);
+		z-index: 1;
+	}
+
+	&__hero-content {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		padding: 0 2rem;
+		max-width: 64rem;
+
+		h1 {
+			color: #fff;
+			font-size: clamp(2.5rem, 7vw, 5rem);
+			line-height: 1.05;
+			letter-spacing: -0.045em;
+			text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+		}
+	}
+
+	&__eyebrow {
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--c-primary) !important;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+	}
+
+	&__lead {
+		font-size: clamp(1.2rem, 3vw, 1.6rem);
+		color: rgba(255, 255, 255, 0.9) !important;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	}
+
+	/* --- КОНТЕЙНЕР ДЛЯ ІСНУЮЧОГО КОНТЕНТУ --- */
+	&__content-wrap {
+		display: grid;
+		gap: 3rem;
+		width: min(100%, 64rem); /* Повертаємо обмеження ширини */
+		margin-inline: auto;
+		padding: 4rem 1.5rem;
+	}
+
+	&__intro {
+		text-align: center;
+		font-size: 1.25rem;
+		line-height: 1.75;
+		color: var(--c-text-muted);
+		max-width: 48rem;
+		margin: 0 auto 2rem;
+	}
+
+	/* --- ТВОЇ СТАРІ СТИЛІ (Трохи адаптовані) --- */
 	p {
-		max-width: 44rem;
 		line-height: 1.75;
 		color: var(--c-text-muted);
 	}
 
-	&__hero {
-		display: grid;
-		gap: 1rem;
-		padding: clamp(1.5rem, 5vw, 4rem);
-		border: 1px solid var(--c-border);
-		border-radius: var(--radius-card);
-		background:
-			radial-gradient(
-				circle at top right,
-				color-mix(in srgb, var(--c-primary) 18%, transparent),
-				transparent 42%
-			),
-			var(--c-bg-tertiary);
-
-		h1 {
-			max-width: 48rem;
-			font-size: clamp(2.25rem, 7vw, 4.75rem);
-			line-height: 1.02;
-			letter-spacing: -0.045em;
-		}
-	}
-
-	&__eyebrow,
 	&__number {
 		font-size: 0.75rem;
 		font-weight: 700;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
 		color: var(--c-primary) !important;
-	}
-
-	&__lead {
-		font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-		color: var(--c-text-primary) !important;
 	}
 
 	&__sections {
@@ -59,12 +140,25 @@
 			gap: 0.8rem;
 			padding: clamp(1.25rem, 3vw, 2rem);
 			border: 1px solid var(--c-border);
-			border-radius: var(--radius-card);
+			border-radius: var(--radius-card, 1rem);
 			background: var(--c-bg-tertiary);
+			transition:
+				transform 0.2s,
+				border-color 0.2s;
+
+			&:hover {
+				transform: translateY(-4px);
+				border-color: color-mix(
+					in srgb,
+					var(--c-primary) 50%,
+					transparent
+				);
+			}
 
 			h2 {
 				font-size: clamp(1.25rem, 2.5vw, 1.65rem);
 				line-height: 1.2;
+				color: var(--c-text-primary);
 			}
 		}
 	}
@@ -73,22 +167,31 @@
 		display: grid;
 		gap: 1.5rem;
 		padding: clamp(1.5rem, 5vw, 3.5rem);
-		border-radius: var(--radius-card);
-		background: var(--c-text-secondary);
+		border-radius: var(--radius-card, 1rem);
+		background: var(
+			--c-text-secondary,
+			#e5e5e5
+		); /* Якщо змінна пуста, буде світлий */
 		color: var(--c-bg-tertiary);
 
 		h2 {
 			font-size: clamp(1.75rem, 4vw, 3rem);
 			line-height: 1.1;
 		}
+
 		ul {
 			display: grid;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 0.6rem 1.5rem;
 			list-style: none;
+			padding: 0;
+			margin: 0;
+			font-weight: 500;
 		}
+
 		p {
 			color: var(--c-bg-tertiary);
+			margin-top: 1rem;
 		}
 	}
 

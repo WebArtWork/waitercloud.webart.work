@@ -8,12 +8,12 @@
 				контрактами.
 			</p>
 		</div>
-		<button type="button" class="workspace__create-btn">
-			<material-icon
-				icon="add"
-				class="workspace__create-icon"
-			></material-icon>
-			Створити сутність
+		<button
+			type="button"
+			[routerLink]="createBtnLink()"
+			class="workspace__create-btn"
+		>
+			{{ createBtnLabel() }}
 		</button>
 	</div>
 
@@ -70,6 +70,8 @@
 						<button
 							class="workspace__edit-btn"
 							title="Редагувати рецепт"
+							[routerLink]="['/editor']"
+							[queryParams]="{ id: recipe.id, type: 'recipe' }"
 						>
 							<material-icon icon="edit"></material-icon>
 						</button>
@@ -150,10 +152,11 @@
 					<button
 						class="workspace__edit-btn"
 						title="Редагувати заклад"
+						[routerLink]="['/editor']"
+						[queryParams]="{ id: place.id, type: 'restaurant' }"
 					>
 						<material-icon icon="edit"></material-icon>
 					</button>
-
 					<restaurant-short
 						[restaurant]="{
                             id: place.id,
