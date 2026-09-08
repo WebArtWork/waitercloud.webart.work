@@ -2,13 +2,28 @@ import { Component, signal } from '@angular/core';
 import { MaterialComponent } from '@wawjs/ngx-ui';
 import { RecipeFormComponent } from 'src/app/components/recipe/recipe-form/recipe-form.component';
 import { RestaurantFormComponent } from 'src/app/components/restaurant/restaurant-form/restaurant-form.component';
+import {
+	SchoolFormComponent,
+	SchoolFormData,
+} from 'src/app/components/school/school-form/school-form.component';
+import {
+	EmployeeFormComponent,
+	EmployeeFormData,
+} from 'src/app/components/employee/employee-form/employee-form.component';
+
 @Component({
 	selector: 'page-editor',
+	standalone: true,
 	templateUrl: './editor.component.html',
-	imports: [MaterialComponent, RecipeFormComponent, RestaurantFormComponent],
+	imports: [
+		MaterialComponent,
+		RecipeFormComponent,
+		RestaurantFormComponent,
+		SchoolFormComponent,
+		EmployeeFormComponent,
+	],
 })
 export class EditorComponent {
-	// Доступні типи форм згідно з ТЗ
 	readonly formTypes = signal([
 		{ id: 'recipe', label: 'Рецепт', icon: 'menu_book' },
 		{ id: 'restaurant', label: 'Ресторан', icon: 'restaurant' },
@@ -20,11 +35,17 @@ export class EditorComponent {
 		{ id: 'contract', label: 'Контракт', icon: 'gavel' },
 	]);
 
-	// Поточний обраний тип форми
 	readonly activeForm = signal('recipe');
 
-	// Метод зміни форми
 	selectForm(id: string) {
 		this.activeForm.set(id);
+	}
+
+	onSaveSchool(schoolData: SchoolFormData) {
+		console.log('School saved:', schoolData);
+	}
+
+	onSaveEmployee(employeeData: EmployeeFormData) {
+		console.log('Employee saved:', employeeData);
 	}
 }

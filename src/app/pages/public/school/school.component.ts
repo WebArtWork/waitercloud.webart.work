@@ -1,16 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
-import { MaterialComponent } from '@wawjs/ngx-ui';
-import { RecipeShortComponent } from '../../../components/recipe/recipe-short/recipe-short.component';
+import {
+	SchoolViewComponent,
+	SchoolViewModel,
+} from '../../../components/school/school-view/school-view.component';
 
 @Component({
 	selector: 'page-school',
 	standalone: true,
-	imports: [MaterialComponent, RecipeShortComponent, RouterLink],
+	imports: [SchoolViewComponent],
 	templateUrl: './school.component.html',
-	styleUrl: './school.component.scss',
 })
 export class SchoolComponent {
 	readonly schoolId = toSignal(
@@ -20,7 +21,7 @@ export class SchoolComponent {
 		{ initialValue: null },
 	);
 
-	readonly school = signal({
+	readonly school = signal<SchoolViewModel>({
 		id: this.schoolId() || '1',
 		title: 'Culinary Academy',
 		tagline: 'Професійні кулінарні програми для майбутніх шефів',

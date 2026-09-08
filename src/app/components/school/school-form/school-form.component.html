@@ -1,1 +1,81 @@
-<!-- Intentionally empty. -->
+<form class="school-form" (ngSubmit)="onSubmit()">
+	<div class="school-form__group">
+		<label class="school-form__label">Назва школи / академії</label>
+		<input
+			type="text"
+			class="school-form__input"
+			placeholder="Наприклад: Kyiv Culinary Academy"
+			[ngModel]="formData().title"
+			(ngModelChange)="updateField('title', $event)"
+			name="title"
+			required
+		/>
+	</div>
+
+	<div class="school-form__group">
+		<label class="school-form__label">Слоган / Короткий підзаголовок</label>
+		<input
+			type="text"
+			class="school-form__input"
+			placeholder="Наприклад: Професійні кулінарні програми"
+			[ngModel]="formData().tagline"
+			(ngModelChange)="updateField('tagline', $event)"
+			name="tagline"
+		/>
+	</div>
+
+	<div class="school-form__group">
+		<label class="school-form__label">Посилання на банер (Image URL)</label>
+		<input
+			type="url"
+			class="school-form__input"
+			placeholder="https://images.unsplash.com/..."
+			[ngModel]="formData().imageUrl"
+			(ngModelChange)="updateField('imageUrl', $event)"
+			name="imageUrl"
+		/>
+	</div>
+
+	<div class="school-form__row">
+		<div class="school-form__group">
+			<label class="school-form__label">Адреса</label>
+			<input
+				type="text"
+				class="school-form__input"
+				placeholder="Київ, вул. Академічна, 15"
+				[ngModel]="formData().address"
+				(ngModelChange)="updateField('address', $event)"
+				name="address"
+			/>
+		</div>
+
+		<div class="school-form__group">
+			<label class="school-form__label">Тривалість курсів</label>
+			<input
+				type="text"
+				class="school-form__input"
+				placeholder="Від 2 тижнів до 6 місяців"
+				[ngModel]="formData().duration"
+				(ngModelChange)="updateField('duration', $event)"
+				name="duration"
+			/>
+		</div>
+	</div>
+
+	<div class="school-form__group">
+		<label class="school-form__label">Опис курсів та академії</label>
+		<textarea
+			class="school-form__textarea"
+			rows="4"
+			placeholder="Розкажіть про методику навчання, обладнання, дипломи..."
+			[ngModel]="formData().description"
+			(ngModelChange)="updateField('description', $event)"
+			name="description"
+		></textarea>
+	</div>
+
+	<button type="submit" class="school-form__submit-btn">
+		<material-icon icon="save"></material-icon>
+		Зберегти академію
+	</button>
+</form>

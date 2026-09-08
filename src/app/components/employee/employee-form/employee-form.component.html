@@ -1,1 +1,109 @@
-<!-- Intentionally empty. -->
+<form class="employee-form" (submit)="onSubmit(); $event.preventDefault()">
+	<div class="employee-form__row">
+		<div class="employee-form__group">
+			<label class="employee-form__label">Повне ім'я *</label>
+			<input
+				type="text"
+				class="employee-form__input"
+				placeholder="напр. Володимир Ярославський"
+				[ngModel]="formData().name"
+				(ngModelChange)="updateField('name', $event)"
+				name="name"
+				required
+			/>
+		</div>
+		<div class="employee-form__group">
+			<label class="employee-form__label">Посада / Спеціалізація *</label>
+			<input
+				type="text"
+				class="employee-form__input"
+				placeholder="напр. Шеф-кухар, Су-шеф, Сомельє"
+				[ngModel]="formData().role"
+				(ngModelChange)="updateField('role', $event)"
+				name="role"
+				required
+			/>
+		</div>
+	</div>
+
+	<div class="employee-form__row">
+		<div class="employee-form__group">
+			<label class="employee-form__label">Досвід роботи</label>
+			<input
+				type="text"
+				class="employee-form__input"
+				placeholder="напр. 7 років у європейській кухні"
+				[ngModel]="formData().experience"
+				(ngModelChange)="updateField('experience', $event)"
+				name="experience"
+			/>
+		</div>
+		<div class="employee-form__group">
+			<label class="employee-form__label"
+				>Поточний ресторан / заклад</label
+			>
+			<input
+				type="text"
+				class="employee-form__input"
+				placeholder="напр. Ресторан 'М'ясо'"
+				[ngModel]="formData().restaurantName"
+				(ngModelChange)="updateField('restaurantName', $event)"
+				name="restaurantName"
+			/>
+		</div>
+	</div>
+
+	<div class="employee-form__group">
+		<label class="employee-form__label">URL фотографії / аватара</label>
+		<input
+			type="url"
+			class="employee-form__input"
+			placeholder="https://..."
+			[ngModel]="formData().avatarUrl"
+			(ngModelChange)="updateField('avatarUrl', $event)"
+			name="avatarUrl"
+		/>
+	</div>
+
+	<div class="employee-form__group">
+		<label class="employee-form__label">Про себе / Біографія</label>
+		<textarea
+			class="employee-form__textarea"
+			rows="4"
+			placeholder="Коротко розкажіть про професійний шлях та філософію кухні..."
+			[ngModel]="formData().bio"
+			(ngModelChange)="updateField('bio', $event)"
+			name="bio"
+		></textarea>
+	</div>
+
+	<div class="employee-form__row">
+		<div class="employee-form__group">
+			<label class="employee-form__label">Телефон</label>
+			<input
+				type="tel"
+				class="employee-form__input"
+				placeholder="+380..."
+				[ngModel]="formData().phone"
+				(ngModelChange)="updateField('phone', $event)"
+				name="phone"
+			/>
+		</div>
+		<div class="employee-form__group">
+			<label class="employee-form__label">Email</label>
+			<input
+				type="email"
+				class="employee-form__input"
+				placeholder="chef@example.com"
+				[ngModel]="formData().email"
+				(ngModelChange)="updateField('email', $event)"
+				name="email"
+			/>
+		</div>
+	</div>
+
+	<button type="submit" class="employee-form__submit-btn">
+		<material-icon icon="save"></material-icon>
+		<span>Зберегти профіль</span>
+	</button>
+</form>

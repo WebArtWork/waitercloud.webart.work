@@ -1,1 +1,55 @@
-<!-- Intentionally empty. -->
+<article class="employee-view">
+	<div class="employee-view__header">
+		<div class="employee-view__avatar-wrapper">
+			<img
+				[src]="employee().avatarUrl"
+				[alt]="employee().name"
+				class="employee-view__avatar"
+				loading="eager"
+				decoding="async"
+			/>
+		</div>
+		<div class="employee-view__title-group">
+			<h1 class="employee-view__name">{{ employee().name }}</h1>
+			<p class="employee-view__role">{{ employee().role }}</p>
+			@if (employee().restaurantName) {
+			<a
+				[routerLink]="['/restaurant']"
+				[queryParams]="{ id: employee().restaurantId }"
+				class="employee-view__workplace"
+			>
+				<material-icon icon="restaurant"></material-icon>
+				<span>{{ employee().restaurantName }}</span>
+			</a>
+			}
+		</div>
+	</div>
+
+	<div class="employee-view__body">
+		<div class="employee-view__meta">
+			<div class="employee-view__meta-item">
+				<material-icon icon="history_edu"></material-icon>
+				<span>Досвід: {{ employee().experience }}</span>
+			</div>
+		</div>
+
+		<section class="employee-view__section">
+			<h2 class="employee-view__section-title">Про шефа</h2>
+			<p class="employee-view__text">{{ employee().bio }}</p>
+		</section>
+
+		@if (employee().recipes && employee().recipes?.length) {
+		<section class="employee-view__section">
+			<h2 class="employee-view__section-title">
+				<material-icon icon="restaurant_menu"></material-icon>
+				Авторські рецепти
+			</h2>
+			<div class="employee-view__recipes-grid">
+				@for (recipe of employee().recipes; track recipe.id) {
+				<recipe-short [recipe]="recipe"></recipe-short>
+				}
+			</div>
+		</section>
+		}
+	</div>
+</article>

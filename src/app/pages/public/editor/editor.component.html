@@ -11,7 +11,7 @@
 		</span>
 	</div>
 
-	<!-- Вибір типу форми (Supported forms) -->
+	<!-- Вибір типу форми -->
 	<div class="flex flex-col gap-2">
 		<label
 			class="text-xs font-bold uppercase tracking-wider text-[var(--c-text-muted)]"
@@ -40,19 +40,16 @@
 	<hr class="border-[var(--c-border)]" />
 
 	<!-- === ДИНАМІЧНА ФОРМА === -->
-	@switch (activeForm()) {
-
-	<!-- УВАГА: Заміни 'recipe' на той ID, який у тебе реально використовується для рецептів у масиві formTypes() -->
-	@case ('recipe') {
+	@switch (activeForm()) { @case ('recipe') {
 	<recipe-form></recipe-form>
-	}
-
-	<!-- === НОВИЙ БЛОК ДЛЯ РЕСТОРАНІВ === -->
-	<!-- УВАГА: Якщо в formTypes() id для ресторану інший (наприклад 'restaurant' без 's'), зміни тут назву кейсу -->
-	@case ('restaurant') {
+	} @case ('restaurant') {
 	<restaurant-form></restaurant-form>
+	} @case ('school') {
+	<school-form (save)="onSaveSchool($event)"></school-form>
+	} @case ('employee') {
+	<employee-form (save)="onSaveEmployee($event)"></employee-form>
 	} @default {
-	<!-- Стара базова форма для всіх інших типів -->
+	<!-- Базова форма для інших типів -->
 	<div
 		class="flex flex-col gap-4 rounded-[var(--radius-btn)] bg-[var(--c-bg-tertiary)] p-5 border border-[var(--c-border)]"
 	>

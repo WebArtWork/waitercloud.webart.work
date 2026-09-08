@@ -1,1 +1,19 @@
-<!-- Intentionally empty. -->
+<a
+	[routerLink]="['/school']"
+	[queryParams]="{ id: school().id }"
+	class="school-icon"
+	[title]="school().title"
+>
+	@if (school().imageUrl) {
+	<img
+		[src]="school().imageUrl"
+		[alt]="school().title"
+		class="school-icon__image"
+	/>
+	} @else {
+	<div class="school-icon__placeholder">
+		<material-icon icon="school"></material-icon>
+	</div>
+	}
+	<span class="school-icon__label">{{ school().title }}</span>
+</a>

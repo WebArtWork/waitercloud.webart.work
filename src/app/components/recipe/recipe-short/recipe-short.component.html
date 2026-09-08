@@ -1,8 +1,15 @@
-<div class="recipe-short" (click)="onCardClick()" tabindex="0">
+<a
+	[routerLink]="['/recipe']"
+	[queryParams]="{ id: recipe().id }"
+	class="recipe-short"
+	(click)="onCardClick()"
+>
 	<img
 		class="recipe-short__image"
 		[src]="recipe().imageUrl"
 		[alt]="recipe().title"
+		loading="lazy"
+		decoding="async"
 	/>
 	<div class="recipe-short__content">
 		<h3 class="recipe-short__title">{{ recipe().title }}</h3>
@@ -11,4 +18,4 @@
 		<span class="recipe-short__status">{{ recipe().status }}</span>
 		}
 	</div>
-</div>
+</a>

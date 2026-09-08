@@ -1,0 +1,65 @@
+:host {
+	display: inline-block;
+}
+
+.school-icon {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.25rem;
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+
+	&:hover {
+		transform: scale(1.1);
+
+		.school-icon__image,
+		.school-icon__placeholder {
+			border-color: #3b82f6;
+			box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+		}
+	}
+
+	&__image {
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 9999px;
+		object-fit: cover;
+		border: 2px solid #ffffff;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+		transition: all 0.2s ease;
+	}
+
+	&__placeholder {
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 9999px;
+		background-color: #3b82f6;
+		color: #ffffff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid #ffffff;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+		transition: all 0.2s ease;
+
+		material-icon {
+			font-size: 1.25rem;
+		}
+	}
+
+	&__label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--c-text-primary);
+		background-color: var(--c-bg-primary);
+		padding: 0.125rem 0.375rem;
+		border-radius: var(--radius-btn);
+		border: 1px solid var(--c-border);
+		white-space: nowrap;
+		max-width: 6rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}

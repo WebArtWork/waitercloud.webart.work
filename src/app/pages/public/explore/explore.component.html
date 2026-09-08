@@ -1,87 +1,3 @@
-<!-- <div class="flex flex-col gap-5 pb-6">
-	<div class="relative w-full">
-		<material-icon
-			icon="search"
-			class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--c-text-muted)]"
-		></material-icon>
-		<input
-			type="text"
-			placeholder="Пошук рецептів, ресторанів, людей..."
-			class="w-full rounded-[var(--radius-btn)] border border-[var(--c-border)] bg-[var(--c-bg-tertiary)] py-3 pl-14 pr-4 text-sm text-[var(--c-text-primary)] outline-none transition-colors focus:border-[var(--c-text-primary)]"
-		/>
-	</div>
-
-	<div class="flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
-		@for (filter of filters(); track filter) {
-		<button
-			type="button"
-			(click)="setFilter(filter)"
-			class="whitespace-nowrap rounded-[var(--radius-btn)] px-4 py-2 text-sm font-semibold transition-colors"
-			[class]="activeFilter() === filter
-                    ? 'bg-[var(--c-text-primary)] text-[var(--c-bg-primary)]'
-                    : 'bg-[var(--c-bg-tertiary)] text-[var(--c-text-muted)] hover:text-[var(--c-text-primary)]'"
-		>
-			{{ filter }}
-		</button>
-		}
-	</div>
-
-	<div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-		@for (item of exploreItems(); track item.id) {
-
-
-		@if ($any(item).type === 'recipe' || $any(item).type === 'recipes') {
-		<a
-			routerLink="/recipe"
-			[queryParams]="{ id: item.id }"
-			class="explore__card"
-		>
-		<recipe-short
-			[recipe]="{
-                        id: item.id,
-                        title: item.title,
-                        author: $any(item).subtitle || 'Невідомий автор',
-                        imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
-                        status: $any(item).type
-                    }"
-			class="w-full cursor-pointer transition-transform hover:scale-[1.02]"
-		></recipe-short>
-		}
-
-
-		@else if ($any(item).type === 'restaurant' || $any(item).type ===
-		'restaurants' || $any(item).type === 'Rest') {
-		<restaurant-short
-			routerLink="/restaurant"
-			[queryParams]="{ id: item.id }"
-			[restaurant]="{
-                        id: item.id,
-                        title: item.title,
-                        description: $any(item).subtitle || 'Опис закладу',
-                        imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
-                        rating: $any(item).rating || 5.0
-                    }"
-			class="w-full cursor-pointer transition-transform hover:scale-[1.02]"
-		></restaurant-short>
-		}
-
-
-		@else {
-		<recipe-short
-			[routerLink]="$any(item).type === 'Школа' ? '/school' : '/author'"
-			[queryParams]="{ id: item.id }"
-			[recipe]="{
-                        id: item.id,
-                        title: item.title,
-                        author: $any(item).subtitle || 'Деталі',
-                        imageUrl: $any(item).image || 'https://placehold.co/400x300/eeeeee/999999?text=Entity',
-                        status: $any(item).type
-                    }"
-			class="w-full cursor-pointer opacity-70"
-		></recipe-short>
-		} }
-	</div>
-</div> -->
 <div class="explore">
 	<h1 class="sr-only">Explore recipes, restaurants, cooks, and schools</h1>
 	<div class="explore__search-wrapper">
@@ -108,6 +24,7 @@
 		</button>
 		}
 	</div>
+
 	@if (subcategories[activeFilter()]) {
 	<div class="explore__subfilters">
 		@for (sub of subcategories[activeFilter()]; track sub) {
@@ -122,67 +39,75 @@
 		}
 	</div>
 	}
-	<!-- Сітка карток -->
+
 	<div class="explore__grid">
-		@for (item of exploreItems(); track item.id) {
+		@for (item of filteredItems(); track item.id) {
 
 		<!-- Якщо це Рецепт -->
-		@if ($any(item).type === 'recipe' || $any(item).type === 'recipes' ||
-		$any(item).type === 'Рецепт') {
+		@if (item.type === 'Рецепт' || item.type === 'recipe') {
 		<a
 			routerLink="/recipe"
 			[queryParams]="{ id: item.id }"
 			class="explore__card"
 		>
-		<recipe-short
-			[recipe]="{
-                    id: item.id,
-                    title: item.title,
-                    author: $any(item).subtitle || 'Невідомий автор',
-                    imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
-                    status: $any(item).type
-                }"
-		></recipe-short>
+			<recipe-short
+				[recipe]="{
+                        id: item.id,
+                        title: item.title,
+                        author: item.subtitle || 'Невідомий автор',
+                        imageUrl: item.image,
+                        status: item.type
+                    }"
+			></recipe-short>
 		</a>
 		}
 
 		<!-- Якщо це Ресторан -->
-		@else if ($any(item).type === 'restaurant' || $any(item).type ===
-		'restaurants' || $any(item).type === 'Rest' || $any(item).type ===
-		'Ресторан') {
-		<a
-			routerLink="/restaurant"
-			[queryParams]="{ id: item.id }"
-			class="explore__card"
-		>
-		<restaurant-short
-			[restaurant]="{
-                    id: item.id,
-                    title: item.title,
-                    description: $any(item).subtitle || 'Опис закладу',
-                    imageUrl: $any(item).image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
-                    rating: $any(item).rating || 5.0
-                }"
-		></restaurant-short>
-		</a>
+		@else if (item.type === 'Ресторан' || item.type === 'restaurant') {
+		<div class="explore__card">
+			<restaurant-short
+				[restaurant]="{
+                        id: item.id,
+                        title: item.title,
+                        description: item.subtitle || 'Опис закладу',
+                        imageUrl: item.image,
+                        rating: $any(item).rating || 5.0
+                    }"
+			></restaurant-short>
+		</div>
 		}
 
-		<!-- Фолбек для інших типів -->
+		<!-- Якщо це Школа -->
+		@else if (item.type === 'Школа' || item.type === 'school') {
+		<div class="explore__card">
+			<school-short
+				[school]="{
+                        id: item.id,
+                        title: item.title,
+                        description: item.subtitle || 'Кулінарні курси',
+                        imageUrl: item.image,
+                        duration: $any(item).duration || 'Курс'
+                    }"
+			></school-short>
+		</div>
+		}
+
+		<!-- Кухар (Автор) або інші сутності -->
 		@else {
 		<a
-			[routerLink]="$any(item).type === 'Школа' ? '/school' : '/author'"
+			routerLink="/author"
 			[queryParams]="{ id: item.id }"
 			class="explore__card explore__card--fallback"
 		>
-		<recipe-short
-			[recipe]="{
-                    id: item.id,
-                    title: item.title,
-                    author: $any(item).subtitle || 'Деталі',
-                    imageUrl: $any(item).image || 'https://placehold.co/400x300/eeeeee/999999?text=Entity',
-                    status: $any(item).type
-                }"
-		></recipe-short>
+			<recipe-short
+				[recipe]="{
+                        id: item.id,
+                        title: item.title,
+                        author: item.subtitle || 'Кухар',
+                        imageUrl: item.image,
+                        status: item.type
+                    }"
+			></recipe-short>
 		</a>
 		} }
 	</div>

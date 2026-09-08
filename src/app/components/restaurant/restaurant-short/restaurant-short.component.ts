@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MaterialComponent } from '@wawjs/ngx-ui';
 
 export interface RestaurantShortModel {
@@ -12,7 +13,7 @@ export interface RestaurantShortModel {
 @Component({
 	selector: 'restaurant-short',
 	standalone: true,
-	imports: [MaterialComponent],
+	imports: [MaterialComponent, RouterLink],
 	templateUrl: './restaurant-short.component.html',
 	styleUrl: './restaurant-short.component.scss',
 })

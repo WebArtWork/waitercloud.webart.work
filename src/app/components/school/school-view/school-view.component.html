@@ -1,1 +1,78 @@
-<!-- Intentionally empty. -->
+<article class="school-view">
+	<div class="school-view__banner">
+		<img
+			[src]="school().imageUrl"
+			[alt]="school().title"
+			class="school-view__image"
+		/>
+	</div>
+
+	<div class="school-view__body">
+		<header class="school-view__header">
+			<h1 class="school-view__title">{{ school().title }}</h1>
+			@if (school().tagline) {
+			<p class="school-view__tagline">{{ school().tagline }}</p>
+			}
+		</header>
+
+		<div class="school-view__meta">
+			<div class="school-view__meta-item">
+				<material-icon icon="location_on"></material-icon>
+				<span>{{ school().address }}</span>
+			</div>
+			<div class="school-view__meta-item">
+				<material-icon icon="school"></material-icon>
+				<span>{{ school().duration }}</span>
+			</div>
+		</div>
+
+		<section class="school-view__description">
+			<h2 class="school-view__section-title">Про академію</h2>
+			<p class="school-view__text">{{ school().description }}</p>
+		</section>
+
+		@if (school().instructors && school().instructors?.length) {
+		<section class="school-view__section">
+			<h2 class="school-view__section-title">
+				<material-icon icon="person"></material-icon>
+				Викладачі та шефи курсу
+			</h2>
+			<div class="school-view__instructors-grid">
+				@for (instructor of school().instructors; track instructor.id) {
+				<a
+					[routerLink]="['/author']"
+					[queryParams]="{ id: instructor.id }"
+					class="school-view__instructor-card"
+				>
+					<img
+						[src]="instructor.avatarUrl"
+						[alt]="instructor.name"
+						class="school-view__instructor-avatar"
+					/>
+					<div class="school-view__instructor-info">
+						<span class="school-view__instructor-name"
+							>{{ instructor.name }}</span
+						>
+						<span class="school-view__instructor-role"
+							>{{ instructor.role }}</span
+						>
+					</div>
+				</a>
+				}
+			</div>
+		</section>
+		} @if (school().recipes && school().recipes?.length) {
+		<section class="school-view__section">
+			<h2 class="school-view__section-title">
+				<material-icon icon="menu_book"></material-icon>
+				Страви, яких навчають на курсі
+			</h2>
+			<div class="school-view__recipes-grid">
+				@for (recipe of school().recipes; track recipe.id) {
+				<recipe-short [recipe]="recipe"></recipe-short>
+				}
+			</div>
+		</section>
+		}
+	</div>
+</article>

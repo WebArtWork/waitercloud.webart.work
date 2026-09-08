@@ -9,17 +9,20 @@ import {
 	viewChild,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 import type * as Leaflet from 'leaflet';
 import { MaterialComponent } from '@wawjs/ngx-ui';
 
 @Component({
 	selector: 'page-map',
+	standalone: true,
 	templateUrl: './map.component.html',
 	styleUrls: ['./map.component.scss'],
 	imports: [MaterialComponent],
 })
 export class MapComponent implements AfterViewInit, OnDestroy {
 	private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+	private readonly router = inject(Router);
 	private readonly mapContainer =
 		viewChild.required<ElementRef<HTMLElement>>('mapContainer');
 	private map?: Leaflet.Map;
@@ -39,7 +42,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 		{ id: 'jobs', label: 'Вакансії', icon: 'work', active: false },
 	]);
 
-	// Твої локації з реальними координатами (lat/lng)
+	// Локації
 	readonly markers = signal([
 		{
 			id: 1,
@@ -47,6 +50,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 			label: 'Гастро Паб',
 			lat: 50.4501,
 			lng: 30.5234,
+			image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=150&h=150&fit=crop&q=70',
 		},
 		{
 			id: 2,
@@ -54,6 +58,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 			label: 'Кулінарна школа',
 			lat: 50.46,
 			lng: 30.51,
+			image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=150&h=150&fit=crop&q=70',
 		},
 		{
 			id: 3,
@@ -61,6 +66,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 			label: 'Піцерія',
 			lat: 50.44,
 			lng: 30.53,
+			image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150&h=150&fit=crop&q=70',
 		},
 		{
 			id: 4,
@@ -68,6 +74,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 			label: 'Точка продажу меду',
 			lat: 50.43,
 			lng: 30.5,
+			image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&h=150&fit=crop&q=70',
 		},
 	]);
 
@@ -95,30 +102,25 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 		}).addTo(this.map);
 	}
 
-	// МЕТОД: Генерація твоїх кастомних маркерів з HTML/SCSS
 	private getCustomIcon(markerData: any): any {
-		// Дозволяємо брати картинку з даних маркера (якщо вона там є)
-		let imageUrl = markerData.image || '';
-		let iconName = 'school';
+		const imageUrl = markerData.image || '';
+		let iconName = 'location_on';
 
-		// Якщо картинки немає, ставимо заглушки, АЛЕ зі стисненням (?w=150&q=80)
-		if (markerData.type === 'restaurants' && !imageUrl) {
-			imageUrl =
-				'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=150&h=150&fit=crop&q=80';
-		} else if (
-			(markerData.type === 'recipes' || markerData.type === 'recipe') &&
-			!imageUrl
-		) {
-			imageUrl =
-				'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&h=150&fit=crop&q=80';
+		if (markerData.type === 'schools') {
+			iconName = 'school';
+		} else if (markerData.type === 'restaurants') {
+			iconName = 'restaurant';
+		} else if (markerData.type === 'recipes') {
+			iconName = 'menu_book';
 		} else if (markerData.type === 'jobs') {
 			iconName = 'work';
 		}
 
 		let innerContent = '';
 		if (imageUrl) {
-			// Додав обробник onerror: якщо картинка раптом зламана, покажеться іконка ресторану/рецепту
 			innerContent = `<img src="${imageUrl}"
+                                 alt="${markerData.label}"
+                                 loading="lazy"
                                  onerror="this.style.display='none'"
                                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;" />`;
 		} else {
@@ -126,7 +128,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 		}
 
 		const html = `
-            <div class="map__marker">
+            <div class="map__marker" style="cursor: pointer;">
                 <div class="map__marker-tooltip">${markerData.label}</div>
                 <div class="map__marker-fallback">
                     ${innerContent}
@@ -143,10 +145,25 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 		});
 	}
 
+	private handleMarkerClick(markerData: any): void {
+		if (markerData.type === 'schools') {
+			this.router.navigate(['/school'], {
+				queryParams: { id: markerData.id },
+			});
+		} else if (markerData.type === 'restaurants') {
+			this.router.navigate(['/restaurant'], {
+				queryParams: { id: markerData.id },
+			});
+		} else if (markerData.type === 'recipes') {
+			this.router.navigate(['/recipe'], {
+				queryParams: { id: markerData.id },
+			});
+		}
+	}
+
 	private renderMarkers(): void {
 		if (!this.map || !this.L) return;
 
-		// Очищаємо старі маркери
 		this.leafletMarkers.forEach((marker) => marker.remove());
 		this.leafletMarkers = [];
 
@@ -154,12 +171,13 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 			.filter((f) => f.active)
 			.map((f) => f.id);
 
-		// Додаємо нові маркери з кастомним HTML
 		this.markers().forEach((markerData) => {
 			if (activeFilterIds.includes(markerData.type)) {
 				const marker = this.L.marker([markerData.lat, markerData.lng], {
 					icon: this.getCustomIcon(markerData),
 				}).addTo(this.map!);
+
+				marker.on('click', () => this.handleMarkerClick(markerData));
 
 				this.leafletMarkers.push(marker);
 			}

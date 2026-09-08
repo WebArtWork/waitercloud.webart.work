@@ -1,1 +1,24 @@
-<!-- Intentionally empty. -->
+<a
+	[routerLink]="['/author']"
+	[queryParams]="{ id: employee().id }"
+	class="employee-short"
+>
+	<div class="employee-short__avatar-wrapper">
+		<img
+			[src]="employee().avatarUrl"
+			[alt]="employee().name"
+			class="employee-short__avatar"
+			loading="lazy"
+			decoding="async"
+		/>
+	</div>
+	<div class="employee-short__info">
+		<h3 class="employee-short__name">{{ employee().name }}</h3>
+		<p class="employee-short__role">{{ employee().role }}</p>
+		@if (employee().restaurantName) {
+		<span class="employee-short__workplace"
+			>{{ employee().restaurantName }}</span
+		>
+		}
+	</div>
+</a>

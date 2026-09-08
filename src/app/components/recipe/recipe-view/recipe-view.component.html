@@ -3,12 +3,14 @@
 		class="recipe-view__image"
 		[src]="recipe().imageUrl"
 		[alt]="recipe().title"
+		loading="eager"
+		decoding="async"
 	/>
 	<div class="recipe-view__overlay"></div>
 
 	<div class="recipe-view__info">
 		<a
-			routerLink="/recipe"
+			[routerLink]="['/recipe']"
 			[queryParams]="{ id: recipe().id }"
 			class="recipe-view__title-link group"
 		>
@@ -24,7 +26,7 @@
 
 		<div class="recipe-view__author-row">
 			<a
-				routerLink="/author"
+				[routerLink]="['/author']"
 				[queryParams]="{ id: recipe().author }"
 				class="recipe-view__author-link"
 			>

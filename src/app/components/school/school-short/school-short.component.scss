@@ -2,7 +2,7 @@
 	display: block;
 }
 
-.restaurant-short {
+.school-short {
 	display: flex;
 	flex-direction: column;
 	border-radius: var(--radius-btn);
@@ -33,7 +33,7 @@
 		object-fit: cover;
 	}
 
-	&__rating {
+	&__badge {
 		position: absolute;
 		top: 0.5rem;
 		right: 0.5rem;
@@ -50,7 +50,7 @@
 
 		material-icon {
 			font-size: 0.875rem;
-			color: #facc15;
+			color: #60a5fa;
 		}
 	}
 

@@ -1,1 +1,9 @@
-<!-- Intentionally empty. -->
+<div class="employee-icon" [title]="employee().name">
+	<img
+		[src]="employee().avatarUrl"
+		[alt]="employee().name"
+		class="employee-icon__image"
+		loading="lazy"
+		decoding="async"
+	/>
+</div>
