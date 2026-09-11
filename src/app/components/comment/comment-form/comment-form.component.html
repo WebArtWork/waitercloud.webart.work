@@ -1,1 +1,44 @@
-<!-- Intentionally empty. -->
+<form class="comment-form" (submit)="onSubmit(); $event.preventDefault()">
+	@if (enableRating()) {
+	<div class="comment-form__rating-bar">
+		<span class="comment-form__rating-label">Оцінка:</span>
+		<div class="comment-form__stars">
+			@for (star of stars; track star) {
+			<button
+				type="button"
+				class="comment-form__star-btn"
+				(click)="setRating(star)"
+			>
+				<material-icon
+					[icon]="star <= rating() ? 'star' : 'star_border'"
+					class="comment-form__star"
+				></material-icon>
+			</button>
+			}
+		</div>
+	</div>
+	}
+
+	<div class="comment-form__input-group">
+		<textarea
+			class="comment-form__textarea"
+			rows="3"
+			[placeholder]="placeholder()"
+			[ngModel]="text()"
+			(ngModelChange)="text.set($event)"
+			name="commentText"
+			required
+		></textarea>
+	</div>
+
+	<div class="comment-form__actions">
+		<button
+			type="submit"
+			class="comment-form__submit-btn"
+			[disabled]="!text().trim()"
+		>
+			<material-icon icon="send"></material-icon>
+			<span>Надіслати</span>
+		</button>
+	</div>
+</form>

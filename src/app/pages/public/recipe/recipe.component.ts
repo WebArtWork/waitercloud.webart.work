@@ -6,6 +6,9 @@ import { map } from 'rxjs';
 import { MaterialComponent } from '@wawjs/ngx-ui';
 import { RecipeViewComponent } from 'src/app/components/recipe/recipe-view/recipe-view.component';
 import { RestaurantViewComponent } from 'src/app/components/restaurant/restaurant-view/restaurant-view.component';
+import { CommentsViewComponent } from 'src/app/components/comment/comments-view/comments-view.component';
+import { CommentShortModel } from 'src/app/components/comment/comment-short/comment-short.component';
+import { CommentSubmitPayload } from 'src/app/components/comment/comment-form/comment-form.component';
 
 @Component({
 	selector: 'page-recipe',
@@ -17,6 +20,7 @@ import { RestaurantViewComponent } from 'src/app/components/restaurant/restauran
 		RouterLink,
 		RecipeViewComponent,
 		RestaurantViewComponent,
+		CommentsViewComponent,
 	],
 })
 export class RecipeComponent {
@@ -59,18 +63,20 @@ export class RecipeComponent {
 		],
 	});
 
-	readonly comments = signal([
+	readonly comments = signal<CommentShortModel[]>([
 		{
 			id: 1,
-			user: 'Олена',
+			authorName: 'Олена',
 			text: 'Дуже смачно, дякую за детальну інструкцію!',
-			time: '2 дні тому',
+			createdAt: '2 дні тому',
+			rating: 5,
 		},
 		{
 			id: 2,
-			user: 'Максим',
+			authorName: 'Максим',
 			text: 'Спробував зробити вдома — вийшло як у найкращому ресторані.',
-			time: '5 днів тому',
+			createdAt: '5 днів тому',
+			rating: 5,
 		},
 	]);
 
@@ -91,4 +97,15 @@ export class RecipeComponent {
 			image: 'https://images.unsplash.com/photo-1588013273468-315fd08af3c5?q=80&w=300&auto=format&fit=crop',
 		},
 	]);
+
+	onAddComment(payload: CommentSubmitPayload): void {
+		const newComment: CommentShortModel = {
+			id: Date.now(),
+			authorName: 'Ви',
+			text: payload.text,
+			createdAt: 'Щойно',
+			rating: payload.rating,
+		};
+		this.comments.update((prev) => [newComment, ...prev]);
+	}
 }

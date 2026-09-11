@@ -1,1 +1,24 @@
-<!-- Intentionally empty. -->
+<section class="comments-view">
+	<div class="comments-view__header">
+		<h2 class="comments-view__title">
+			<material-icon icon="chat_bubble_outline"></material-icon>
+			{{ title() }}
+		</h2>
+		<span class="comments-view__count">{{ comments().length }}</span>
+	</div>
+
+	<div class="comments-view__form-wrapper">
+		<comment-form (submitComment)="onCommentSubmit($event)"></comment-form>
+	</div>
+
+	<div class="comments-view__list">
+		@for (item of comments(); track item.id) {
+		<comment-short [comment]="item"></comment-short>
+		} @empty {
+		<div class="comments-view__empty">
+			<material-icon icon="rate_review"></material-icon>
+			<p>Ще немає відгуків. Залиште свій першим!</p>
+		</div>
+		}
+	</div>
+</section>

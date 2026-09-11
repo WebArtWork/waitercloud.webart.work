@@ -130,38 +130,10 @@
 
 	<!-- === КОМЕНТАРІ === -->
 	<div class="entity-page__section">
-		<h2 class="entity-page__section-title">Коментарі</h2>
-
-		<div class="entity-page__comment-input-wrap">
-			<div class="entity-page__avatar-placeholder">
-				<material-icon icon="person"></material-icon>
-			</div>
-			<input
-				type="text"
-				placeholder="Додати коментар..."
-				class="entity-page__comment-input"
-			/>
-		</div>
-
-		<div class="entity-page__comments-list">
-			@for (comment of comments(); track comment.id) {
-			<div class="entity-page__comment">
-				<div class="entity-page__comment-avatar">
-					{{ comment.user.charAt(0) }}
-				</div>
-				<div class="entity-page__comment-content">
-					<div class="entity-page__comment-header">
-						<span class="entity-page__comment-author"
-							>{{ comment.user }}</span
-						>
-						<span class="entity-page__comment-time"
-							>{{ comment.time }}</span
-						>
-					</div>
-					<p class="entity-page__comment-text">{{ comment.text }}</p>
-				</div>
-			</div>
-			}
-		</div>
+		<comments-view
+			[comments]="comments()"
+			title="Коментарі"
+			(addComment)="onAddComment($event)"
+		></comments-view>
 	</div>
 </div>

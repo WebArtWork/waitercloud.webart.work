@@ -53,18 +53,53 @@
 			</div>
 			<span class="recipe-view__action-count">{{ recipe().likes }}</span>
 		</button>
-		<button type="button" class="recipe-view__action-btn group">
+
+		<!-- Відкриття шторки коментарів -->
+		<button
+			type="button"
+			class="recipe-view__action-btn group"
+			(click)="toggleComments()"
+		>
 			<div class="recipe-view__action-icon">
 				<material-icon icon="chat_bubble"></material-icon>
 			</div>
 			<span class="recipe-view__action-count"
-				>{{ recipe().comments }}</span
+				>{{ commentsList().length }}</span
 			>
 		</button>
+
 		<button type="button" class="recipe-view__action-btn group">
 			<div class="recipe-view__action-icon">
 				<material-icon icon="share"></material-icon>
 			</div>
 		</button>
 	</div>
+
+	<!-- Модальна панель відгуків та коментарів -->
+	@if (showComments()) {
+	<div class="recipe-view__comments-backdrop" (click)="toggleComments()">
+		<div
+			class="recipe-view__comments-sheet"
+			(click)="$event.stopPropagation()"
+		>
+			<div class="recipe-view__comments-header">
+				<span class="recipe-view__comments-title">Коментарі</span>
+				<button
+					type="button"
+					class="recipe-view__comments-close"
+					(click)="toggleComments()"
+				>
+					<material-icon icon="close"></material-icon>
+				</button>
+			</div>
+			<div class="recipe-view__comments-content">
+				<comments-view
+					[comments]="commentsList()"
+					title="Відгуки до рецепта"
+					(addComment)="onAddComment($event)"
+				></comments-view>
+			</div>
+		</div>
+	</div>
+	}
 </article>

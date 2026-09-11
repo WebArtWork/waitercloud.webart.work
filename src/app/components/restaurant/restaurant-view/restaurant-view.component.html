@@ -79,5 +79,14 @@
 			</div>
 		</div>
 		}
+
+		<!-- Блок відгуків -->
+		<div class="restaurant-view__section">
+			<comments-view
+				[comments]="comments()"
+				title="Відгуки гостей"
+				(addComment)="onAddComment($event)"
+			></comments-view>
+		</div>
 	</div>
 </div>

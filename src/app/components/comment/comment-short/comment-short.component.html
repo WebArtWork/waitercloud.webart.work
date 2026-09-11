@@ -1,1 +1,53 @@
-<!-- Intentionally empty. -->
+<article
+	class="comment-short"
+	[class.comment-short--verified]="comment().isVerifiedReviewer"
+>
+	<div class="comment-short__header">
+		<div class="comment-short__avatar-wrapper">
+			@if (comment().authorAvatar) {
+			<img
+				[src]="comment().authorAvatar"
+				[alt]="comment().authorName"
+				class="comment-short__avatar"
+				loading="lazy"
+				decoding="async"
+			/>
+			} @else {
+			<div class="comment-short__avatar-fallback">
+				<material-icon icon="person"></material-icon>
+			</div>
+			}
+		</div>
+
+		<div class="comment-short__meta">
+			<div class="comment-short__author-row">
+				<span class="comment-short__author"
+					>{{ comment().authorName }}</span
+				>
+				@if (comment().isVerifiedReviewer) {
+				<span
+					class="comment-short__badge"
+					title="Верифікований рецензент"
+				>
+					<material-icon icon="verified"></material-icon>
+					Критик
+				</span>
+				}
+			</div>
+			<span class="comment-short__date">{{ comment().createdAt }}</span>
+		</div>
+
+		@if (comment().rating) {
+		<div class="comment-short__rating">
+			@for (star of stars; track star) {
+			<material-icon
+				[icon]="star <= (comment().rating || 0) ? 'star' : 'star_border'"
+				class="comment-short__star"
+			></material-icon>
+			}
+		</div>
+		}
+	</div>
+
+	<p class="comment-short__text">{{ comment().text }}</p>
+</article>

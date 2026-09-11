@@ -1,67 +1,244 @@
-@reference "tailwindcss";
+:host {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
 
 .recipe-view {
-	@apply relative flex w-full flex-col overflow-hidden rounded-[var(--radius-btn)] bg-black shadow-md;
-	height: 70vh;
-	min-height: 450px;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: 100svh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	background-color: var(--c-bg-primary, #000000);
 
 	&__image {
-		@apply absolute inset-0 h-full w-full object-cover opacity-85;
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: 1;
 	}
 
 	&__overlay {
-		@apply absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent;
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to top,
+			rgba(0, 0, 0, 0.9) 0%,
+			rgba(0, 0, 0, 0.45) 35%,
+			rgba(0, 0, 0, 0.1) 70%,
+			transparent 100%
+		);
+		z-index: 2;
+		pointer-events: none;
 	}
 
 	&__info {
-		@apply absolute bottom-0 left-0 right-16 flex flex-col gap-3 p-4;
+		position: relative;
+		z-index: 10;
+		padding: 1.5rem;
+		padding-right: 5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
 	}
 
 	&__title-link {
-		@apply block cursor-pointer outline-none;
+		text-decoration: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 	}
 
 	&__title {
-		@apply text-xl font-bold leading-tight text-white line-clamp-2 transition-colors group-hover:text-gray-300;
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: var(--c-text-primary, #ffffff);
+		margin: 0;
+		line-height: 1.3;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 	}
 
 	&__more {
-		@apply mt-1 inline-flex items-center text-xs text-white/70 group-hover:text-white;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--c-text-secondary, #e2e8f0);
+		opacity: 0.85;
+		transition: opacity 0.2s ease;
+
+		&:hover {
+			opacity: 1;
+		}
 	}
 
 	&__author-row {
-		@apply flex items-center gap-2;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
 	}
 
 	&__author-link {
-		@apply flex items-center gap-2 outline-none;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: var(--c-text-primary, #ffffff);
 	}
 
 	&__avatar {
-		@apply flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-bg-tertiary)]/30 backdrop-blur-sm;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 9999px;
+		background-color: var(--c-bg-tertiary, #1f2937);
+		border: 1.5px solid var(--c-border, #4b5563);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
 	}
 
 	&__author-name {
-		@apply text-sm font-medium text-white/90 hover:underline;
+		font-size: 0.875rem;
+		font-weight: 700;
+		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 	}
 
 	&__follow-btn {
-		@apply ml-1 rounded-full border border-white/50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black;
+		background-color: rgba(255, 255, 255, 0.15);
+		backdrop-filter: blur(8px);
+		color: var(--c-text-primary, #ffffff);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 9999px;
+		padding: 0.25rem 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.25);
+		}
 	}
 
 	&__actions {
-		@apply absolute bottom-4 right-3 flex flex-col items-center gap-5;
+		position: absolute;
+		right: 1rem;
+		bottom: 2rem;
+		z-index: 20;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
 	}
 
 	&__action-btn {
-		@apply flex flex-col items-center gap-1 text-white outline-none cursor-pointer;
+		background: transparent;
+		border: none;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+		cursor: pointer;
+		padding: 0;
+		color: var(--c-text-primary, #ffffff);
 	}
 
 	&__action-icon {
-		@apply flex h-11 w-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 transition-colors group-hover:bg-black/60;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 9999px;
+		background-color: rgba(0, 0, 0, 0.45);
+		backdrop-filter: blur(6px);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition:
+			transform 0.2s ease,
+			background-color 0.2s ease;
+
+		&:hover {
+			transform: scale(1.08);
+			background-color: rgba(0, 0, 0, 0.6);
+		}
 	}
 
 	&__action-count {
-		@apply text-xs font-semibold;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--c-text-primary, #ffffff);
+		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+	}
+
+	&__comments-backdrop {
+		position: absolute;
+		inset: 0;
+		background-color: rgba(0, 0, 0, 0.65);
+		backdrop-filter: blur(4px);
+		z-index: 50;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	&__comments-sheet {
+		background-color: var(--c-bg-primary, #0c111d);
+		border-top: 1px solid var(--c-border, #1f2a37);
+		border-radius: 1.25rem 1.25rem 0 0;
+		max-height: 75%;
+		display: flex;
+		flex-direction: column;
+		animation: slideSheetUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	&__comments-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid var(--c-border, #1f2a37);
+	}
+
+	&__comments-title {
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--c-text-primary, #ffffff);
+	}
+
+	&__comments-close {
+		background: transparent;
+		border: none;
+		color: var(--c-text-muted, #9ca3af);
+		cursor: pointer;
+		padding: 0.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&:hover {
+			color: var(--c-text-primary, #ffffff);
+		}
+	}
+
+	&__comments-content {
+		padding: 1.25rem;
+		overflow-y: auto;
+	}
+}
+
+@keyframes slideSheetUp {
+	from {
+		transform: translateY(100%);
+	}
+	to {
+		transform: translateY(0);
 	}
 }

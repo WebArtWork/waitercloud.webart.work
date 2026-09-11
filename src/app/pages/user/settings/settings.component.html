@@ -1,28 +1,213 @@
 <div class="settings">
+	<!-- 1. ВИБІР КРАЇНИ -->
+	<section class="settings__section">
+		<h2 class="settings__label">Країна контенту (Country)</h2>
+		<p class="settings__hint">
+			Визначає локальні рецепти, заклади, школи та вакансії у Feed і
+			Explore
+		</p>
+		<div class="settings__chips-grid">
+			@for (c of countries(); track c.code) {
+			<button
+				type="button"
+				(click)="setCountry(c.code)"
+				class="settings__chip"
+				[class.settings__chip--active]="selectedCountry() === c.code"
+			>
+				<span class="settings__chip-flag">{{ c.flag }}</span>
+				<span>{{ c.name }}</span>
+			</button>
+			}
+		</div>
+	</section>
+
+	<!-- 2. ВИДИМІ СУТНОСТІ У СТРІЧЦІ -->
+	<section class="settings__section">
+		<h2 class="settings__label">Відображення сутностей у стрічці</h2>
+		<div class="settings__toggle-list">
+			@for (entity of visibleEntities(); track entity.id) {
+			<button
+				type="button"
+				(click)="toggleEntity(entity.id)"
+				class="settings__toggle-row"
+			>
+				<div class="settings__toggle-info">
+					<material-icon [icon]="entity.icon"></material-icon>
+					<span>{{ entity.label }}</span>
+				</div>
+				<div
+					class="settings__toggle-pill"
+					[class.settings__toggle-pill--active]="entity.active"
+				>
+					<span class="settings__toggle-dot"></span>
+				</div>
+			</button>
+			}
+		</div>
+	</section>
+
+	<!-- 3. КУЛІНАРНІ ІНТЕРЕСИ -->
+	<section class="settings__section">
+		<h2 class="settings__label">Кулінарні інтереси</h2>
+		<p class="settings__hint">
+			Оберіть теми для персоналізації рекомендацій
+		</p>
+		<div class="settings__chips-grid">
+			@for (interest of interests(); track interest.id) {
+			<button
+				type="button"
+				(click)="toggleInterest(interest.id)"
+				class="settings__chip"
+				[class.settings__chip--active]="interest.selected"
+			>
+				<material-icon
+					[icon]="interest.selected ? 'check' : 'add'"
+					class="settings__chip-icon"
+				></material-icon>
+				<span>{{ interest.label }}</span>
+			</button>
+			}
+		</div>
+	</section>
+
+	<!-- 4. ПРИВАТНІСТЬ ТА КАР'ЄРА -->
+	<section class="settings__section">
+		<h2 class="settings__label">Приватність та профіль</h2>
+		<div class="settings__toggle-list">
+			<button
+				type="button"
+				(click)="togglePublicProfile()"
+				class="settings__toggle-row"
+			>
+				<div class="settings__toggle-info">
+					<material-icon icon="visibility"></material-icon>
+					<div>
+						<span class="block text-sm font-semibold"
+							>Публічний профіль</span
+						>
+						<span class="settings__hint block"
+							>Дозволити іншим бачити мої рецепти</span
+						>
+					</div>
+				</div>
+				<div
+					class="settings__toggle-pill"
+					[class.settings__toggle-pill--active]="isPublicProfile()"
+				>
+					<span class="settings__toggle-dot"></span>
+				</div>
+			</button>
+
+			<button
+				type="button"
+				(click)="toggleEmployeeActive()"
+				class="settings__toggle-row"
+			>
+				<div class="settings__toggle-info">
+					<material-icon icon="badge"></material-icon>
+					<div>
+						<span class="block text-sm font-semibold"
+							>Шукаю роботу (Профіль шефа/працівника)</span
+						>
+						<span class="settings__hint block"
+							>Відображатися у пошуку кухарів та отримувати
+							пропозиції</span
+						>
+					</div>
+				</div>
+				<div
+					class="settings__toggle-pill"
+					[class.settings__toggle-pill--active]="isEmployeeActive()"
+				>
+					<span class="settings__toggle-dot"></span>
+				</div>
+			</button>
+		</div>
+	</section>
+
+	<!-- 5. ІГНОРОВАНІ АВТОРИ -->
+	@if (ignoredAuthors().length) {
+	<section class="settings__section">
+		<h2 class="settings__label">Ігноровані автори (Свайп вліво)</h2>
+		<div class="settings__ignored-list">
+			@for (author of ignoredAuthors(); track author) {
+			<div class="settings__ignored-item">
+				<span class="settings__ignored-name">{{ author }}</span>
+				<button
+					type="button"
+					(click)="unignoreAuthor(author)"
+					class="settings__unignore-btn"
+				>
+					Розблокувати
+				</button>
+			</div>
+			}
+		</div>
+	</section>
+	}
+
+	<!-- 6. ЗМІНА ПАРОЛЯ -->
 	<section class="settings__section">
 		<h2 class="settings__label" translate>Change password</h2>
-		<form (submit)="wSecuritySubmit(); $event.preventDefault()" class="settings__content">
-			<winput [placeholder]="translateService.translate('Enter your current password...')()" [formField]="securityForm.currentPassword" type="password"></winput>
-			<winput [placeholder]="translateService.translate('Enter your new password...')()" [formField]="securityForm.newPassword" type="password"></winput>
-			<winput [placeholder]="translateService.translate('Confirm your new password...')()" [formField]="securityForm.confirmPassword" type="password"></winput>
-			<wbutton [disabled]="isSecurityDisabled()" type="primary"><span translate>Update password</span></wbutton>
+		<form
+			(submit)="wSecuritySubmit(); $event.preventDefault()"
+			class="settings__content"
+		>
+			<winput
+				[placeholder]="translateService.translate('Enter your current password...')()"
+				[formField]="securityForm.currentPassword"
+				type="password"
+			></winput>
+			<winput
+				[placeholder]="translateService.translate('Enter your new password...')()"
+				[formField]="securityForm.newPassword"
+				type="password"
+			></winput>
+			<winput
+				[placeholder]="translateService.translate('Confirm your new password...')()"
+				[formField]="securityForm.confirmPassword"
+				type="password"
+			></winput>
+			<wbutton [disabled]="isSecurityDisabled()" type="primary">
+				<span translate>Update password</span>
+			</wbutton>
 		</form>
 	</section>
 
+	<!-- 7. ТЕМА -->
 	<section class="settings__section">
 		<h2 class="settings__label" translate>Theme</h2>
-		<div class="settings__content settings__content--inline"><icon-theme size="48px" [showText]="true"></icon-theme></div>
+		<div class="settings__content settings__content--inline">
+			<icon-theme size="48px" [showText]="true"></icon-theme>
+		</div>
 	</section>
 
+	<!-- 8. МОВА -->
 	<section class="settings__section">
 		<h2 class="settings__label" translate>Switch language</h2>
 		@if (languageName()) {
-			<button (click)="nextLanguage()" class="settings__language" [attr.aria-label]="translateService.translate('Switch language')()" type="button">
-				<img [src]="languageFlagSrc()" class="settings__flag" alt="" aria-hidden="true" />
-				<span [translate]="languageName()"></span>
-			</button>
+		<button
+			(click)="nextLanguage()"
+			class="settings__language"
+			[attr.aria-label]="translateService.translate('Switch language')()"
+			type="button"
+		>
+			<img
+				[src]="languageFlagSrc()"
+				class="settings__flag"
+				alt=""
+				aria-hidden="true"
+			/>
+			<span [translate]="languageName()"></span>
+		</button>
 		}
 	</section>
 
-	<div class="settings__actions"><wbutton (wClick)="userService.logout()" type="secondary"><material-icon icon="logout"></material-icon><span translate>Logout</span></wbutton></div>
+	<!-- 9. ДІЇ -->
+	<div class="settings__actions">
+		<wbutton (wClick)="userService.logout()" type="secondary">
+			<material-icon icon="logout"></material-icon>
+			<span translate>Logout</span>
+		</wbutton>
+	</div>
 </div>

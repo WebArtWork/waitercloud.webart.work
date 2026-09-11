@@ -74,5 +74,14 @@
 			</div>
 		</section>
 		}
+
+		<!-- Блок відгуків -->
+		<section class="school-view__section">
+			<comments-view
+				[comments]="comments()"
+				title="Відгуки про школу"
+				(addComment)="onAddComment($event)"
+			></comments-view>
+		</section>
 	</div>
 </article>
